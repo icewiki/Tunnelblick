@@ -20,6 +20,64 @@ logMessage()
 	echo "${@}"
 }
 
+##########################################################################################
+# @param Bool TRUE if should reset if disconnect was expected
+# @param Bool TRUE if should reset if disconnect was not expected
+disableNetworkAccess()
+{
+
+	# Disables network access by powering off Wi-Fi and disabling all other network services.
+	#
+	# Appends list of services that were disabled (including Wi-Fi) to a file which is used by
+	# re-enable-network-services.sh to re-enable network services that were disabled by this script.
+
+	expected_path="/Library/Application Support/Tunnelblick/expect-disconnect.txt"
+
+	if [ -e "$expected_path" ] ; then
+		# Don't remove the file here; the down script will remove the file after testing it
+		should_disable="$1"
+	else
+		should_disable="$2"
+	fi
+
+	if [ "$should_disable" != "true" ] ; then
+		return
+	fi
+
+	list_path="/Library/Application Support/Tunnelblick/disabled-network-services.txt"
+
+	# Get list of services (remove the first line which contains a heading)
+	dia_services="$( networksetup  -listallnetworkservices | sed -e '1,1d')"
+
+	# Go through the list disabling the interface for enabled services
+	printf %s "$dia_services
+" | \
+	while IFS= read -r dia_service ; do
+
+		# If first character of a line is an asterisk, the service is disabled, so we skip it
+		if [ "${dia_service:0:1}" != "*" ] ; then
+
+			if [ "$dia_service" = "Wi-Fi" ] ; then
+				dia_interface="$(networksetup -listallhardwareports | awk '$3=="Wi-Fi" {getline; print $2}')"
+				dia_airport_power="$( networksetup -getairportpower "$dia_interface" | sed -e 's/^.*: //g' )"
+				if [  "$dia_airport_power" = "On"  ] ; then
+					networksetup -setairportpower "$dia_interface" off
+					logMessage "Turned off $dia_service ($dia_interface)"
+					echo -n "\"Wi-Fi\" " >> "$list_path"
+				else
+					logMessage "$dia_service ($dia_interface) was already off"
+				fi
+			else
+				# (We already know it is enabled from the above)
+				networksetup -setnetworkserviceenabled "$dia_service" off
+				logMessage "Disabled $dia_service"
+				echo -n "\"$dia_service\" " >> "$list_path"
+			fi
+		fi
+
+	done
+}
+
 trap "" TSTP
 trap "" HUP
 trap "" INT
@@ -30,10 +88,38 @@ readonly OUR_NAME=$(basename "${0}")
 logMessage "**********************************************"
 logMessage "Start of output from ${OUR_NAME}"
 
+# Test for the "-k" and "-ku" Tunnelbick options (Disable network access after disconnecting).
+# Usually we get the value for that option (and the other options) from State:/Network/OpenVPN,
+# but that key may not exist (because, for example, there were no DNS changes).
+# So we get the value from the Tunnelblick options passed to this script by OpenVPN.
+ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING="false"
+ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING_UNEXPECTED="false"
+while [ {$#} ] ; do
+
+	if [ "${1:0:1}" != "-" ] ; then				# Tunnelblick arguments start with "-" and come first
+		break                                   # so if this one doesn't start with "-" we are done processing Tunnelblick arguments
+	fi
+
+	if [ "$1" = "-k" ] ; then
+		ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING="true"
+
+	elif [ "$1" = "-ku" ] ; then
+		ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING_UNEXPECTED="true"
+	fi
+
+	shift                                       # Shift arguments to examine the next option (if there is one)
+done
+
+readonly ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING_UNEXPECTED
+
 # Quick check - is the configuration there?
 if ! scutil -w State:/Network/OpenVPN &>/dev/null -t 1 ; then
-	# Configuration isn't there, so we forget it
-	logMessage "WARNING: No saved Tunnelblick DNS configuration found; not doing anything."
+
+	# Configuration isn't there
+	logMessage "WARNING: Not restoring DNS settings because no saved Tunnelblick DNS information was found."
+
+	disableNetworkAccess $ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING $ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING_UNEXPECTED
+
     logMessage "End of output from ${OUR_NAME}"
     logMessage "**********************************************"
 	exit 0
@@ -126,13 +212,14 @@ EOF
         quit
 EOF
     else
-        logMessage "NOTE: No action by ${OUR_NAME} is needed because this TAP connection does not use DHCP via the TAP device."
+        logMessage "NOTE: No DHCP release by ${OUR_NAME} is needed because this TAP connection does not use DHCP via the TAP device."
 	fi
 else
-    logMessage "No action by ${OUR_NAME} is needed because this is not a TAP connection."
+    logMessage "No DHCP release by ${OUR_NAME} is needed because this is not a TAP connection."
 fi
+
+disableNetworkAccess $ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING $ARG_DISABLE_INTERNET_ACCESS_AFTER_DISCONNECTING_UNEXPECTED
 
 logMessage "End of output from ${OUR_NAME}"
 logMessage "**********************************************"
-
 exit 0

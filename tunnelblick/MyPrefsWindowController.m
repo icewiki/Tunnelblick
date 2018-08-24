@@ -1,5 +1,5 @@
 /*
- * Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -44,6 +44,7 @@
 #import "SystemAuth.h"
 #import "TBButton.h"
 #import "TBOperationQueue.h"
+#import "TBPopUpButton.h"
 #import "TBUserDefaults.h"
 #import "UIHelper.h"
 #import "UtilitiesView.h"
@@ -83,7 +84,6 @@ extern NSArray        * gConfigurationPreferences;
 -(void) setupLoggingLevel:            (VPNConnection *) connection;
 -(void) setupRouteAllTraffic:         (VPNConnection *) connection;
 -(void) setupCheckIPAddress:          (VPNConnection *) connection;
--(void) setupResetPrimaryInterface:   (VPNConnection *) connection;
 -(void) setupDisableIpv6OnTun:                    (VPNConnection *) connection;
 -(void) setupPerConfigOpenvpnVersion: (VPNConnection *) connection;
 -(void) setupNetworkMonitoring:       (VPNConnection *) connection;
@@ -256,7 +256,7 @@ TBSYNTHESIZE_NONOBJECT_GET(NSUInteger, selectedLeftNavListIndex)
     
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
-    NSString * prompt = NSLocalizedString(@"Tunnelblick Admin Mode\n\n Temporarily authorize changes that require an administrator password.\n\n The session expires after five minutes or when the 'VPN Details' window is closed.", @"Window text");
+    NSString * prompt = NSLocalizedString(@"Tunnelblick Admin Mode\n\n Temporarily allow changes that require a computer administrator's authorization.\n\n The session expires after five minutes or when the 'VPN Details' window is closed.", @"Window text");
     SystemAuth * sa = [[SystemAuth newAuthWithPrompt: prompt] autorelease];
     if (  sa  ) {
         // We update the UI in the main thread to avoid having the task finish when there are still pending CoreAnimation tasks to complete
@@ -332,17 +332,17 @@ TBSYNTHESIZE_NONOBJECT_GET(NSUInteger, selectedLeftNavListIndex)
 		// Add an NSToolbarFlexibleSpaceIdentifier item on the left, to force the primary toolbar buttons to the right
 		[self addLockIcon];
 		[self addView: (NSView *)[NSNull null]  label: NSToolbarFlexibleSpaceItemIdentifier                  image: (NSImage *)[NSNull null]];
-		[self addView: infoPrefsView            label: NSLocalizedString(@"Info",           @"Window title") image: [NSImage imageNamed: @"Info"          ]];
-		[self addView: utilitiesPrefsView       label: NSLocalizedString(@"Utilities",      @"Window title") image: [NSImage imageNamed: @"Utilities"     ]];
-		[self addView: generalPrefsView         label: NSLocalizedString(@"Preferences",    @"Window title") image: [NSImage imageNamed: @"Preferences"   ]];
-		[self addView: appearancePrefsView      label: NSLocalizedString(@"Appearance",     @"Window title") image: [NSImage imageNamed: @"Appearance"    ]];
-		[self addView: configurationsPrefsView  label: NSLocalizedString(@"Configurations", @"Window title") image: [NSImage imageNamed: @"Configurations"]];
+		[self addView: infoPrefsView            label: NSLocalizedString(@"Info",           @"Window title") image: [NSImage imageNamed: NSImageNameInfo              ]];
+		[self addView: utilitiesPrefsView       label: NSLocalizedString(@"Utilities",      @"Window title") image: [NSImage imageNamed: NSImageNameAdvanced          ]];
+		[self addView: generalPrefsView         label: NSLocalizedString(@"Preferences",    @"Window title") image: [NSImage imageNamed: NSImageNamePreferencesGeneral]];
+		[self addView: appearancePrefsView      label: NSLocalizedString(@"Appearance",     @"Window title") image: [NSImage imageNamed: NSImageNameColorPanel        ]];
+		[self addView: configurationsPrefsView  label: NSLocalizedString(@"Configurations", @"Window title") image: [NSImage imageNamed: NSImageNameNetwork           ]];
 	} else {
-		[self addView: configurationsPrefsView  label: NSLocalizedString(@"Configurations", @"Window title") image: [NSImage imageNamed: @"Configurations"]];
-		[self addView: appearancePrefsView      label: NSLocalizedString(@"Appearance",     @"Window title") image: [NSImage imageNamed: @"Appearance"    ]];
-		[self addView: generalPrefsView         label: NSLocalizedString(@"Preferences",    @"Window title") image: [NSImage imageNamed: @"Preferences"   ]];
-		[self addView: utilitiesPrefsView       label: NSLocalizedString(@"Utilities",      @"Window title") image: [NSImage imageNamed: @"Utilities"     ]];
-		[self addView: infoPrefsView            label: NSLocalizedString(@"Info",           @"Window title") image: [NSImage imageNamed: @"Info"          ]];
+		[self addView: configurationsPrefsView  label: NSLocalizedString(@"Configurations", @"Window title") image: [NSImage imageNamed: NSImageNameNetwork           ]];
+		[self addView: appearancePrefsView      label: NSLocalizedString(@"Appearance",     @"Window title") image: [NSImage imageNamed: NSImageNameColorPanel        ]];
+		[self addView: generalPrefsView         label: NSLocalizedString(@"Preferences",    @"Window title") image: [NSImage imageNamed: NSImageNamePreferencesGeneral]];
+		[self addView: utilitiesPrefsView       label: NSLocalizedString(@"Utilities",      @"Window title") image: [NSImage imageNamed: NSImageNameAdvanced          ]];
+		[self addView: infoPrefsView            label: NSLocalizedString(@"Info",           @"Window title") image: [NSImage imageNamed: NSImageNameInfo              ]];
 		[self addView: (NSView *)[NSNull null]  label: NSToolbarFlexibleSpaceItemIdentifier                  image: (NSImage *)[NSNull null]];
 		[self addLockIcon];
 	}
@@ -547,9 +547,6 @@ static BOOL firstTimeShowingWindow = TRUE;
     }
     
     if (  view == generalPrefsView  ) {
-		// Update our preferences from Sparkle's whenever we show the view
-		// (Would be better if Sparkle told us when they changed, but it doesn't)
-		[((MenuController *)[NSApp delegate]) setOurPreferencesFromSparkles];
 		[self setupGeneralView];
 	}
     
@@ -664,14 +661,15 @@ static BOOL firstTimeShowingWindow = TRUE;
         [self indicateNotWaitingForLogDisplay: [self selectedConnection]];
         [self validateWhenToConnect: [self selectedConnection]];
         
-        [self setupSetNameserver:           [self selectedConnection]];
-        [self setupLoggingLevel:            [self selectedConnection]];
-        [self setupRouteAllTraffic:         [self selectedConnection]];
-        [self setupCheckIPAddress:          [self selectedConnection]];
-        [self setupResetPrimaryInterface:   [self selectedConnection]];
-        [self setupDisableIpv6OnTun:                    [self selectedConnection]];
-        [self setupNetworkMonitoring:       [self selectedConnection]];
-        [self setupPerConfigOpenvpnVersion: [self selectedConnection]];
+        [self setupSetNameserver:						[self selectedConnection]];
+        [self setupLoggingLevel:						[self selectedConnection]];
+        [self setupRouteAllTraffic:						[self selectedConnection]];
+        [self setupUponDisconnectPopUpButton:			[self selectedConnection]];
+		[self setupUponUnexpectedDisconnectPopUpButton:	[self selectedConnection]];
+        [self setupCheckIPAddress:						[self selectedConnection]];
+        [self setupDisableIpv6OnTun:					[self selectedConnection]];
+        [self setupNetworkMonitoring:					[self selectedConnection]];
+        [self setupPerConfigOpenvpnVersion:				[self selectedConnection]];
         
         // Set up a timer to update connection times
         [((MenuController *)[NSApp delegate]) startOrStopUiUpdater];
@@ -683,7 +681,7 @@ static BOOL firstTimeShowingWindow = TRUE;
 }
 
 
--(BOOL) usingSetNameserver {
+-(BOOL) usingSmartSetNameserverScript {
     NSString * name = [[self selectedConnection] displayName];
 	if (  ! name  ) {
 		return NO;
@@ -694,7 +692,7 @@ static BOOL firstTimeShowingWindow = TRUE;
                                          default: 1
                                              min: 0
                                              max: MAX_SET_DNS_WINS_INDEX];
-    return (ix == 1);
+    return (ix == 1) || (ix == 5);
 }
 
 -(void) setupSetNameserver: (VPNConnection *) connection
@@ -785,6 +783,58 @@ static BOOL firstTimeShowingWindow = TRUE;
                               defaultTo: NO];
 }
 
+-(void) setupAnUponDisconnectPopUpButton: (id)              button // Can be NSPopUpButton or TBPopUpButton
+							  connection: (VPNConnection *) connection
+							  unexpected: (BOOL)            unexpected
+{
+	
+// Two boolean preferences are used to create three settings:
+	//
+	//
+	// ! reset & ! disable => Do nothing
+	//   reset & ! disable => Reset
+	// ! reset &   disable => Disable on disconnect
+	//   reset &   disable => (should not happen; if it does, the reset preference will be removed)
+	
+	if (  ! connection  ) {
+		return;
+	}
+	
+	if (  ! configurationsPrefsView  ) {
+		return;
+	}
+	
+	NSString * displayName = [connection displayName];
+	NSString * resetKey    = (  unexpected
+							  ? [displayName stringByAppendingString: @"-resetPrimaryInterfaceAfterUnexpectedDisconnect"]
+							  : [displayName stringByAppendingString: @"-resetPrimaryInterfaceAfterDisconnect"]);
+	NSString * disableKey = (  unexpected
+							 ? [displayName stringByAppendingString: @"-disableNetworkAccessAfterUnexpectedDisconnect"]
+							 : [displayName stringByAppendingString: @"-disableNetworkAccessAfterDisconnect"]);
+	NSInteger reset   = ( [gTbDefaults boolForKey: resetKey]   ? 1 : 0);
+	NSInteger disable = ( [gTbDefaults boolForKey: disableKey] ? 1 : 0);
+
+	if (  ( reset + (disable * 2) ) > 2  ) {
+		reset = 0;
+		[gTbDefaults setBool: FALSE forKey: resetKey];
+	}
+	
+	NSInteger ix = reset + (disable * 2);
+	[button selectItemAtIndex: ix];
+	[button setEnabled: (   [gTbDefaults canChangeValueForKey: resetKey]
+						 && [gTbDefaults canChangeValueForKey: disableKey])];
+}
+
+-(void) setupUponUnexpectedDisconnectPopUpButton: (VPNConnection *) connection
+{
+	[self setupAnUponDisconnectPopUpButton: [configurationsPrefsView uponUnexpectedDisconnectPopUpButton] connection: connection unexpected: YES];
+}
+
+-(void) setupUponDisconnectPopUpButton: (VPNConnection *) connection
+{
+	[self setupAnUponDisconnectPopUpButton: [configurationsPrefsView uponDisconnectPopUpButton] connection: connection unexpected: NO];
+}
+
 -(void) setupCheckIPAddress: (VPNConnection *) connection
 {
     (void) connection;
@@ -800,28 +850,13 @@ static BOOL firstTimeShowingWindow = TRUE;
     }
 }
 
--(void) setupResetPrimaryInterface: (VPNConnection *) connection
-{
-    (void) connection;
-    
-    if (  [self usingSetNameserver]  ) {
-        [self setupPerConfigurationCheckbox: [configurationsPrefsView resetPrimaryInterfaceAfterDisconnectCheckbox]
-                                        key: @"-resetPrimaryInterfaceAfterDisconnect"
-                                   inverted: NO
-                                  defaultTo: NO];
-    } else {
-        [[configurationsPrefsView resetPrimaryInterfaceAfterDisconnectCheckbox] setState:   NSOffState];
-        [[configurationsPrefsView resetPrimaryInterfaceAfterDisconnectCheckbox] setEnabled: NO];
-    }
-}
-
 -(void) setupDisableIpv6OnTun: (VPNConnection *) connection
 {
     (void) connection;
     
 	NSString * type = [connection tapOrTun];
     if (   ( ! [type isEqualToString: @"tap"] )
-		&& [self usingSetNameserver]  ) {
+		&& [self usingSmartSetNameserverScript]  ) {
         [self setupPerConfigurationCheckbox: [configurationsPrefsView disableIpv6OnTunCheckbox]
                                         key: @"-doNotDisableIpv6onTun"
                                    inverted: YES
@@ -847,32 +882,35 @@ static BOOL firstTimeShowingWindow = TRUE;
         return; // Have not set up the list yet
     }
     
-    NSUInteger versionIx    = [connection getOpenVPNVersionIxToUse];
-    
     NSString * key = [[connection displayName] stringByAppendingString: @"-openvpnVersion"];
     NSString * prefVersion = [gTbDefaults stringForKey: key];
-    NSUInteger listIx = 0;                              // Default to the first entry -- "Default (x.y.z)"
+    NSUInteger listIx;                              // Default to the first entry -- "Default (x.y.z)"
 
+	NSArray  * versionNames = [((MenuController *)[NSApp delegate]) openvpnVersionNames];
+	NSUInteger versionIx = [connection getOpenVPNVersionIxToUseConnecting: NO];
     if (  [prefVersion length] == 0  ) {
-        // Use default; if actually using it, show we are using default (1st entry), otherwise show what we are using
-        if (  versionIx == 0  ) {
-            listIx = 0;
-        } else {
-            listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
-        }
-    } else if (  [prefVersion isEqualToString: @"-"]  ) {
-        // Use latest. If we are actually using it, show we are using latest (last entry), otherwise show what we are using
-        NSArray  * versionNames = [((MenuController *)[NSApp delegate]) openvpnVersionNames];
-        if (  versionIx == [versionNames count] - 1  ) {
-            listIx = versionIx + 2; // + 2 to skip over the 1st entry (default) and the specific entry, to get to "Latest (version)"
-        } else {
-            listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
-        }
-    } else {
-        // Using a specific version, but show what we are actually using instead
-        listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
-    }
-    
+		if (  versionIx == [connection defaultVersionIxFromVersionNames: versionNames]  ) {
+			listIx = 0;
+		} else {
+			listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
+		}
+	} else {
+		if (  versionIx == NSNotFound  ) {
+			listIx = 0; // Don't have a version of OpenVPN that will work with this configuration, so display it as using the default version of OpenVPN
+		} else if (  [prefVersion isEqualToString: @"-"]  ) {
+			// Use latest. If we are actually using it, show we are using latest (last entry), otherwise show what we are using
+			NSArray  * versionNames = [((MenuController *)[NSApp delegate]) openvpnVersionNames];
+			if (  versionIx == [versionNames count] - 1  ) {
+				listIx = versionIx + 2; // + 2 to skip over the 1st entry (default) and the specific entry, to get to "Latest (version)"
+			} else {
+				listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
+			}
+		} else {
+			// Using a specific version, but show what we are actually using instead
+			listIx = versionIx + 1; // + 1 to skip over the 1st entry (default)
+		}
+	}
+	
     [self setSelectedPerConfigOpenvpnVersionIndex: [NSNumber numberWithInteger: listIx]];
     
     [[configurationsPrefsView perConfigOpenvpnVersionButton] setEnabled: [gTbDefaults canChangeValueForKey: key]];
@@ -995,14 +1033,15 @@ static BOOL firstTimeShowingWindow = TRUE;
             [self setSelectedLeftNavListIndex: (unsigned)leftNavIndexToSelect];
         }
     } else {
-        [self setupSetNameserver:            nil];
-        [self setupLoggingLevel:             nil];
-        [self setupRouteAllTraffic:          nil];
-        [self setupCheckIPAddress:           nil];
-        [self setupResetPrimaryInterface:    nil];
-        [self setupDisableIpv6OnTun:                     nil];
-        [self setupNetworkMonitoring:        nil];
-		[self setupPerConfigOpenvpnVersion:  nil];
+        [self setupSetNameserver:						nil];
+        [self setupLoggingLevel:						nil];
+        [self setupRouteAllTraffic:						nil];
+		[self setupUponDisconnectPopUpButton:			nil];
+		[self setupUponUnexpectedDisconnectPopUpButton:	nil];
+        [self setupCheckIPAddress:						nil];
+        [self setupDisableIpv6OnTun:					nil];
+        [self setupNetworkMonitoring:					nil];
+		[self setupPerConfigOpenvpnVersion:				nil];
         [self validateDetailsWindowControls];
         [settingsSheetWindowController setConfigurationName: nil];
         
@@ -1060,21 +1099,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 	[[utilitiesPrefsView consoleLogToClipboardProgressIndicator] stopAnimation: self];
 	[[utilitiesPrefsView consoleLogToClipboardProgressIndicator] setHidden: YES];
     [[utilitiesPrefsView consoleLogToClipboardButton] setEnabled: YES];
-}
-
--(void) indicateWaitingForKillAllOpenVPN
-{
-    [[utilitiesPrefsView killAllOpenVPNProgressIndicator] startAnimation: self];
-    [[utilitiesPrefsView killAllOpenVPNProgressIndicator] setHidden: NO];
-    [[utilitiesPrefsView utilitiesKillAllOpenVpnButton]   setEnabled: NO];
-}
-
-
--(void) indicateNotWaitingForKillAllOpenVPN
-{
-    [[utilitiesPrefsView killAllOpenVPNProgressIndicator] stopAnimation: self];
-    [[utilitiesPrefsView killAllOpenVPNProgressIndicator] setHidden: YES];
-    [[utilitiesPrefsView utilitiesKillAllOpenVpnButton]   setEnabled: YES];
 }
 
 -(void) indicateWaitingForLogDisplay: (VPNConnection *) theConnection
@@ -1162,19 +1186,20 @@ static BOOL firstTimeShowingWindow = TRUE;
         
         // Right split view - settings tab
         
-        [self validateWhenToConnect:        connection];
+        [self validateWhenToConnect:					connection];
 		
-		[self setupPerConfigOpenvpnVersion: connection];
+		[self setupPerConfigOpenvpnVersion:				connection];
 		
-		[self setupSetNameserver:           connection];
-		[self setupLoggingLevel:            connection];
+		[self setupSetNameserver:						connection];
+		[self setupLoggingLevel:						connection];
         
-		[self setupNetworkMonitoring:       connection];
-		[self setupRouteAllTraffic:         connection];
-        [self setupDisableIpv6OnTun:        connection];
-        [self setupCheckIPAddress:          connection];
-        [self setupResetPrimaryInterface:   connection];
- 		
+		[self setupNetworkMonitoring:					connection];
+		[self setupRouteAllTraffic:						connection];
+		[self setupUponDisconnectPopUpButton:			connection];
+		[self setupUponUnexpectedDisconnectPopUpButton:	connection];
+        [self setupDisableIpv6OnTun:					connection];
+        [self setupCheckIPAddress:						connection];
+		
         [[configurationsPrefsView advancedButton] setEnabled: YES];
         [settingsSheetWindowController            setupSettingsFromPreferences];
         
@@ -1202,10 +1227,11 @@ static BOOL firstTimeShowingWindow = TRUE;
         
         [[configurationsPrefsView loggingLevelPopUpButton]          setEnabled: NO];
         
+		[[configurationsPrefsView uponDisconnectPopUpButton]        setEnabled: NO];
+
         [[configurationsPrefsView monitorNetworkForChangesCheckbox]             setEnabled: NO];
         [[configurationsPrefsView routeAllTrafficThroughVpnCheckbox]            setEnabled: NO];
         [[configurationsPrefsView checkIPAddressAfterConnectOnAdvancedCheckbox] setEnabled: NO];
-        [[configurationsPrefsView resetPrimaryInterfaceAfterDisconnectCheckbox] setEnabled: NO];
         [[configurationsPrefsView disableIpv6OnTunCheckbox]                     setEnabled: NO];
         
         [[configurationsPrefsView perConfigOpenvpnVersionButton]    setEnabled: NO];
@@ -1428,6 +1454,16 @@ static BOOL firstTimeShowingWindow = TRUE;
 		return [[self selectedConnection] mayConnectWhenComputerStarts];
 	}
 	
+	if (   ( [anItem action] == @selector(uponDisconnectDoNothingMenuItemWasClicked:) )
+		|| ( [anItem action] == @selector(uponDisconnectResetPrimaryInterfaceMenuItemWasClicked:) )
+		|| ( [anItem action] == @selector(uponDisconnectDisableNetworkAccessMenuItemWasClicked:) )
+		|| ( [anItem action] == @selector(uponUnexpectedDisconnectDoNothingMenuItemWasClicked:) )
+		|| ( [anItem action] == @selector(uponUnexpectedDisconnectResetPrimaryInterfaceMenuItemWasClicked:) )
+		|| ( [anItem action] == @selector(uponUnexpectedDisconnectDisableNetworkAccessMenuItemWasClicked:) )
+	   ) {
+		return YES;
+	}
+	
 	NSLog(@"MyPrefsWindowController:validateMenuItem: Unknown menuItem %@", [anItem description]);
 	return NO;
 }
@@ -1536,11 +1572,13 @@ static BOOL firstTimeShowingWindow = TRUE;
 
 -(BOOL) forceDisableOfNetworkMonitoring
 {
+	// Some up/down scripts do not implement network monitoring, so we disable the checkbox if one of them is selected in "Set DNS/WINS"
     NSArray * content = [[configurationsPrefsView setNameserverArrayController] content];
     NSUInteger ix = [selectedSetNameserverIndex unsignedIntegerValue];
-    if (   ([content count] < 4)
-        || (ix > 2)
-        || (ix == 0)  ) {
+    if (   ([content count] <= MAX_SET_DNS_WINS_INDEX)
+        || (ix == 0)		// Do not set nameserver
+		|| (ix == 2)		// Set nameserver (3.1)		-- client.1.up.tunnelblick.sh and client.1.down.tunnelblick.sh
+        || (ix == 3)  ) {	// Set nameserver (3.0b10)	-- client.2.up.tunnelblick.sh and client.2.down.tunnelblick.sh
         return TRUE;
     } else {
         return FALSE;
@@ -1751,7 +1789,7 @@ static BOOL firstTimeShowingWindow = TRUE;
 		[gTbDefaults removeObjectForKey: key];
 	}
 	
-	[((MenuController *)[NSApp delegate]) changedDisplayConnectionSubmenusSettings];
+	[((MenuController *)[NSApp delegate]) recreateMainMenuClearCache: YES];
 }
 
 -(IBAction) doNotShowOnTbMenuMenuItemWasClicked: (id) sender
@@ -1766,7 +1804,7 @@ static BOOL firstTimeShowingWindow = TRUE;
 		[gTbDefaults setBool: YES forKey: key];
 	}
 	
-	[((MenuController *)[NSApp delegate]) changedDisplayConnectionSubmenusSettings];
+	[((MenuController *)[NSApp delegate]) recreateMainMenuClearCache: YES];
 }
 
 -(IBAction) editOpenVPNConfigurationFileMenuItemWasClicked: (id) sender
@@ -1892,6 +1930,12 @@ static BOOL firstTimeShowingWindow = TRUE;
     }
 }
 
+-(void) setupPerConfigOpenvpnVersionAfterDelay {
+	
+	VPNConnection * connection = [self selectedConnection];
+	[self performSelector: @selector(setupPerConfigOpenvpnVersion:) withObject: connection afterDelay: 0.1];
+}
+
 -(void) setSelectedPerConfigOpenvpnVersionIndex: (NSNumber *) newValue
 {
     if (  [newValue isNotEqualTo: [self selectedPerConfigOpenvpnVersionIndex]]  ) {
@@ -1909,10 +1953,148 @@ static BOOL firstTimeShowingWindow = TRUE;
 									   @"-openvpnVersion", @"PreferenceName",
 									   nil];
 				[((MenuController *)[NSApp delegate]) performSelectorOnMainThread: @selector(setPreferenceForSelectedConfigurationsWithDict:) withObject: dict waitUntilDone: NO];
+				[self performSelectorOnMainThread: @selector(setupPerConfigOpenvpnVersionAfterDelay) withObject: nil waitUntilDone: NO];
 			}
         }
     }
 }
+
+-(void) uponADisconnectReset: (BOOL) reset
+					 disable: (BOOL) disable
+				  unexpected: (BOOL) unexpected {
+	
+	NSString * resetKey   = (  unexpected
+							 ? @"-resetPrimaryInterfaceAfterUnexpectedDisconnect"
+							 : @"-resetPrimaryInterfaceAfterDisconnect");
+	NSString * disableKey = (  unexpected
+							 ? @"-disableNetworkAccessAfterUnexpectedDisconnect"
+							 : @"-disableNetworkAccessAfterDisconnect");
+	
+	[((MenuController *)[NSApp delegate]) setBooleanPreferenceForSelectedConnectionsWithKey: resetKey   to: reset   inverted: NO];
+	[((MenuController *)[NSApp delegate]) setBooleanPreferenceForSelectedConnectionsWithKey: disableKey to: disable inverted: NO];
+
+}
+
+-(void) restoreAnUponDisconnectCheckboxState: (NSNumber *) unexpected {
+	
+	SEL selector = (  [unexpected boolValue]
+					? @selector(setupUponUnexpectedDisconnectPopUpButton:)
+					: @selector(setupUponDisconnectPopUpButton:));
+	[self performSelectorOnMainThread: selector withObject: [self selectedConnection] waitUntilDone: YES];
+}
+
+-(BOOL) okToDisableNetworkAccessOnDisconnectForUnexpected: (BOOL) unexpected {
+	
+	// Do not do this if any of the selected configurations include the 'user' or 'group' options.
+	
+	// Create a list of the selected connections (if any) that have 'user' and/or 'group' options
+	NSMutableString * listString = [[[NSMutableString alloc] initWithCapacity: 1000] autorelease];
+
+	NSMutableString * cancelled = [[[NSMutableString alloc] initWithCapacity:100] autorelease]; // Empty unless operation has been cancelled by user
+								   
+	LeftNavViewController   * ovc    = [configurationsPrefsView outlineViewController];
+	NSOutlineView           * ov     = [ovc outlineView];
+	NSIndexSet              * idxSet = [ov selectedRowIndexes];
+	if  (  [idxSet count] != 0  ) {
+		[idxSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+			(void) stop;
+			
+			LeftNavItem * item = [ov itemAtRow: idx];
+			NSString * displayName = [item displayName];
+			if (  [displayName length] != 0  ) {	// Ignore folders; just process configurations
+
+				VPNConnection * connection = [[(MenuController*)[NSApp delegate] myVPNConnectionDictionary] objectForKey: displayName];
+				if (  ! connection  ) {
+					NSLog(@"Error: no connection for displayName '%@'", displayName);
+					[(MenuController *)[NSApp delegate] terminateBecause: terminatingBecauseOfError];
+					[cancelled appendString: @"X"];
+				} else {
+
+					if (   [connection configurationIsSecureOrMatchesShadowCopy]
+						|| [connection makeShadowCopyMatchConfiguration]  ) {
+						if (  [connection userOrGroupOptionExistsInConfiguration]  ) {
+							[listString appendFormat: @"          %@\n", displayName];
+						}
+					} else {
+						[cancelled appendString: @"X"];
+					}
+				}
+			}
+		}];
+	} else {
+		NSLog(@"okToDisableNetworkAccessOnDisconnectForUnexpected: No configuration is selected");
+	}
+
+	if (  [cancelled length] != 0  ) {
+		// Revert to the prior state because we canceled changing it to 'Disable network access on disconnect'
+		[self performSelector: @selector(restoreAnUponDisconnectCheckboxState:) withObject: [NSNumber numberWithBool: unexpected] afterDelay: 0.2];
+		return NO;
+	}
+	
+	// If any of the selected configurations have a 'user' and/or 'group' option, complain and restore the original setting.
+	if (  [listString length] != 0  ) {
+		TBShowAlertWindow(NSLocalizedString(@"Tunnelblick", @"Window title"),
+						  [NSString stringWithFormat: NSLocalizedString(@"Network access cannot be disabled after disconnecting for some or all"
+																		@" of the selected configurations because they include 'user'"
+																		@" and/or 'group' options. Those options will cause OpenVPN"
+																		@" to not be running as root during disconnection, so it will"
+																		@" not be able to disable network access.\n\n"
+																		@"The configurations that contain 'user' and/or 'group' are:\n\n%@\n\n", @"Window text; the %@ will be replaced by a list of configuration names."),
+						   listString]);
+		[self performSelector: @selector(restoreAnUponDisconnectCheckboxState:) withObject: [NSNumber numberWithBool: unexpected] afterDelay: 0.2];
+		return NO;
+	}
+	
+	return YES;
+}
+
+-(IBAction) uponDisconnectDoNothingMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	[self uponADisconnectReset: NO disable: NO unexpected: NO];
+}
+
+-(IBAction) uponDisconnectResetPrimaryInterfaceMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	[self uponADisconnectReset: YES disable: NO unexpected: NO];
+}
+
+-(IBAction) uponDisconnectDisableNetworkAccessMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	if (  [self okToDisableNetworkAccessOnDisconnectForUnexpected: NO]  ) {
+		[self uponADisconnectReset: NO disable: YES unexpected: NO];
+	}
+}
+
+-(IBAction) uponUnexpectedDisconnectDoNothingMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	[self uponADisconnectReset: NO disable: NO unexpected: YES];
+}
+
+-(IBAction) uponUnexpectedDisconnectResetPrimaryInterfaceMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	[self uponADisconnectReset: YES disable: NO unexpected: YES];
+}
+
+-(IBAction) uponUnexpectedDisconnectDisableNetworkAccessMenuItemWasClicked: (id) sender
+{
+	(void) sender;
+	
+	if (  [self okToDisableNetworkAccessOnDisconnectForUnexpected: YES]  ) {
+		[self uponADisconnectReset: NO disable: YES unexpected: YES];
+	}
+	
+}
+
 
 // Checkbox was changed by another window
 -(void) monitorNetworkForChangesCheckboxChangedForConnection: (VPNConnection *) theConnection
@@ -1948,12 +2130,6 @@ static BOOL firstTimeShowingWindow = TRUE;
     [((MenuController *)[NSApp delegate]) setBooleanPreferenceForSelectedConnectionsWithKey: @"-notOKToCheckThatIPAddressDidNotChangeAfterConnection"
                                                                                          to: ([sender state] == NSOnState)
                                                                                    inverted: YES];
-}
-
--(IBAction) resetPrimaryInterfaceAfterDisconnectCheckboxWasClicked: (NSButton *) sender {
-    [((MenuController *)[NSApp delegate]) setBooleanPreferenceForSelectedConnectionsWithKey: @"-resetPrimaryInterfaceAfterDisconnect"
-                                                                                         to: ([sender state] == NSOnState)
-                                                                                   inverted: NO];
 }
 
 -(IBAction) disableIpv6OnTunCheckboxWasClicked: (NSButton *) sender
@@ -2295,22 +2471,10 @@ static BOOL firstTimeShowingWindow = TRUE;
 
         [self setSelectedSetNameserverIndexDirect: newValue];
         
-        // If script doesn't support monitoring, indicate it is off and disable it
-        if (   ([newValue unsignedIntegerValue] > 2)
-            || ([newValue unsignedIntegerValue] == 0)
-            || ([[[configurationsPrefsView setNameserverArrayController] content] count] < 4)  ) {
-            [[configurationsPrefsView monitorNetworkForChangesCheckbox] setState: NSOffState];
-            [[configurationsPrefsView monitorNetworkForChangesCheckbox] setEnabled: NO];
-        } else {
-            [self setupPerConfigurationCheckbox: [configurationsPrefsView monitorNetworkForChangesCheckbox]
-                                            key: @"-notMonitoringConnection"
-                                       inverted: YES
-                                      defaultTo: NO];
-        }
+		[self setupNetworkMonitoring: [self selectedConnection]];
 		
 		// Set up IPv6 and reset of primary interface
 		[self setupDisableIpv6OnTun: [self selectedConnection]];
-		[self setupResetPrimaryInterface: [self selectedConnection]];
 		
         [settingsSheetWindowController monitorNetworkForChangesCheckboxChangedForConnection: [self selectedConnection]];
         [settingsSheetWindowController setupSettingsFromPreferences];
@@ -2414,14 +2578,15 @@ static BOOL firstTimeShowingWindow = TRUE;
 		BOOL savedDoingSetupOfUI = [((MenuController *)[NSApp delegate]) doingSetupOfUI];
 		[((MenuController *)[NSApp delegate]) setDoingSetupOfUI: TRUE];
 		
-        [self setupSetNameserver:           newConnection];
-        [self setupLoggingLevel:            newConnection];
-        [self setupRouteAllTraffic:         newConnection];
-        [self setupCheckIPAddress:          newConnection];
-        [self setupResetPrimaryInterface:   newConnection];
-        [self setupDisableIpv6OnTun:        newConnection];
-        [self setupNetworkMonitoring:       newConnection];
-		[self setupPerConfigOpenvpnVersion: newConnection];
+        [self setupSetNameserver:						newConnection];
+        [self setupLoggingLevel:						newConnection];
+        [self setupRouteAllTraffic:						newConnection];
+		[self setupUponDisconnectPopUpButton:			newConnection];
+		[self setupUponUnexpectedDisconnectPopUpButton:	newConnection];
+        [self setupCheckIPAddress:						newConnection];
+        [self setupDisableIpv6OnTun:					newConnection];
+        [self setupNetworkMonitoring:					newConnection];
+		[self setupPerConfigOpenvpnVersion:				newConnection];
         
         [self validateDetailsWindowControls];
 		
@@ -2479,11 +2644,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 	
 	[self setupCheckForBetasCheckbox];
 	
-	[self setValueForCheckbox: [generalPrefsView updatesSendProfileInfoCheckbox]
-				preferenceKey: @"updateSendProfileInfo"
-					 inverted: NO
-				   defaultsTo: FALSE];
-    
     // Set the last update date/time
     [self updateLastCheckedDate];
 
@@ -2499,8 +2659,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 
 -(void) setupGeneralView
 {
-	[((MenuController *)[NSApp delegate]) setOurPreferencesFromSparkles]; // Sparkle may have changed it's preferences so we update ours
-    
 	[self setupUpdatesAdminApprovalForKeyAndCertificateChangesCheckbox];
 	
 	[self setValueForCheckbox: [generalPrefsView inhibitOutboundTBTrafficCheckbox]
@@ -2529,11 +2687,11 @@ static BOOL firstTimeShowingWindow = TRUE;
     NSUInteger logSizeIx = NSNotFound;
     NSArrayController * ac = [generalPrefsView maximumLogSizeArrayController];
     NSArray * list = [ac content];
-    unsigned i;
+    NSUInteger i;
     for (  i=0; i<[list count]; i++  ) {
         NSDictionary * dict = [list objectAtIndex: i];
         NSString * listValue = [dict objectForKey: @"value"];
-        unsigned listValueSize;
+        NSUInteger listValueSize;
         if (  [listValue respondsToSelector:@selector(intValue)]  ) {
             listValueSize = [listValue unsignedIntValue];
         } else {
@@ -2579,20 +2737,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 }
 
 
--(IBAction) updatesSendProfileInfoCheckboxWasClicked: (NSButton *) sender
-{
-    SUUpdater * updater = [((MenuController *)[NSApp delegate]) updater];
-    if (  [updater respondsToSelector: @selector(setSendsSystemProfile:)]  ) {
-        [((MenuController *)[NSApp delegate]) setOurPreferencesFromSparkles]; // Sparkle may have changed it's preferences so we update ours
-        BOOL newValue = [sender state] == NSOnState;
-        [gTbDefaults setBool: newValue forKey: @"updateSendProfileInfo"];
-        [updater setSendsSystemProfile: newValue];
-    } else {
-        NSLog(@"'Send anonymous profile information when checking' change ignored because Sparkle Updater does not respond to setSendsSystemProfile:");
-    }
-}
-
-
 -(IBAction) inhibitOutboundTBTrafficCheckboxWasClicked: (NSButton *) sender
 {
 	[gTbDefaults setBool: [sender state] forKey: @"inhibitOutboundTunneblickTraffic"];
@@ -2602,7 +2746,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 	
     SUUpdater * updater = [((MenuController *)[NSApp delegate]) updater];
     if (  [updater respondsToSelector: @selector(setAutomaticallyChecksForUpdates:)]  ) {
-        [((MenuController *)[NSApp delegate]) setOurPreferencesFromSparkles]; // Sparkle may have changed it's preferences so we update ours
  		[((MenuController *)[NSApp delegate]) setupUpdaterAutomaticChecks];
     } else {
         NSLog(@"'Inhibit automatic update checking and IP address checking' change ignored because the updater does not respond to setAutomaticallyChecksForUpdates:");
@@ -2696,8 +2839,6 @@ static BOOL firstTimeShowingWindow = TRUE;
 {
     SUUpdater * updater = [((MenuController *)[NSApp delegate]) updater];
     if (  [updater respondsToSelector: @selector(setAutomaticallyChecksForUpdates:)]  ) {
-        [((MenuController *)[NSApp delegate]) setOurPreferencesFromSparkles]; // Sparkle may have changed it's preferences so we update ours
-		
         [gTbDefaults setBool: [sender state] forKey: @"updateCheckAutomatically"];
 		[((MenuController *)[NSApp delegate]) setupUpdaterAutomaticChecks];
     } else {
@@ -2811,9 +2952,9 @@ static BOOL firstTimeShowingWindow = TRUE;
     
     // Search popup list for the specified filename and the default
     NSArray * icsContent = [[appearancePrefsView appearanceIconSetArrayController] content];
-    unsigned i;
+    NSUInteger i;
     NSUInteger iconSetIx = NSNotFound;
-    unsigned defaultIconSetIx = NSNotFound;
+    NSUInteger defaultIconSetIx = NSNotFound;
     for (  i=0; i< [icsContent count]; i++  ) {
         NSDictionary * dict = [icsContent objectAtIndex: i];
         NSString * fileName = [dict objectForKey: @"value"];
@@ -2929,7 +3070,7 @@ static BOOL firstTimeShowingWindow = TRUE;
 		
     } else {
 		
-        unsigned displayNumberFromPrefs = [gTbDefaults unsignedIntForKey: @"statusDisplayNumber" default: 0 min: 0 max: NSNotFound];
+        unsigned displayNumberFromPrefs = [gTbDefaults unsignedIntForKey: @"statusDisplayNumber" default: 0 min: 0 max: UINT_MAX];
         NSUInteger screenIxToSelect;
         if (  displayNumberFromPrefs == 0 ) {
             screenIxToSelect = 0;   // Screen to use was not specified, use default screen
@@ -3012,7 +3153,7 @@ static BOOL firstTimeShowingWindow = TRUE;
 -(IBAction) appearanceDisplayConnectionSubmenusCheckboxWasClicked: (NSButton *) sender
 {
     [gTbDefaults setBool: ! [sender state] forKey:@"doNotShowConnectionSubmenus"];
-    [((MenuController *)[NSApp delegate]) changedDisplayConnectionSubmenusSettings];
+    [((MenuController *)[NSApp delegate]) recreateMainMenuClearCache: YES];
 }
 
 -(IBAction) appearanceDisplayConnectionTimersCheckboxWasClicked: (NSButton *) sender
@@ -3177,7 +3318,78 @@ static BOOL firstTimeShowingWindow = TRUE;
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.tunnelblick.net/uninstall.html"]];
 }
 
--(IBAction) utilitiesKillAllOpenVpnButtonWasClicked: (id) sender
+-(void) notifyAboutOpenvpnProcessesQuit: (NSString *) message {
+	
+	[utilitiesPrefsView setUtilitiesQuitAllOpenvpnStatusText: message];
+	
+	// Restore the "Quit All OpenVPN Processes" button to normal
+	NSButton * button = [utilitiesPrefsView utilitiesQuitAllOpenVpnButton];
+	[button setAction: @selector(utilitiesQuitAllOpenVpnButtonWasClicked:)];
+	[button setEnabled: YES];
+	[utilitiesPrefsView setUtilitiesQuitAllOpenVpnButtonTitle: NSLocalizedString(@"Quit All OpenVPN Processes", @"Button")];
+}
+
+-(void) terminateAllOpenvpnProcessesThread {
+	
+	// Tries to terminate all processes named "openvpn" once per second using "openvpnstart killall".
+	// Keeps trying until the user cancels or there are no processes named "openvpn".
+	// Notifies user of progress and of the result in the status area next to the "Quit All OpenVPN Processes" button.
+	// (Note that the status area is erased five seconds after being changed.)
+	
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
+	NSString * message;
+	
+	if (  [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count] == 0  ) {
+
+		message = NSLocalizedString(@"There are no OpenVPN processes running", @"Window text");
+	
+	} else {
+		
+		NSUInteger i = 0;
+		while (  ! cancelUtilitiesQuitAllOpenVpn  ) {
+
+			if (  [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count] == 0  ) {
+ 				break;
+			}
+			
+			// The first time through, and thereafter every tenth time through (about once per second):
+			//     * Try to terminate all "openvpn" processes
+			//	   * Release memory (otherwise it accumlates because of the use of pIdsForOpenVPNProcessesOnlyMain)
+			
+			if (  (i % 10)  == 0  ) {
+				TBLog(@"DB-TO", @"terminateAllOpenvpnProcessesThread: will run 'openvpnstart killall'; stack trace: %@", callStack());
+				runOpenvpnstart([NSArray arrayWithObject: @"killall"], nil, nil);
+				
+				[pool drain];
+				pool = [[NSAutoreleasePool alloc] init];
+			}
+			
+			usleep(100000);	// 0.1 seconds
+
+			i++;
+		}
+		
+		message = (  ( [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count] == 0 )
+				   ? NSLocalizedString(@"All OpenVPN processes have quit", @"Window text")
+				   : NSLocalizedString(@"Cancelled trying to quit all OpenVPN processes", @"Window text"));
+		TBLog(@"DB-TO", @"terminateAllOpenvpnProcessesThread: %@", message);
+	}
+	
+	[self performSelectorOnMainThread: @selector(notifyAboutOpenvpnProcessesQuit:) withObject: message waitUntilDone: NO];
+		
+	[pool drain];
+}
+
+-(IBAction) utilitiesQuitAllOpenVpnCancelButtonWasClicked: (id) sender
+{
+	(void) sender;
+	
+	cancelUtilitiesQuitAllOpenVpn = YES;
+	[[utilitiesPrefsView utilitiesQuitAllOpenVpnButton] setEnabled: NO];
+}
+
+-(IBAction) utilitiesQuitAllOpenVpnButtonWasClicked: (id) sender
 {
 	(void) sender;
 	
@@ -3185,9 +3397,19 @@ static BOOL firstTimeShowingWindow = TRUE;
 		return;
 	}
 	
-    [self indicateWaitingForKillAllOpenVPN];
-    
-    [ConfigurationManager killAllOpenVPNInNewThread];
+	if ( [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count] == 0  ) {
+		[utilitiesPrefsView setUtilitiesQuitAllOpenvpnStatusText: NSLocalizedString(@"There are no OpenVPN processes running", @"Window text")];
+	} else {
+		// Change the button to a "Cancel" button
+		TBButton * button = [utilitiesPrefsView utilitiesQuitAllOpenVpnButton];
+		[button setTitle: NSLocalizedString(@"Cancel", @"Button")];
+		[button setAction: @selector(utilitiesQuitAllOpenVpnCancelButtonWasClicked:)];
+
+		[utilitiesPrefsView setUtilitiesQuitAllOpenvpnStatusText: NSLocalizedString(@"Trying to quit all OpenVPN processes...", @"Window text")];
+		
+		cancelUtilitiesQuitAllOpenVpn = NO;
+		[NSThread detachNewThreadSelector: @selector(terminateAllOpenvpnProcessesThread) toTarget: self withObject: nil];
+	}
 }
 
 -(IBAction) consoleLogToClipboardButtonWasClicked: (id) sender {

@@ -19,6 +19,7 @@
  *  or see http://www.gnu.org/licenses/.
  */
 
+// THIS FILE IS IDENTICAL TO TBPopUpButton.h except for the class and base class
 
 #import "defines.h"
 

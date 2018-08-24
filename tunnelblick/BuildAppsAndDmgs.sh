@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2015, 2016 by Jonathan K. Bullard. All rights reserved.
+# Copyright (c) 2015, 2016, 2018 by Jonathan K. Bullard. All rights reserved.
 #
 # This file is part of Tunnelblick.
 #
@@ -31,7 +31,11 @@ readonly uninstaller_path="build/${CONFIGURATION}/${PROJECT_NAME} Uninstaller.ap
 
 # If Xcode has built Tunnelblick.app in somewhere unexpected, complain and quit
 if [ ! -d "${app_path}" ] ; then
-  echo "error: An Xcode preference must be set to put build products in the 'tunnelblick/build' folder. Please set Xcode preference > Locations > Advanced to 'Legacy'"
+  if [ "$ACTION" = "install" ] ; then
+    echo "You must 'Build' Tunnelblick before doing an 'Archive'"
+  else
+    echo "An Xcode preference must be set to put build products in the 'tunnelblick/build' folder. Please set Xcode preference > Locations > Advanced to 'Legacy'"
+  fi
   exit 1
 fi
 
@@ -49,10 +53,7 @@ fi
   rm -r -f      "${uninstaller_path}"
   osacompile -o "${uninstaller_path}" -x "tunnelblick-uninstaller.applescript"
 
-  # The droplet product of the above 'osacompile' command doesn't support PowerPC G3 processors, so we replace it with a droplet compiled on Tiger (which supports PowerPC G3 and 32-bit Intel processors)
-  # See tunnelblick-uninstaller-droplet-note.txt for details 
-  rm -f "${uninstaller_path}/Contents/MacOS/droplet"
-  cp -p "tunnelblick-uninstaller-droplet-compiled-on-tiger" "${uninstaller_path}/Contents/MacOS/Tunnelblick Uninstaller"
+  mv "${uninstaller_path}/Contents/MacOS/droplet" "${uninstaller_path}/Contents/MacOS/Tunnelblick Uninstaller"
 
   # Add the Uninstaller .app's Info.plist and its icon, script, and localization resources
   cp -p -f "tunnelblick-uninstaller.Info.plist"   "${uninstaller_path}/Contents/Info.plist"
@@ -83,12 +84,6 @@ fi
   hiutil -Caf "${app_path}/Contents/Resources/help/help.helpindex" "${app_path}/Contents/Resources/help"
 
 # Copy the tun and tap kexts
-  rm -r -f                                  "${app_path}/Contents/Resources/tap-20111101.kext"
-  cp -R "../third_party/products/tuntap/tap-20111101.kext/" "${app_path}/Contents/Resources/tap-20111101.kext"
-
-  rm -r -f                                  "${app_path}/Contents/Resources/tun-20111101.kext"
-  cp -R "../third_party/products/tuntap/tun-20111101.kext/" "${app_path}/Contents/Resources/tun-20111101.kext"
-
   rm -r -f                                  "${app_path}/Contents/Resources/tap.kext"
   cp -R "../third_party/products/tuntap/tap.kext/"          "${app_path}/Contents/Resources/tap.kext"
  
@@ -139,8 +134,6 @@ changeEntry "${uninstaller_path}/Contents/Info.plist" TBBUILDNUMBER "${tbbn}"
 # So we change a Tunnelblick build # of (for example) 1234.5678 to just 5678 for use in the kexts.
 # Since the kexts have TBBUILDNUMBER.1, TBBUILDNUMBER.2, or TBBUILDNUMBER.3, they will be 5678.1, 5678.2, and 5678.3
 readonly kextbn="${tbbn##*.}"
-changeEntry "${app_path}/Contents/Resources/tun-20111101.kext/Contents/Info.plist"   TBBUILDNUMBER "${kextbn}"
-changeEntry "${app_path}/Contents/Resources/tap-20111101.kext/Contents/Info.plist"   TBBUILDNUMBER "${kextbn}"
 changeEntry "${app_path}/Contents/Resources/tun.kext/Contents/Info.plist"            TBBUILDNUMBER "${kextbn}"
 changeEntry "${app_path}/Contents/Resources/tap.kext/Contents/Info.plist"            TBBUILDNUMBER "${kextbn}"
 changeEntry "${app_path}/Contents/Resources/tun-signed.kext/Contents/Info.plist"     TBBUILDNUMBER "${kextbn}"
@@ -158,12 +151,19 @@ if [ -e "../.git" -a  "$(which git)" != "" ] ; then
     changeEntry "${app_path}/Contents/Info.plist" TBGITSTATUS "${git_status}"
 fi
 
+# Set the build date and time
+changeEntry "${app_path}/Contents/Info.plist" TBBUILDTIMESTAMP   "$( date -j +%s )"
+
 # Create the openvpn directory structure:
 # ...Contents/Resources/openvpn contains a folder for each version of OpenVPN.
 # The folder for each vesion of OpenVPN is named "openvpn-x.x.x".
 # Each "openvpn-x.x.x"folder contains the openvpn binary and the openvpn-down-root.so binary
 mkdir -p "${app_path}/Contents/Resources/openvpn"
 default_openvpn="z"
+
+# DEFAULT OpenVPN will be the lowest version linked to OpenSSL with the following prefix:
+default_openvpn_version_prefix="openvpn-2.4"
+
 for d in `ls "../third_party/products/openvpn"`
 do
   mkdir -p "${app_path}/Contents/Resources/openvpn/${d}"
@@ -172,7 +172,11 @@ do
   chmod 744 "${app_path}/Contents/Resources/openvpn/${d}/openvpn-down-root.so"
   if [ "${d}" \< "${default_openvpn}" ] ; then
     if [ "${d}" != "${d/openssl/xx}" ] ; then
-      default_openvpn="${d}"
+	  dovp_len=${#default_openvpn_version_prefix}
+	  if [ "${d:0:$dovp_len}" = "$default_openvpn_version_prefix" ] ; then
+		echo "Setting default OpenVPN version to $d"
+		default_openvpn="${d}"
+	  fi
     fi
   fi
 done
@@ -181,7 +185,7 @@ if [ "${default_openvpn}" != "z" ] ; then
   rm -f "${app_path}/Contents/Resources/openvpn/default"
   ln -s "${default_openvpn}/openvpn" "${app_path}/Contents/Resources/openvpn/default"
 else
-  echo "warning: Could not find a version of OpenVPN to use by default"
+  echo "error: Could not find a version of OpenVPN to use by default; default_openvpn_version_prefix = '$default_openvpn_version_prefix'"
 fi
 
 # Copy English.lproj/Localizable.strings (It isn't copied in Debug builds using recent versions of Xcode, probably because it is the primary language)
@@ -272,6 +276,9 @@ chmod 744 "${app_path}/Contents/Resources/client.2.up.tunnelblick.sh"
 chmod 744 "${app_path}/Contents/Resources/client.2.down.tunnelblick.sh"
 chmod 744 "${app_path}/Contents/Resources/client.3.up.tunnelblick.sh"
 chmod 744 "${app_path}/Contents/Resources/client.3.down.tunnelblick.sh"
+chmod 744 "${app_path}/Contents/Resources/client.4.up.tunnelblick.sh"
+chmod 744 "${app_path}/Contents/Resources/client.4.down.tunnelblick.sh"
+chmod 744 "${app_path}/Contents/Resources/re-enable-network-services.sh"
 
 # Create the Tunnelblick .dmg and the Uninstaller .dmg except if Debug
 if [ "${CONFIGURATION}" != "Debug" ]; then
@@ -301,6 +308,11 @@ if [ "${CONFIGURATION}" != "Debug" ]; then
 	# Remove any existing .dmg and create a new one. Specify "-noscrub" so that .DS_Store is copied to the image
 	rm -r -f "build/${CONFIGURATION}/${PROJECT_NAME}.dmg"
 	hdiutil create -noscrub -srcfolder "$TMPDMG" "build/${CONFIGURATION}/${PROJECT_NAME}.dmg"
+    status=$?
+    if [ "${status}" -ne "0" ]; then
+        echo "ERROR creating .dmg"
+		exit ${status}
+    fi
 
 	# Leave the staging folder so customized .dmgs can be easily created
 
@@ -321,6 +333,11 @@ if [ "${CONFIGURATION}" != "Debug" ]; then
 	# Remove any existing .dmg and create a new one. Specify "-noscrub" so that .DS_Store is copied to the image
 	rm -r -f "build/${CONFIGURATION}/${PROJECT_NAME} Uninstaller.dmg"
 	hdiutil create -noscrub -srcfolder "$TMPDMG" "build/${CONFIGURATION}/${PROJECT_NAME} Uninstaller.dmg"
+    status=$?
+    if [ "${status}" -ne "0" ]; then
+        echo "ERROR creating uninstaller .dmg"
+		exit ${status}
+    fi
 
 	# Leave the staging folder so customized .dmgs can be easily created
 

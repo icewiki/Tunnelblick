@@ -1,3 +1,6 @@
+/* THIS FILE SHOULD NOT BE EDITED. IT IS GENERATED AUTOMATICALLY. */
+/* See https://tunnelblick.net/cLocalizeTranslate.html.           */
+
 /* Status message. First '%@' is the name of a configuration. Second '%@' is an IP address (e.g. '8.8.4.4') */
 "Disconnect All (%@) - apparent public IP address %@" = "Изключи всички (%1$@) - външен публичен IP адрес %2$@";
 
@@ -62,9 +65,6 @@
 "Check Now" = "Провери сега";
 
 /* Button */
-"Check for a change" = "Проверка за промяна";
-
-/* Button */
 "Connect" = "Свързване";
 
 /* Button */
@@ -98,13 +98,19 @@
 "Delete" = "Изтриване";
 
 /* Button */
+"Disable network access" = "Забрани достъпа до мрежата";
+
+/* Button */
 "Disconnect" = "Прекъсни";
 
 /* Button */
-"Do not check for a change" = "Да не се проверява за промяна";
+"Do Not Re-enable Network Access" = "Не разрешавай отново достъп до мрежата";
 
 /* Button */
 "Do not use the plugin" = "Не изплозвай добавката";
+
+/* Button */
+"Do nothing" = "Не прави нищо";
 
 /* Button */
 "Download" = "Изтегляне";
@@ -138,6 +144,9 @@
 
 /* Button */
 "Monochrome icon" = "Монохромна икона";
+
+/* Button. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"More Info [%@]" = "Повече информация [%@]";
 
 /* Button */
 "More Info" = "Повече информация";
@@ -176,13 +185,14 @@
 "Place Icon Normally" = "Постави иконата стандартно";
 
 /* Button */
-"Privacy info..." = "Информация относно личните данни…";
-
-/* Button */
 "Quit All OpenVPN Processes" = "Излез от всички OpenVPN процеси";
 
 /* Button */
 "Quit" = "Излез";
+
+/* Button
+   Menu item */
+"Re-enable Network Access" = "Разреши отново достъп до мрежата";
 
 /* Button */
 "Reinstall" = "Преинсталирай";
@@ -197,16 +207,28 @@
 "Reset Disabled Warnings" = "Възстнови деактивираните предупреждения";
 
 /* Button */
+"Reset primary interface" = "Рестарт на основния интерфейс";
+
+/* Button */
 "Restart connection" = "Рестартирай връзката";
 
 /* Button */
 "Restore" = "Възстанови";
 
+/* Button text */
+"Retry with manual response" = "Повтори с ръчен отговор";
+
 /* Button */
 "Retry" = "Опитай отново";
 
 /* Button */
+"Revert to the Last Secured Copy" = "Връщане към последното сигурно копие";
+
+/* Button */
 "Revert" = "Върни първоначалните";
+
+/* Button */
+"Secure the Configuration" = "Защити конфигурацията";
 
 /* Button */
 "Show on default screen (%u x %u)" = "Показване на екрана по подразбиране (%1$u x %2$u)";
@@ -216,6 +238,9 @@
 
 /* Button */
 "Show when connection status changes" = "Покажи при промяна на състоянието на връзката";
+
+/* Button */
+"Show while connecting and connected" = "Покажи докато се свързва и като е свързан";
 
 /* Button */
 "Show while connecting" = "Покажи докато се свързва";
@@ -311,10 +336,10 @@
 "OpenVPN level 3 - normal output" = "OpenVPN ниво 3 - нормално ниво на детайли";
 
 /* Menu Item */
-"OpenVPN level 4 - also outputs values for all options" = "OpenVPN ниво 4 - извежда също и стойности на всички опции";
+"OpenVPN level 4 - values for all options" = "OpenVPN ниво 4 - извежда също и стойности на всички опции";
 
 /* Menu Item */
-"OpenVPN level 5 - also outputs \"R\" or \"W\" for each packet" = "OpenVPN ниво 5 - извежда също \"R\" или ”W\" за всеки пакет";
+"OpenVPN level 5 - \"R\" or \"W\" for each packet" = "OpenVPN ниво 5 - извежда също \"R\" или ”W\" за всеки пакет";
 
 /* Menu Item */
 "OpenVPN level 6 - very verbose output" = "OpenVPN ниво 6 - детайлно ниво на логове";
@@ -386,19 +411,19 @@
 "Do not ask again, always convert" = "Не питай повече, винаги конвертирай";
 
 /* Checkbox name */
-"Do not check for IP address changes" = "Не проверявай за променя на IP адреса";
-
-/* Checkbox name on a warning dialog */
-"Do not show again for any configuration" = "Не показвай отново за която и да е конфигурация";
+"Do not show this type of warning again" = "Това предупреждение да не се показва отново";
 
 /* Checkbox name */
-"Do not show this type of warning again" = "Това предупреждение да не се показва отново";
+"Do not warn about this again for any configuration" = "Не показвай отново за която и да е конфигурация";
 
 /* Checkbox name */
 "Do not warn about this again for this configuration" = "Не предупреждавай отново за тази конфигурация";
 
 /* Checkbox name */
 "Do not warn about this again" = "Не предупреждавай за това отново";
+
+/* Checkbox name */
+"Do not warn about this for %lu days" = "Не напомняй за това следващите %lu дни";
 
 /* Checkbox name */
 "Enable IPv6 (tap only)" = "Активиране на IPv6 (валидно само за tap канал)";
@@ -431,9 +456,6 @@
 "Require administrator authorization for key and certificate changes" = "Изисвай оторизиране от администратор на промени в ключове и сертификати";
 
 /* Checkbox name */
-"Reset the primary interface after disconnecting" = "Възстановяване на основния интерфейс след прекъсване на връзката";
-
-/* Checkbox name */
 "Route all IPv4 traffic through the VPN" = "Маршрутизирай всичкия IPv4 трафик през VPN тунела";
 
 /* Checkbox name */
@@ -441,9 +463,6 @@
 
 /* Checkbox name */
 "Save in Keychain" = "Запази в Keychain";
-
-/* Checkbox name */
-"Send anonymous profile information when checking" = "Изпращай анонимна профилна информация при отмятане";
 
 /* Checkbox name */
 "Set DNS after routes are set" = "Задай DNS след като са зададени пътищата (routes)";
@@ -465,6 +484,9 @@
 
 /* PopUpButton */
 "Set nameserver (alternate 1)" = "Задай DNS (алтернативa 1)";
+
+/* PopUpButton */
+"Set nameserver (alternate 2)" = "Задай сървър за имена (алтернатива 2)";
 
 /* PopUpButton *//* System profile item */
 "Set nameserver" = "Задай DNS";
@@ -560,9 +582,6 @@
 "Alert" = "Уведомления";
 
 /* Window title */
-"All OpenVPN process were terminated." = "Всички OpenVPN процеси бяха прекратени.";
-
-/* Window title */
 "All configuration files removed" = "Всички конфигурационни файлове премахнати";
 
 /* Window title */
@@ -626,16 +645,10 @@
 "Name not allowed" = "Името не е позволено";
 
 /* Window title */
-"New Feature" = "Нова функция";
-
-/* Window title */
 "No 'dev tun', 'dev utun', or 'dev tap' found" = "Не е открит аргумент 'dev tun', 'dev utun', или 'dev tap'";
 
 /* Window title */
 "No Credentials" = "Няма идентификационни данни";
-
-/* Window title */
-"One or more OpenVPN processes could not be terminated." = "Един или повече OpenVPN процеси не могат да бъдат прекратени.";
 
 /* Window title */
 "Only computer administrators should update Tunnelblick" = "Само компютърните администратори трябва да актуализират Tunnelblick";
@@ -668,7 +681,7 @@
 "System Requirements Not Met" = "Системни изисквания не са изпълнени";
 
 /* Window title */
-"There are no OpenVPN processes running." = "Няма активни OpenVPN процеси.";
+"Tunnelblick %@ may need to be updated" = "Tunnelblick %@ може да се нуждае от актуализация";
 
 /* Window title */
 "Tunnelblick Configuration Problem" = "Проблем с конфигурацията на Tunnelblick";
@@ -723,6 +736,9 @@
 
 /* Window title */
 "While Connected" = "Докато сте свързани";
+
+/* Window text. The first %@ will be replaced by the name of a configuration. The second %@ will be replaced by a message from a VPN server, such as 'Please insert your security token'. */
+"     From the VPN server for %@:\n\n%@" = "     От VPN сървъра за %1$@:\n\n%2$@";
 
 /* Window text: 'Tunnelblick successfully: *' */
 "     • Installed %lu configurations\n\n" = "     • Инсталирани %lu конфигурации\n\n";
@@ -785,7 +801,7 @@
 "  • Secure configurations\n" = "  • Да подсигури конфигурацията\n";
 
 /* Window text */
-" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Technologies, Inc." = " %1$@ е безплатен софтуер: Вие можете да го преразпределите и/или промените под общите условия на %2$@ публикувани от %3$@.\n\n%4$@ е регистрирата търгонска марка на OpenVPN Technologies, Inc.";
+" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Inc." = " %1$@ е безплатен софтуер: Вие можете да го разпространявате и/или променяте под общите условия на %2$@ публикувани от %3$@.\n\n%4$@ е регистрирата търговска марка на OpenVPN Inc.";
 
 /* Window text */
 " Do you wish to install %@ to %@%@?\n\n" = " Желаете ли да инсталирате %1$@ към %2$@%3$@?\n\n";
@@ -817,6 +833,9 @@
 /* Window text */
 "%@ has been reverted to its last secured (shadow) copy.\n\n" = "%@ е върнат към последното сигурно (скрито) копие.\n\n";
 
+/* Window text. The '%@' at the beginning is a separately translated string that describes an action that is to be taken. */
+"%@\n\n Note: Tunnelblick is in administrator mode, so a computer administrator's authorization is not required." = "%@\n\n Забележка: Tunnelblick е в режим с администраторски режим, затова и не се изисква достъп с права на администратор.";
+
 /* Window text */
 "%ld configurations have been reverted to their last secured (shadow) copy.\n\n" = "%ld конфигурации бяха върнати към тяхната secured (shadow) copy версия.\n\n";
 
@@ -824,16 +843,25 @@
 "'%@' already exists on the Desktop.\n\nWould you like to replace it?" = "'%@' вече съществува на работния плот.\n\nИскате ли да го замените?";
 
 /* Window text */
+"'%@' at line %u was not terminated properly" = "'%1$@' на ред %2$u не беше спряно правилно";
+
+/* Window text */
 "'%@' does not have any credentials (private key or username and password) stored in the Keychain." = "' %@' не разполага с никакви идентификационни данни (личен ключ или потребителско име и парола), съхранявани в Keychain.";
 
 /* Window text */
 "'%@' was not terminated." = "' %@' не е завършен.";
+
+/* Window text. The first '%@' will be replaced by the name of a configuration. The second and third '%@' will each be replaced by the name of a version of OpenVPN, e.g. '2.3 - OpenSSL v1.0.2n */
+"'%@' will connect using OpenVPN %@ instead of the requested version (OpenVPN %@)." = "'%1$@' ще използва за свързване OpenVPN %2$@ вместо поисканата версия (OpenVPN %3$@).";
 
 /* Window text */
 "'easy-rsaPath' preference ignored; it does not specify a folder" = "Свойството 'easy-rsaPath' игнорирано; не посочва папка";
 
 /* Window text */
 "'easy-rsaPath' preference ignored; it must be an absolute path or start with '~'" = "Свойството 'easy-rsaPath' игнорирано; трябва да е абсолютен път или да започва с '~'";
+
+/* Window text */
+"(An error occurred creating the help content.)" = "(Възникна грешка при създаване на пощно съдържание.)";
 
 /* Window text -- appears in log display when logging is disabled\n */
 "(Logging is disabled.)" = "(Логовете са спрени.)";
@@ -851,7 +879,10 @@
 "(if connected when user switched out)" = "(ако e бил свързан, когато потребителят се е изключил)";
 
 /* Window text */
-"<br>Based on Tunnelblick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Technologies, Inc." = "<br>На базата на Tunnelblick безплатен софтуер на разположение на<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN е регистрирана търговска марка на OpenVPN Technologies, Inc.";
+"<br>Based on Tunnelblick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Inc." = "<br>На базата на Tunnelblick безплатен софтуер на разположение на<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN е регистрирана търговска марка на OpenVPN Inc.";
+
+/* Window text */
+"<p>This version of Tunnelblick is %lu days old.</p><p>Please check for a newer version:</p><ul><li>Manually on the 'Preferences' panel of Tunnelblick's 'VPN Details' window; or<br></li><li>By looking for a more recent version on the <a href=\"https://tunnelblick.net/downloads.html\">Tunnelblick Downloads page</a> [tunnelblick.net].</li></ul>" = "<p>Тази версия на Tunnelblick е на %lu дни.</p><p>Проверете за нова версия:</p><ul><li>Ръчно през панел 'Настройки' или<br></li><li> търсейки последна версия на <a href=\"https://tunnelblick.net/downloads.html\">Tunnelblick Downloads page</a> [tunnelblick.net].</li></ul>";
 
 /* Window text */
 "A TBPreference or TBAlwaysSetPreference key refers to an unknown preference '%@' in %@" = "TBPreference или TBAlwaysSetPreference ключът се обръща към неизвестно свойство ' %1$@' в %2$@";
@@ -900,6 +931,9 @@
 
 /* Window text */
 "After connecting to %@, the Internet does not appear to be reachable.\n\nThis may mean that your VPN is not configured correctly.\n\n" = "След свързване с %@, Интернетът не е достъпен.\n\nТова може да означава, че вашият VPN не е конфигуриран правилно.\n\n";
+
+/* Window text */
+"All OpenVPN processes have quit" = "Всички OpenVPN процеси са спрели";
 
 /* Window text */
 "All configuration files have been removed. Tunnelblick must quit." = "Всички конфигурационни файлове са били отстранени. Tunnelblick трябва да излезе.";
@@ -968,6 +1002,9 @@
 "Backslash at end of line %u is not allowed" = "Наклонена черта на ляво в края на ред %u не е позволена";
 
 /* Window text */
+"Cancelled trying to quit all OpenVPN processes" = "Отменен е опита да се спрат всички OpenVPN процеси";
+
+/* Window text */
 "Cannot find configuration file at %@" = "Не може да се намери конфигурационен файл в %@";
 
 /* Window text */
@@ -996,6 +1033,12 @@
 
 /* Window text */
 "Configuration '%@' is not updatable because it could not be marked as 'updatable'.\n" = "Конфигурацията '%@' няма възможност за актуализация, защото тя не може да бъде маркирана като \"С възможност за актуализиране\".\n";
+
+/* Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02' */
+"Configuration '%@' requires Tunnelblick %@ or higher; you are using Tunnelblick %@.\n\nYou must update Tunnelblick to install this configuration." = "Конфигурацията '%1$@' изисква Tunnelblick версия %2$@ или по-висока; използвате Tunnelblick %3$@.\n\nТрябва да актуализирате Tunnelblick, за да инсталирате тази конфигурация.";
+
+/* Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02' */
+"Configuration '%@' requires Tunnelblick %@ or lower; you are using Tunnelblick %@." = "Конфигурацията '%1$@' изисква Tunnelblick версия %2$@ или по-ниска; използвате Tunnelblick %3$@.";
 
 /* Window text */
 "Configuration '%@' will be ignored because its name contains characters that are not allowed.\n\nCharacters that are not allowed: '%s'\n\n" = "Конфигурация ' %1$@ \"ще бъде игнорирана, защото името ѝ съдържа знаци, които не са позволени.  \n\nЗнаците, които не са позволени са: '%2$s'\n\n";
@@ -1127,6 +1170,9 @@
 "File '%@' appears to be in 'rich text' format because it starts with a '{' character. All OpenVPN-related files must be 'plain text' or 'UTF-8' files." = "Файлът '%@' изглежда да е в 'rich text' формат, защото започва със следния символ '{'. \nВсички файлове, свързани с OpenVPN трябва да бъдат в \"plain text\" или \"UTF-8\" файлов формат.";
 
 /* Window text */
+"File '%@' contains one or more NUL characters." = "Файлът '%@' съдържа един или повече NUL символа.";
+
+/* Window text */
 "File '%@' ends with a backslash, which is not allowed." = "Файлът '%@' завършва с наклонена черта наляво, което не е позволено.";
 
 /* Window text */
@@ -1134,6 +1180,9 @@
 
 /* Window text */
 "File '%@' is missing" = "Файлът '%@' липсва";
+
+/* Window text */
+"File '%@' is not a plain text or UTF-8 file." = "Файлът '%@' не е текстов файл или UTF-8 файл.";
 
 /* Window text */
 "File '%@' is too short (%lu bytes)" = "Файлът '%1$@' е твърде малък (%2$lu байта)";
@@ -1231,6 +1280,15 @@
 /* Window text */
 "NetBIOS name:" = "NetBIOS име:";
 
+/* Window text; the %@ will be replaced by a list of configuration names. */
+"Network access cannot be disabled after disconnecting for some or all of the selected configurations because they include 'user' and/or 'group' options. Those options will cause OpenVPN to not be running as root during disconnection, so it will not be able to disable network access.\n\nThe configurations that contain 'user' and/or 'group' are:\n\n%@\n\n" = "Мрежовият достъп не може да бъде забранен след спиране на някои или висчки избрани конфигурации, защото включват 'потребителски' или 'група' опции. Тези опции определят OpenVPN да се изпълнява нато неадминистративен акаунт по време на спирането, и за това не могат да се спрат и връзките към мрежата.\n\nКонфигурации, които включват 'потребителски' или 'група' опции:\n\n%@\n\n";
+
+/* Window text */
+"Network access was disabled when a VPN disconnected." = "Мрежовият достъп е спрян, когато VPN връзката е прекъсната.";
+
+/* Window text */
+"Network access was disabled when a VPN disconnected.\n\nDo you wish to re-enable network access?\n\n" = "Мрежовият достъп е забранен след спиране на VPN-а.\n\nИзкате ли да разрешите отново мрежовия достъп?\n\n";
+
 /* Window text */
 "Network setting" = "Мрежови настройки";
 
@@ -1265,6 +1323,12 @@
 "Not replacing an existing configuration, so configuration '%@' cannot use 'TBKeepExistingFilesList'" = "Не заменя съществуващата конфигурация, така че конфигурацията '%@' не може да използва\"TBKeepExistingFilesList\"";
 
 /* Window text */
+"On expected disconnect:" = "При очаквано прекъсване на връзката:";
+
+/* Window text */
+"On unexpected disconnect:" = "При неочаквано прекъсване на връзката:";
+
+/* Window text */
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation. Do you wish to terminate all OpenVPN processes?" = "Един или повече OpenVPN процеси се изпълняват, но са непознати за Tunnelblick. Ако не използвате OpenVPN отделно от Tunnelblick, това обикновено означава, че предишно стартиране на Tunnelblick не е било в състояние да ги прекрати правилно и Вие трябва да ги прекратите. Вероятно е да пречат на работата на Tunnelblick. Желаете ли да прекрати всички OpenVPN процеси?";
 
 /* Window text */
@@ -1274,13 +1338,19 @@
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation.\n\nThey can be terminated in the 'Activity Monitor' application.\n\n" = "Един или повече OpenVPN процеси се изпълняват, но са непознати за Tunnelblick. Ако не използвате OpenVPN отделно от Tunnelblick, това обикновено означава, че предишно стартиране на Tunnelblick не е било в състояние да ги прекрати правилно и Вие трябва да ги прекратите. Вероятно е да пречат на работата на Tunnelblick.\n\nТе могат да бъдат прекратени чрез вградената в операционната система програма 'Activity Monitor'.\n\n";
 
 /* Window text */
-"One or more VPN configurations that are being updated include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които се променят включват програми, които ще бъдат изпълнявани с root права когато се свържете с VPN. Те могат да ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
+"One or more VPN configurations that are being installed include OpenVPN options that were not recognized by Tunnelblick. That may be an error in the configuration or an error in Tunnelblick, or the configurations might include programs which will run as root when you connect to a VPN. Such programs would be able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които инсталирате включват OpenVPN опции, които не бяха разпознати от Tunnelblick. Това може да е грешка в конфигурацията или в Tunnelblick, или могат да включват програми, които ще бъдат изпълнявани с root права, когато се свържете с VPN. Те могат да ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
 
 /* Window text */
-"One or more VPN configurations you are installing include OpenVPN options that were not recognized by Tunnelblick. That may be an error in the configuration or an error in Tunnelblick, or the configurations might include programs which will run as root when you connect to a VPN. Such programs would be able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които инсталирате включват OpenVPN опции, които не бяха разпознати от Tunnelblick. Това може да е грешква в конфигурацията или в Tunnelblick, или могат да включват програми които ще бъдат изпълнявани с root права когато се свържете с VPN. Те могат да ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
+"One or more VPN configurations that are being installed include programs which will run as root when you connect to a VPN. These programs are part of the configuration and are not part of the Tunnelblick application. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които се променят включват програми, които ще бъдат изпълнявани с root права когато се свържете с VPN. Те могат да ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
 
 /* Window text */
-"One or more VPN configurations you are installing include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които ще инсталирате включват програми, които ще бъдат изпълнявани с root права когато се свържете с VPN. Те могат да ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
+"One or more VPN configurations that are being installed include programs which will run when you connect to a VPN. These programs are part of the configuration and are not part of the Tunnelblick application.\n\nYou should install these configurations only if you trust their author.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които се инсталират включват програми, които ще бъдат изпълнявани когато се свържете с VPN. Те са част от конфигурацията и НЕ са част от приложението Tunnelblick.\n\nИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ САМО АКО ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
+
+/* Window text */
+"One or more VPN configurations that are being updated include programs which will run as root when you connect to a VPN. These programs are part of the configuration and are not part of the Tunnelblick application. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които се променят включват програми, които ще бъдат изпълнявани с root права когато се свържете с VPN. Те са част от конфигурацията и не са част от Tunnelblick програмата. ТЕ МОГАТ ДА ПОЕМАТ ПЪЛЕН КОНТРОЛ ВЪРХУ ВАШИЯТ КОМПЮТЪР.\n\nНЕ ИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ АКО НЕ ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
+
+/* Window text */
+"One or more VPN configurations that are being updated include programs which will run when you connect to a VPN. These programs are part of the configuration and are not part of the Tunnelblick application.\n\nYou should install these configurations only if you trust their author.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Една или повече VPN конфигурации, които се инсталират включват програми, които ще бъдат изпълнявани когато се свържете с VPN. Те са част от конфигурацията и НЕ са част от приложението Tunnelblick.\n\nИНСТАЛИРАЙТЕ ТЕЗИ КОНФИГУРАЦИИ САМО АКО ВЯРВАТЕ НА АВТОРА/ИЗТОЧНИКА ИМ.\n\nВярвате ли на автора/източника на тези конфигурации и искате ли да ги инсталирате?\n\n";
 
 /* Window text */
 "One or more VPNs are currently connected. Please disconnect all VPNs and quit Tunnelblick before proceeding." = "Една или повече VPN връзки са активни. Моля изключете всички VPN и излезте от Tunnelblick преди да продължите.";
@@ -1297,11 +1367,8 @@
 /* Window text */
 "OpenVPN is not responding to requests to disconnect %@.\n\nTunnelblick will disconnect when OpenVPN starts responding to disconnection requests.\n\nTHIS MAY TAKE UP TO TWO MINUTES in certain unusual circumstances.\n\nThe connection will be unavailable until it is disconnected." = "OpenVPN не отговаря на искането за прекъсване на %@.  \n\nTunnelblick ще прекъсне връзката, когато OpenVPN започне да отговаря на исканията за прекъсване на връзката.\n\nТОВА МОЖЕ ДА ОТНЕМЕ ДО ДВЕ МИНУТИ в някои необичайни обстоятелства.  \n\nВръзката ще бъде недостъпна, докато не бъде прекъсната.";
 
-/* Window text */
-"OpenVPN version %@ is not available. Changing this configuration to use the latest version (%@) that is included in this version of Tunnelblick." = "OpenVPN версия %1$@ не е достъпна. Променяне на тази конфигурация да използва най-новата версия (%2$@), включена в тази версия на Tunnelblick.";
-
-/* Window text */
-"OpenVPN version %@ is not available. Using the latest version (%@) as the default." = "OpenVPN версия %1$@ не е достъпна. Ще се използва най-новата версия (%2$@) като версия по подразбиране.";
+/* Window text. Each '%@' will be replaced by OpenVPN and SLL version information (e.g., '2.3.18-openssl-1.0.2n' or '2.3.18-libressl-2.6.3') */
+"OpenVPN version %@ is not available. Using %@ as the default." = "OpenVPN версия %1$@ не е достъпна. Използвай %2$@ като версия по подразбиране.";
 
 /* Window text */
 "OpenVPN version:" = "OpenVPN версия:";
@@ -1322,6 +1389,9 @@
 "Path '%@' contains characters that are not allowed.\n\nCharacters that are not allowed: '%s'\n\n" = "Път '%1$@' съдържа знаци, които не са позволени.\n\nЗнаците, които не са позволени са: '%2$s'\n\n";
 
 /* Window text */
+"Please check for a newer version." = "Моля, проверете за по-нова версия.";
+
+/* Window text */
 "Please enter a name and click \"OK\" or click \"Cancel\".\n\n" = "Моля въведете име и натиснете \"ОК\" или върху \"Отказ\".\n\n";
 
 /* Window text */
@@ -1332,6 +1402,9 @@
 
 /* Window text */
 "Private configurations cannot connect when the computer starts.\n\nFirst make the configuration shared, then change this setting." = "Личните конфигурации не могат да се свързват при стартиране на компютъра.\n\nМоля първо направете конфигурациите споделени и след това променете тази настройка.";
+
+/* Window text */
+"Program error, please see the Console log." = "Програмна грешка. Моля, погледнете в конзолния журнал.";
 
 /* Window text */
 "Received fatal signal %d." = "Получен фатален сигнал %d.";
@@ -1414,8 +1487,14 @@
 /* Window text */
 "The 'namedCredentialsNames' preference must be an array of strings" = "Свойството \"CredentialsNames\" трябва да бъде масив от низове";
 
+/* Window text; the %@ will be replaced by the name of a configuration. */
+"The OpenVPN configuration file for '%@' was modified after it was last secured.\n\nDo you wish to secure the modified configuration or revert to the last secured configuration?\n\n" = "Конфигурационният файл на OpenVPN '%@' е модифициран след като е бил защитен.\n\nИскате ли да защитите тази версия или да се върнете към последната защитена конфигурация?\n\n";
+
 /* Window text */
 "The OpenVPN configuration file in %@ contains a '%@' option, which is a Windows-only option. It cannot be used on OS X." = "Конфигурационния файл на OpenVPN в %1$@ съдържа '%2$@' опция, която е валидна само за Windows. Тя не може да се използва под OS X.";
+
+/* Window text. The first '%@' will be replaced by an OpenVPN warning or error message (in English) such as 'WARNING: Your certificate is not yet valid!'. The second '%@' will be replaced with an empty string or an already-translated comment that explains the warning or error in more detail. */
+"The OpenVPN log contains the following message: \n\n\"%@\".%@" = "Журналът на OpenVPN съдържа следното съобщение: \n\n\"%1$@\".%2$@";
 
 /* Window text */
 "The OpenVPN log does not yet exist or has been deleted." = "Логовете на OpenVPN все още не съществуват или са били изтрити.";
@@ -1481,6 +1560,9 @@
 "There are no OpenVPN configurations to install." = "Няма OpenVPN конфигурации за инсталиране.";
 
 /* Window text */
+"There are no OpenVPN processes running" = "Няма активни OpenVPN процеси";
+
+/* Window text */
 "There are no VPN configurations installed.\n\nTunnelblick needs one or more installed configurations to connect to a VPN. Configurations are installed from files that are usually supplied to you by your network manager or VPN service provider. The files must be installed to be used.\n\nConfiguration files have extensions of .tblk, .ovpn, or .conf.\n\n(There may be other files associated with the configuration that have other extensions; ignore them for now.)\n\nDo you have any configuration files?\n" = "Няма никакви VPN конфигурации инсталирани.\n\nTunnelblick се нуждае от един или повече инсталирани конфигурации, за да се свържете с VPN. Конфигурациите се инсталират от файлове, които обикновено ви се предоставят от вашия мрежов мениджър или доставчик на услуги на VPN. Файловете трябва да бъдат инсталирани да се използват.\n\nКонфигурационните файлове са с разширения .tblk, .ovpn, или. conf.\n\n(Може да има други файлове, свързани с конфигурацията, които имат други разширения; игнорирайте ги за сега.)\n\nИмате ли някакви конфигурационни файлове?\n";
 
 /* Window text */
@@ -1504,6 +1586,12 @@
 /* Window text */
 "This 'Deployed' version of Tunnelblick cannot be launched or installed because it does not have an Info.plist.\n\n" = "Тази \"Deployed\" версия на Tunnelblick не може да се стартира или инсталира, защото няма Info.plist.\n\n";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The second '%@' will be replaced by a list of names of OpenVPN options and when each was deprecated and removed. */
+"This VPN cannot be connected.\n\nThe OpenVPN configuration file for '%@' contains these OpenVPN options:\n\n%@\nNone of the versions of OpenVPN included in this version of Tunnelblick include the option(s).\n\nYou should update the configuration so it can be used with modern versions of OpenVPN." = "Не може да се свърже с VPN.\n\nКонфигурационният файл на OpenVPN '%1$@' съдържа следните опции:\n\n%2$@\nНяма версия на OpenVPN включена в тази версия на Tunnelblick която да поддържа тези опции.\n\nАктуализирайте конфигурацията към по-нова версия на OpenVPN.";
+
+/* Window text */
+"This VPN requires you to respond to a question but has not provided the question." = "VPNът изисква отговор на въпрос, но такъв не беше зададен.";
+
 /* Window text */
 "This computer's apparent public IP address was not different after connecting to %@. It is still %@.\n\nThis may mean that your VPN is not configured correctly.\n\n" = "Публичният IP адрес на този компютър не се е променил след свързване към %1$@. Той все още е %2$@.\n\nТова може да означава, че вашият VPN не е конфигуриран правилно.\n\n";
 
@@ -1512,21 +1600,6 @@
 
 /* Window text */
 "This copy of Tunnelblick is not digitally signed.\n\nThere is no way to verify that this copy has not been tampered with.\n\n Check with the provider of this copy of Tunnelblick before using it.\n\n" = "Това копие на Tunnelblick не е подписано цифрово.\n\nНяма начин да се провери, че това копие не е било променяно.\n\nПроверете при доставчика на това копие на Tunnelblick преди да го използвате.\n\n";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly if it uses tun or tap kexts." = "Това е 64-битова Intel версия на Tunnelblick, която няма да работи коректно ако се използват tun или tap kexts библиотеки.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses a tap connection. Use a universal version of Tunnelblick instead." = "Това е 64-битова Intel версия на Tunnelblick, която няма да работи коректно с конфигурация, която използва tap връзка. Моля, използвайте универсална версия за Tunnelblick.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. Use a universal version of Tunnelblick instead." = "Това е 64-битова Intel версия на Tunnelblick, която няма да работи коректно с конфигурация, която използва tun kexts. Моля, използвайте универсална версия за Tunnelblick.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. You can use a universal version of Tunnelblick or use the OS X 'utun' driver by removing OpenVPN 'dev-type' options - see the OpenVPN documentation." = "Това е 64-битова Intel версия на Tunnelblick, която няма да работи коректно с конфигурация, която използва tun kexts. Може да ползвате универсална версия за Tunnelblick или OS X 'utun' драйвер като премахнете OpenVPN 'dev-type' опциите - виж документацията на OpenVPN.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will only run on OS X with a 64-bit kernel, or on OS X 10.6.8 or higher if there is no use of tun or tap kexts." = "Това е 64-битова Intel версия на Tunnelblick, която работи само на OS X с 64-bit kernel, или на OS X версия 10.6.8 или по-висока и ако не се използват tun или tap kexts.";
 
 /* Window text */
 "This version of Tunnelblick cannot be launched or installed because it has an invalid update URL.\n\n" = "Тази версия на Tunnelblick не може да се стартира или инсталира, защото тя има невалидно URL за актуализация.\n\n";
@@ -1543,6 +1616,9 @@
 /* Window text */
 "Translation by" = "Преведено от";
 
+/* Window text */
+"Trying to quit all OpenVPN processes..." = "Спиране на всички OpenVPN процеси…";
+
 /* Window text; '%@' will be replaced with a version number such as '3.2.1 (build 1234)' */
 "Tunnelblick %@ has been secured successfully." = "Tunnelblick %@ е подсигурен успешно.";
 
@@ -1550,13 +1626,16 @@
 "Tunnelblick %@ is ready." = "Tunnelblick %@ е готов.";
 
 /* Window text */
-"Tunnelblick Admin Mode\n\n Temporarily authorize changes that require an administrator password.\n\n The session expires after five minutes or when the 'VPN Details' window is closed." = "Tunnelblick Администраторски Режим\n\nВременно позволяване на промени, които изискват администраторска парола и права.\n\nТази сесия ще изтече след пет минути или когато прозорецът 'VPN детайли' бъде затворен.";
+"Tunnelblick Admin Mode\n\n Temporarily allow changes that require a computer administrator's authorization.\n\n The session expires after five minutes or when the 'VPN Details' window is closed." = "Tunnelblick Администраторски Режим\n\nВременно позволяване на промени, които изискват администраторски права.\n\nТази сесия ще изтече след пет минути или когато прозорецът 'VPN детайли' бъде затворен.";
 
 /* Window text */
 "Tunnelblick Internet Use:" = "Tunnelblick интернет достъп:";
 
-/* Window text */
-"Tunnelblick can check that the apparent public IP address of your computer changes when you connect to a VPN, and warn you if it doesn't.\n\nThis may help Tunnelblick diagnose problems with your connection.\n\nThis process attempts to access\n%@\n\nDo you wish to check for this IP address change?\n" = "Tunnelblick може да провери дали публичния IP адреса на компютъра ви се променя, когато се свържете с VPN и ви предупреждава, ако не се.\n\nТова може да помогне Tunnelblick диагностика на проблеми с връзката.\n\nТози процес се опитва да достъпи\n%@\n\nИскате ли да проверите за тази промяна на IP адрес?\n";
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick can access %@ to check for updates when it is launched and periodically while it is running.\n\n" = "Tunnelblick може да се свърже с %@, за да провери за актуализации когато се стартира или докато работи.\n\n";
+
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick can access %@ to check that your computer's apparent public IP address changes each time you connect to a VPN.\n\n" = "Tunnelblick се свързва с %@, за да провери публичния IP адрес дали се променя всеки път когато се свързвате с VPN.\n\n";
 
 /* Window text */
 "Tunnelblick could not be configured to automatically launch itself after you log in.\n\nSee the Console log for details." = "Tunnelblick не може да бъде конфигуриран да се стартира автоматично, след като логнете.\n\nВижте конзолния лог за подробности.";
@@ -1590,6 +1669,9 @@
 
 /* Window text */
 "Tunnelblick could not find the configuration file or the configuration file could not be sanitized. See the Console Log for details." = "Tunnelblick не може да намери конфигурационния файл или конфигурационния файл не може да бъде санитазиран. Моля вижте конзолния лог за повече детайли.";
+
+/* Window text */
+"Tunnelblick could not load a kext" = "Tunnelblick не успя да зареди kext";
 
 /* Window text */
 "Tunnelblick could not move the '%@' configuration. See the Console Log for details." = "Tunnelblick не може да премести '%@' конфигурацията. Моля вижте конзолния лог за повече детайли.";
@@ -1652,7 +1734,7 @@
 "Tunnelblick needs to create or update a secure (shadow) copy of the configuration file." = "Tunnelblick трябва да създаде или актуализира подсигуреното (скрито) копие на конфигурационния файл.";
 
 /* Window text */
-"Tunnelblick needs to perform an action that requires administrator authorization.\n" = "Tunnelblick трябва да направи действие, което изисква администраторски права.\n";
+"Tunnelblick needs to perform an action that requires a computer administrator's authorization.\n" = "Tunnelblick трябва да направи действие, което изисква администраторски права.\n";
 
 /* Window text */
 "Tunnelblick needs to:\n" = "Tunnelblick трябва да:\n";
@@ -1687,6 +1769,12 @@
 /* Window text */
 "Tunnelblick was unable to start OpenVPN to connect %@. For details, see the log in the VPN Details... window" = "Tunnelblick не можа да стартира OpenVPN за връзка %@. За подробности, вижте лога във \"VPN Details…\" прозореца";
 
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick will access %@ to check for updates when it is launched and periodically while it is running. Contact the distributor of this copy of Tunnelblick for details.\n\n" = "Tunnelblick се свързва с %@, за да проверява за актуализации когато е стартиран или периодично докато работи. Свържете се с дистрибутора на Tunnelblick за подробности.\n\n";
+
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick will access %@ to check that your computer's apparent public IP address changes each time you connect to a VPN. Contact the distributor of this copy of Tunnelblick for details.\n\n" = "Tunnelblick ще достъпи %@ за да провери видимия външен IP адрес дали се промяне след свързване с VPN. Свържете се с дистрибутора на копието ви на Tunnelblick за детайли.\n\n";
+
 /* Window text */
 "Unable to Establish Communication" = "Не може да се установи връзка";
 
@@ -1703,7 +1791,13 @@
 "Unable to install the '%@' configuration\n" = "Не може да инсталира '%@' конфигурацията\n";
 
 /* Window text */
+"Unable to load contents of %@ as UTF-8" = "Неуспешно зареждане на съдържанието на %@ като UTF-8";
+
+/* Window text */
 "Unable to open configuration file for modification" = "Не може да отвори конфигурационния файл за промяна";
+
+/* Window text */
+"Unable to parse configuration file as UTF-8" = "Неуспешно зареждане на конфигурационен файл като UTF-8";
 
 /* Window text */
 "Unable to replace the '%@' configuration\n" = "Не може да замени '%@' конфигурацията\n";
@@ -1783,6 +1877,9 @@
 /* Window text */
 "Warning: One or more preferences could not be renamed. See the Console Log for details." = "Предупреждение: Една или повече настройки не могат да се преименуват. Вижте конзолния лог за подробности.";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The third '%@' will be replaced by a list of names of OpenVPN options, one on each line. The forth '%@' will be replaced by the name of a version of OpenVPN, e.g. '2.3 - OpenSSL v1.0.2n' */
+"Warning: This VPN may not connect in the future.\n\nThe OpenVPN configuration file for '%@' contains these OpenVPN options:\n\n%@\nYou should update the configuration so it can be used with modern versions of OpenVPN.\n\nTunnelblick will use OpenVPN %@ to connect this configuration.\n\nHowever, you will not be able to connect to this VPN with future versions of Tunnelblick that do not include a version of OpenVPN that accepts the options." = "Внимание: Този VPN няма да може да бъде ползвамн в бъдеще.\n\nКонфигурационният файл на OpenVPN '%1$@' съдържа следните опции на OpenVPN:\n\n%2$@\nАктуализирайте конфиг. файл към по-нова версия на OpenVPN.\n\nTunnelblick ще използва OpenVPN %3$@ за да се свърже с тази конфигурация.\n\nВъпреки това, Вие няма да можете да се свържете с този VPN в бъдещи версии на Tunnelblick, които не поддържат версията на този OpenVPN с тези опции.";
+
 /* Window text */
 "Warnings:" = "Предупреждения:";
 
@@ -1853,7 +1950,7 @@
 "You may not remove a configuration which is set to start when the computer starts." = "Не може да премахнете конфигурация, която е зададена да се изпълнява когато се стартира компютъра.";
 
 /* Window text */
-"You will not be able to use Tunnelblick after updating unless you provide an administrator username and password.\n\nAre you sure you wish to check for updates?" = "Няма да можете да използвате Tunnelblick след актуализиране, освен ако не дадете администраторско потребителско име и парола.\n\nНаистина ли желаете да проверите за актуализации?";
+"You will not be able to update Tunnelblick unless you provide a computer administrator's authorization.\n\nAre you sure you wish to check for updates?" = "Няма да можете да използвате Tunnelblick след актуализиране, освен ако не дадете администраторско потребителско име и парола.\n\nНаистина ли желаете да проверите за актуализации?";
 
 /* Window text */
 "Your computer may not be able to reliably show the Tunnelblick icon near the Spotlight icon.\n\nThis may cause the Tunnelblick icon to sometimes DISAPPEAR from the menu bar.\n\nAre you sure you want to place the Tunnelblick icon near the Spotlight icon?\n\n" = "Вашият компютър е възможно да не успее да покаже иконата на Tunnelblick близо до тази на Spotlight.\n\nТова може да направи иконата на Tunnelblick да изчезне от лентата с менюто.\n\nСигурни ли сте, че искате да поставите иконата на Tunnelblick близо до тази на Spotlight?\n\n";
@@ -1883,6 +1980,9 @@
 "\n\nNOTE: One or more of the configurations are currently connected. They will be disconnected, installs/replacements/uninstalls will be performed, and the configurations will be reconnected unless they have been uninstalled.\n\n" = "\n\nЗАБЕЛЕЖКА: Една или повече конфигурации са свързани. Те ще бъдат изключени, за да се изпълни инсталация/замяна/деинсталация, и тогава ще бъдат свързани отново ако не са били деинсталирани.\n\n";
 
 /* Window text */
+"\n\nThis error means that an option that is contained in the OpenVPN configuration file or was \"pushed\" by the OpenVPN server:\n\n     • has been misspelled,\n\n     • has missing or extra arguments, or\n\n     • is not implemented by the version of OpenVPN which is being used for this configuration. It may be a new option that is not implemented in an old version of OpenVPN, or an old option that has been removed in a new version of OpenVPN. You can choose what version of OpenVPN to use with this configuration in the \"Settings\" tab of the \"Configurations\" panel of Tunnelblick's \"VPN Details\" window.\n\nSee the VPN log in the \"Log\" tab of the \"Configurations\" panel of Tunnelblick's \"VPN Details\" window for details." = "\n\nТази грешка означава, че опция която е в OpenVPN конгифурациония файл или е бил зададена от  OpenVPN сървъра:\n\n     • е сгрешена при изписване\n\n     • има липсващи или повече аргументи или\n\n     • не се поддържа от тази версия на OpenVPN. Може да е нова опция която не съществува в по-стара версия, или стара опция, която е премахната в по-нова версия на OpenVPN. Може да изберете с коя версия на OpenVPN да използвате тази конфигурация в таб \"Настройки\" на прозорец \"VPN детайли\".\n\nВиж VPN лога за детайли.";
+
+/* Window text */
 "\n\nand install %ld Tunnelblick VPN Configurations" = "\n\nи инсталирате %ld Tunnelblick VPN конфигурации";
 
 /* Window text */
@@ -1906,8 +2006,29 @@
 /* Tooltip */
 "%d days %d:%02d:%02d" = "%1$d дни %2$d:%3$02d:%4$02d";
 
+/* The first '%@' is the name of an OpenVPN option. The second '%@' is an OpenVPN version string such as '2.3' or '2.5' */
+"'%@' was added in OpenVPN %@\n" = "'%1$@' беше добавен в OpenVPN %2$@\n";
+
+/* The first '%@' is the name of an OpenVPN option. The second '%@' and third '%@' are OpenVPN version strings such as '2.3' or '2.5' */
+"'%@' was deprecated in OpenVPN %@ and removed in OpenVPN %@\n" = "'%1$@' беше спряна в OpenVPN %2$@ и премахната в OpenVPN %3$@\n";
+
 /* Credit description */
 "64-bit enabling and testing" = "64-битово разрешаване и тестване";
+
+/* HTML info for the 'OpenVPN version' button. */
+"<p><strong>Specifies the version of OpenVPN and the SSL software that should be used to connect the VPN.</strong><ul><li><strong>The \"Default\" setting</strong> will use the default version of OpenVPN with OpenSSL that is included in this version of Tunnelblick. The default may be different in different versions of Tunnelblick.<br></li><li><strong>The \"Latest\" setting</strong> will use the latest version of OpenVPN with LibreSSL that is included in this version of Tunnelblick. The latest version may be different in different versions of Tunnelblick.<br></li><li><strong>Any other setting</strong> will use the specified version of OpenVPN and SSL software if they are available in this version of Tunnelblick. If not available, the closest match will be used.<br></li></ul>" = "<p><strong>Определя версията на OpenVPN и SSL софтуера, които да се ползват за свързване с VPN.</strong><ul><li><strong>Опцията \"По подразбиране\" </strong> ще използва подразбиращата се версия на OpenVPN и OpenSSL която е включена в тази версия на Tunnelblick. Това може да е различна версия в различните версии на Tunnelblick.<br></li><li><strong>Опция \"Последна\"</strong> ще използва най-новата (последна) версия на OpenVPN и LibreSSL, която е включена в тази версия на Tunnelblick. Последната версия може да е различна в различните версии на Tunnelblick.<br></li><li><strong>Всяка друга настройка</strong> ще използва конретно избраната версия на OpenVPN и SSL ако са налични в тази версия на Tunnelblick. Ако не са налични - най-близката налична версия ще бъде използвана.<br></li></ul>";
+
+/* HTML info for the 'Set DNS/WINS' button. */
+"<p><strong>Specifies what (if anything) Tunnelblick does to modify DNS settings while the VPN is connected.</strong> The choices are:<ul><li><strong>Do not set nameserver</strong>: Nothing is done.<br></li><li><strong>Set nameserver</strong>: Tunnelblick uses its standard script to handle DNS and WINS settings. This is usually the best choice. It changes DNS and WINS settings according to instructions provided by OpenVPN. DNS and WINS settings that have been set manually will not be changed unless \"Allow changes to manually-set network settings\" has been selected in the \"Advanced\" settings window<br></li><li><strong>Set nameserver (3.1)</strong>: Tunnelblick uses the script from Tunnelblick 3.1 to handle DNS and WINS settings.<br></li><li><strong>Set nameserver (3.0b10)</strong>: Tunnelblick uses the script from Tunnelblick 3.0b10 to handle DNS and WINS settings.<br></li><li><strong>Set nameserver (alternate 1)</strong>: Tunnelblick uses an alternate script to handle DNS and WINS settings.<br></li></ul>" = "<p><strong>Определя какво прави Tunnelblick за да промени DNS настройките когато е свързан с VPN.</strong>Възможностите са:<ul><li><strong>Не задавай nameserver</strong>: Не прави нищо.<br></li><li><strong>Задавай nameserver</strong>: Tunnelblick използва стандартия си скрипт за задаване на DNS и WINS настройки. Обикновено това е най-добрия избор. Това променя DNS и WINS настройките според инструкциите на OpenVPN. DNS и WINS настройките, които са ръчно направени не се променят освен ако не е избрано \"Позволи ръчни настройки на мрежовите параметри\" в прозорец \"Допълнителни настройки\"<br></li><li><strong>Задай nameserver (3.1)</strong>: Tunnelblick използва скрипта от Tunnelblick 3.1 за управление на DNS и WINS настройките.<br></li><li><strong>Задай nameserver (3.0b10)</strong>: Tunnelblick използва скрипта от Tunnelblick 3.0b10 за да ползва DNS и WINS параметрите.<br></li><li><strong>Задай nameserver (alternate 1)</strong>: Tunnelblick използва алтернативе скрип за управление на DNS и WINS параметри.<br></li></ul>";
+
+/* HTML info for the 'On unexpected disconnect' button. */
+"<p><strong>Specifies what Tunnelblick does when the VPN <em>unexpectedly</em> disconnects</strong> (for example, if OpenVPN crashes or loses its connection to the VPN and is set up to stop when that happens). The choices are:</p><ul><li><strong>Do nothing</strong><br></li><li><strong>Reset primary interface</strong>: Tunnelblick resets the primary network interface by issuing 'ipconfig down; ipconfig up' commands to the interface. This can be helpful when a configuration fails to restore network settings properly after a disconnection.<br></li><li><strong>Disable network access (\"Kill Switch\")</strong>: Tunnelblick cuts off all network access (local and Internet) by turning off Wi-Fi and disabling all other network services. This can help ensure that nothing leaks out of the computer except through the VPN. If Tunnelblick has disabled network access a menu command to re-enable all access that was disabled will be available from the Tunnelblick icon in the menu bar. You can also re-enable Wi-Fi by turning it on, or re-enable other network services in System Preferences : Network. <strong>This setting may not work properly when more than one VPN is connected simultaneously.</strong></li></ul>" = "<p><strong>Определя какво прави Tunnelblick когато VPN <em>неочаквано</em> прекъсне</strong> (например, ако OpenVPN загуби връзка и е настроен да спре когато това се случи). Възможностите са:</p><ul><li><strong>Не прави нищо</strong><br></li><li><strong>Рестартирай Основния интерфейс</strong>: Tunnelblick рестартира основния мрежови интерфей изпълнявайки 'ipconfig down; ipconfig up' командите. Това може да е полезно когато не успее да възстанови настройките след прекъсване.<br></li><li><strong>Спри мрежовия достъп (\"Kill Switch\")</strong>: Tunnelblick спира всякакъв мрежови достъп (локален и интернет) с изключване на Wi-Fi и всички други мрежови услуги. Това осигурява, че нищо няма да се изпраща извън връзката през VPN. Ако Tunnelblick е спрял мрежовия достъп, то команда в менюто за активирането му ще е налична в менюто на иконата на Tunnelblick. Можете да активирате Wi-Fi с включването му, или активиране на други мрежови връзки от System Preferences : Network. <strong>Тази опция може да не работи правилно ако повече от една VPN връзка се прави едновременно</strong></li></ul>";
+
+/* HTML info for the 'On expected disconnect' button. */
+"<p><strong>Specifies what Tunnelblick does when the VPN disconnects <em>as expected</em></strong> (for example, a \"Disconnect\" menu item or button is clicked). The choices are:</p><ul><li><strong>Do nothing</strong><br></li><li><strong>Reset primary interface</strong>: Tunnelblick resets the primary network interface by issuing 'ipconfig down; ipconfig up' commands to the interface. This can be helpful when a configuration fails to restore network settings properly after a disconnection.<br></li><li><strong>Disable network access (\"Kill Switch\")</strong>: Tunnelblick cuts off all network access (local and Internet) by turning off Wi-Fi and disabling all other network services. This can help ensure that nothing leaks out of the computer except through the VPN. If Tunnelblick has disabled network access a menu command to re-enable all access that was disabled will be available from the Tunnelblick icon in the menu bar. You can also re-enable Wi-Fi by turning it on, or re-enable other network services in System Preferences : Network. <strong>This setting may not work properly when more than one VPN is connected simultaneously.</strong></li></ul>" = "<p><strong>Определя какво прави Tunnelblick когато VPN <em>неочаквано</em> прекъсне</strong> (например, ако OpenVPN загуби връзка и е настроен да спре когато това се случи). Възможностите са:</p><ul><li><strong>Не прави нищо</strong><br></li><li><strong>Рестартирай Основния интерфейс</strong>: Tunnelblick рестартира основния мрежови интерфей изпълнявайки 'ipconfig down; ipconfig up' командите. Това може да е полезно когато не успее да възстанови настройките след прекъсване.<br></li><li><strong>Спри мрежовия достъп (\"Kill Switch\")</strong>: Tunnelblick спира всякакъв мрежови достъп (локален и интернет) с изключване на Wi-Fi и всички други мрежови услуги. Това осигурява, че нищо няма да се изпраща извън връзката през VPN. Ако Tunnelblick е спрял мрежовия достъп, то команда в менюто за активирането му ще е налична в менюто на иконата на Tunnelblick. Можете да активирате Wi-Fi с включването му, или активиране на други мрежови връзки от System Preferences : Network. <strong>Тази опция може да не работи правилно ако повече от една VPN връзка се прави едновременно</strong></li></ul>";
+
+/* HTML info for the 'Connect' button. */
+"<p><strong>Specifies when Tunnelblick should connect to the VPN.</strong></p><p>\"When computer starts\" may only be used with \"Shared\" configurations.</p>" = "<p><strong>Определя кога Tunnelblick се свързва с VPN.</strong></p><p>\"При стартиране на комютъра\" може да се ползва за \"Споделени\" конфигурации.</p>";
 
 /* HTML info for the 'Disable IPv6 (tun only)' checkbox. */
 "<p><strong>When checked</strong>, IPv6 will be disabled.</p>\n<p>Disabling IPv6 is often recommended because many VPN configurations do not guard against information leaks caused by the use of IPv6. Most Internet access works fine without IPv6.</p>\n<p><strong>When not checked</strong>, IPv6 will not be disabled.</p>\n<p><strong>This checkbox is disabled</strong> when using a 'tap' connection because it cannot be enforced on a 'tap' connection .</p>" = "<p><strong>Когато е маркиран</strong>, IPv6 е забранен.</p>\n<p>Забраняването на IPv6 е често препоръчвано защото много VPN конфигурации не предпазват от изтичане на информация причинена от използването на IPv6. Повечето връзки към интернет работят и без IPv6.</p>\n<p><strong>Когато не е маркиран</strong>, IPv6 няма да бъде забранен.</p>\n<p><strong>Тази опция е изключена и не може да се променя</strong> когато се ползва 'tap' връзка, защото не може да бъде активиране върху 'tap' връзка .</p>";
@@ -1933,14 +2054,14 @@
 /* HTML info for the 'Route all IPv4 traffic through the VPN' checkbox. */
 "<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n" = "<p><strong>Когато е маркиран</strong>, Tunnelblick ще накара OpenVPN да пренасочва/рутира целия IPv4 трафик през VPN сървъра.</p>\n<p><strong>Когато не е маркиран</strong>, по подразбиране OpenVPN ще използва VPN връзката само за трафик насочен към VPN мрежата. Целият друг трафик ще ползва нормалната интернет връзка без да преминава през VPN сървъра. Поведението по подразбиране на OpenVPN's може да бъде променено в конфигурацията на VPN сървъра и да пренасочи целия IPv4 трафик през VPN сървъра все едно тази опция е избрана. </p>\n";
 
+/* HTML info for the 'Do not warn about this for [number of days] days' checkbox. */
+"<p><strong>When checked</strong>, Tunnelblick will not show this warning again for %lu days.</p>\n<p><strong>When not checked</strong>, Tunnelblick will show this warning each time it is launched.</p>\n" = "<p><strong>Ако е маркирано</strong>, Tunnelblick няма да показва предупреждение в следващите %lu дни.</p>\n<p><strong>Ако НЕ е маркирано</strong>, Tunnelblick ще показва предупреждение всеки път при старирането си.</p>\n";
+
+/* HTML info for the 'Do not warn about this again' checkbox. */
+"<p><strong>When checked</strong>, Tunnelblick will not show this warning again.</p>\n<p><strong>When not checked</strong>, Tunnelblick will show this warning again.</p>\n" = "<p><strong>Ако е маркирано</strong>, Tunnelblick няма да показва това предупреждение пак.</p>\n<p><strong>Ако НЕ е маркирано</strong>, Tunnelblick ще показва това предупреждение пак.</p>";
+
 /* HTML info for the 'Require administrator authorization for key and certificate changes' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>" = "<p><strong>Маркирано</strong>, Tunnelblick ще изисква администраторски достъп за да се правят промени по ключове и сертификати.</p>\n<p><strong>Немаркирано</strong>, обикновен потребител ще има права да прави промени по ключове и сертификати. </p><p><strong>Забележка: администраторски достъпе необходим, за да се промени тази настройка.</strong></p>";
-
-/* HTML info for the 'Reset the primary interface after disconnecting' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will reset the primary network interface after the VPN is disconnected. This can work around problems caused by some misconfigured VPN servers and by some OpenVPN configuration errors.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not reset the primary network interface.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver'.</p>" = "<p><strong>Когато е маркиран</strong>, Tunnelblick ще рестартира основният мрежови интерфейс след като се изключи VPN връзката. Това може да поправи проблеми с недобре конфигурирани VPN сървъри и някои OpenVPN конфигурационни грешки.</p>\n<p><strong>Когато не е маркиран</strong>, Tunnelblick няма да рестартира основният мрежови интерфейс след като се изключи VPN връзката.</p>\n<p><strong>Тази опция е неактивна</strong> когато 'Задаване на DNS/WINS' не е настроен на 'Използвай nameserver'.</p>";
-
-/* HTML info for the 'Send anonymous profile information when checking' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will send information about your computer (the operating system version) to the Tunnelblick website when checking for updates.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not send the information when checking for updates.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p>" = "<p><strong>Маркирано</strong>, Tunnelblick ще изпраща информация за Вашия компютър (версия на операционната система) на сайта на Tunnelblick при проверка за актуализации.</p>\n<p><strong>Немаркирано</strong>, Tunnelblick няма да изпраща информация за Вашия компютър при проверка за актуализации.</p><p>Виж <a href=\"https://tunnelblick.net/cPrivacy.html\">Лични данни и поверителност</a> [tunnelblick.net] за подробности.</p>";
+"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will be allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>" = "<p><strong>Маркирано</strong>, Tunnelblick ще изисква администраторски достъп за да се правят промени по ключове и сертификати.</p>\n<p><strong>Немаркирано</strong>, обикновен потребител ще има права да прави промени по ключове и сертификати. </p><p><strong>Забележка: администраторски достъпе необходим, за да се промени тази настройка.</strong></p>";
 
 /* HTML info for the 'Monitor network settings' checkbox. */
 "<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>" = "<p><strong>Когато е маркиран</strong>, Tunnelblick ще наблюдава и реагира при промени в мрежовите настройки (наприме промени причинени от подновяване на DHCP или смяна на мрежите), за да поддържа VPN връзката активна. Настройките на Tunnelblick's по подразбиране обикновно работят доре, но може да зададете различно действия в таб 'Докато е свързан' и в 'Разширени' настройки.</p>\n<p><strong>Когато не е маркиран</strong>, Tunnelblick ще игнорира промени в мрежите.</p>\n<p><strong>Тази опция е неактивна</strong> когато 'Задаване на DNS/WINS' не е настроен на 'Използвай nameserver' или 'Използвай nameserver(3.1)'.</p>";
@@ -1967,7 +2088,7 @@
 "<p><strong>When checked</strong>, no automatic checking for updates or checking for IP address changes will be done, regardless of other settings. Note: both of these activities access the Tunnelblick website.</p>\n<p><strong>When not checked</strong>, automatic checking for updates will be done if enabled below, and checking for IP address changes will be done when connecting a configuration if the configuration's setting to do so is enabled.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p><p>&nbsp;</p>" = "<p><strong>Маркирано</strong>, не се правят автоматични проверки за актуализации или промяна на IP адреса, независимо от другите настройки. Забележка: и двете дейности ползват сайта на Tunnelblick.</p>\n<p><strong>Немаркирано</strong>, правят се автоматични проверки за актуализации или промяна на IP адреса при свързване ако тази настройка е маркирана.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Лични данни и поверителност</a> [tunnelblick.net] за подробности.</p><p>&nbsp;</p>";
 
 /* HTML info for the 'Place near Spotlight icon' checkbox. The two '%@' are replaced by images of the menu bar showing the position of the Tunnelblick icon. */
-"<p><strong>When checked</strong>, the Tunnelblick icon is positioned near the Spotlight icon:</p>\n<p>%@</p>\n<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n<p>%@</p>\n<p><strong>This checkbox is disabled</strong> on macOS Sierra because it is not needed, and on systems for which it is known to cause problems.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>" = "<p><strong>Когато е маркирано</strong>, иконата на Tunnelblick се разполага близо до тази на Spotlight:</p>\n<p>%1$@</p>\n<p><strong>Когато не е маркирано</strong>, иконата на Tunnelblick се разполага стандартно:</p>\n<p>%2$@</p>\n<p><strong>Този чекбокс е неактивен</strong> на macOS Sierra защото не е необходим и е известно, че това би предизвикало проблеми на такива системи.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">Повече информация</a></p>";
+"<p><strong>When checked</strong>, the Tunnelblick icon is positioned near the Spotlight icon:</p>\n<p>%@</p>\n<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n<p>%@</p>\n<p><strong>This checkbox is disabled</strong> on macOS Sierra and higher because it is not needed, and on systems for which it is known to cause problems.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>" = "<p><strong>Когато е маркирано</strong>, иконата на Tunnelblick се разполага близо до тази на Spotlight:</p>\n<p>%1$@</p>\n<p><strong>Когато не е маркирано</strong>, иконата на Tunnelblick се разполага стандартно:</p>\n<p>%2$@</p>\n<p><strong>Този чекбокс е неактивен</strong> на macOS Sierra защото не е необходим и е известно, че това би предизвикало проблеми на такива системи.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">Повече информация</a></p>";
 
 /* HTML info for the 'Show the VPN status window when disconnected' checkbox. */
 "<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>Ако е маркирано</strong>, прозорецът за статус на VPN ще се показва дори и конфигурацията да не е свързана.</p><p><strong>Ако не е активна</strong> тогава 'Не показвай никога' опцията е избрана по-горе.</p>";
@@ -1999,6 +2120,9 @@
 /* HTML info for the 'Check Now' button. */
 "<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>" = "<p>Провери за актуализации на приложение Tunnelblick.</p><p>Достъпва се сайта на Tunnelblick; за повече детайли виж <a href=\"https://tunnelblick.net/cPrivacy.html\">Лични данни и поверителност</a> [tunnelblick.net].</p><p>Също така проверете за актуализации на конфигурацията на вашия VPN.</p>";
 
+/* HTML info for the 'Copy Diagnostic Info to Clipboard' button. */
+"<p>Copies information to the Clipboard to help diagnose problems.</p><p>The information includes software versions and settings, the OpenVPN configuration file, network settings and more.</p><p>Sensitive certificate information is not included, but data such as IP addreses and URLs which <em>may</em> be confidential are included. You should examine the information and remove anything you want kept secret before sending it in an email or posting it publicly.</p>" = "<p>Копира информация в клипборда, за да се помогне анализа на проблеми.</p><p>Информацията включва версия на софтуера и настройките му, конфигурационният файл на OpenVPN, мрежови настройки и други.</p><p>Чувствителна информация за сертификата не се включва, но данни като IP адреси и URL, които <em>може</em> да са конфиденциални се включват. Добре е да прегледате информацията и да премахнете информация, която искате да запазите в тайна преди да изпратите email или да публикувате публично.</p>";
+
 /* HTML info for the 'Copy Console Log to Clipboard' button. */
 "<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>" = "<p>Копира последната част от Console Log-а в клипборда, за да може да се прехвърли в email или друг документ.</p><p>Log-ът съдържа детайли за действията на Tunnelblick и OpenVPN. Той включва нормални статус съобщения и детайлни съобщения за грешки, които са много дълги да бъдат показани на потребителя в нормален диалогов прозорец.</p>";
 
@@ -2014,17 +2138,41 @@
 /* HTML info for the 'Reset Disabled Warnings' button. */
 "<p>Restores warnings that have been inhibited by a 'Do not warn about this again' checkbox.</p>" = "<p>Възстановява предупрежденията когато са били подтиснати с маркирането на отметка 'Не предупреждавай за това отново'.</p>";
 
+/* HTML info for the 'VPN log level' button. */
+"<p>Specifies the amount of logging that is done by Tunnelblick and OpenVPN.</p>" = "<p>Определя обемът от журнални детайли, които прави Tunnelblick и OpenVPN.</p>";
+
+/* HTML info for the 'Icon' button. */
+"<p>Specifies the icon which Tunnelblick should display in the menu bar.</p>" = "<p>Определя коя икона на Tunnelblick да показва в лентата с менюто.</p>";
+
+/* HTML info for the 'Keyboard shortcut' button. */
+"<p>Specifies the keys to press to invoke Tunneblick's main menu.</p>" = "<p>Определя клавишите, които да се натиснат, за да се извика основното меню на Tunneblick.</p>";
+
+/* HTML info for the 'Maximum log display size' button. */
+"<p>Specifies the maximum amount of storage to use to display the VPN log.</p>" = "<p>Определя максималното място заемано за показване на VPN лога.</p>";
+
+/* HTML info for the button for selecting which screen to show status windows. */
+"<p>Specifies the screen on which Tunnelblick should display VPN status windows.</p>" = "<p>Определя кога Tunnelblick да показва VPN статус прозореца.</p>";
+
+/* HTML info for the 'VPN status windows' button. */
+"<p>Specifies when Tunnelblick should display VPN status windows.</p>" = "<p>Определя кога Tunnelblick да показва VPN статус прозореца.</p>";
+
 /* HTML info for the 'Flush DNS cache after connecting or disconnecting' checkbox. */
 "<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>" = "<p>DNS кешът съдържа копия на DNS (Domain Name System) информация.</p>\n<p><strong>Когато е маркиран</strong>, DNS кешът ще бъде изтрит след свързване или излючване на връзката. Всички DNS заявки ще бъдат изпълнявани от зададения name сървър във VPN настройките.</p>\n<p><strong>Когато не е маркиран</strong>, DNS кешът няма да бъде изтрит. Това може да причини проблеми с конфликти на имена между зададения name сървър във VPN настройките и този от преди свързването с VPN сървъра, които са в кеша.</p>";
 
 /* HTML info for the 'Open easy-rsa in Terminal' button. */
 "<p>Tunnelblick includes a customized version of 'easy-rsa', which is a set of command line scripts written by the OpenVPN developers for creating and maintaining certificates and keys.</p><p>Clicking this button launches the OS X Terminal application with the working directory set to the folder containing the scripts.</p><p>The scripts are normally located in the folder at ~/Library/Application Support/Tunnelblick/easy-rsa. An 'easy-rsaPath' preference can contain the path to a folder that Tunnelblick will use instead. 'easy-rsaPath' must be an absolute path or start with a '~', and the parent folder of the path must exist. If a folder exists at the path, it will be used; if it does not exist, it will be created and the easy-rsa scripts will be installed into it when Tunnelblick is launched.</p><p>For information about using easy-rsa, see <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients</a> [openvpn.net].</p><p>For details of Tunnelblick's customizations of easy-rsa, see the README file located in the folder.</p>" = "<p>Tunnelblick включва персонализирана версия на 'easy-rsa', която е набор от скриптове за команден интерпретато написани от програмистите на OpenVPN за създаване и управление на сертификати и ключове.</p><p>Натискайки този бутон ще се стартира Терминал приложението на OS X и ще отвори папката със скриптовете.</p><p>Обикновено те са разположени в ~/Library/Application Support/Tunnelblick/easy-rsa. Но 'easy-rsaPath' настройката може да зададе и път до папка в Tunnelblick вместо това. 'easy-rsaPath' трябва да е абсолютен път или да започва с '~', и основната папка трябва да съществува. Ако папката посочена с пътя съществува, то тя ще се използва; ако не съществува - ще бъде създадена и скриптовете на easy-rsa ще бъдат инсталирани в нея.</p><p>За повече информация как се ползва easy-rsa, вижте <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Настройване на собствен Certificate Authority (CA) и генериране на сертификати и ключове за OpenVPN сървър и множество клиенти</a> [openvpn.net].</p><p>За повече информация по настройване на Tunnelblick easy-rsa, вижте файла README в папката.</p>";
 
+/* HTML error message. The first %@ is a configuration name. The second %@ and third %@ are HTML <a> and </a> tags that link to tunnelblick.net -- translators should ignore them but keep them in their translation. The fourth %@ is a domain name such as 'tunnelblick.net' to show the user where the link goes to (you may replace the square brackets with symbols appropriate for your language). */
+"<p>Tunnelblick was not able to load a system extension that is needed to connect to %@.</p><p>%@More information%@ [%@]</p>" = "<p>Tunnelblick не успя да зареди системно разширение, което е необходимо за връзка с %1$@.</p><p>%2$@Повече детайли%3$@ [%4$@]</p>";
+
 /* Toolbar text for 'Lock' item */
 "Admin mode %@ remaining" = "Администраторски режим %@ остават";
 
 /* Credit description */
 "Afrikaans translation" = "Африканска локализация";
+
+/* Credit description */
+"Albanian translation" = "Албанска локализация";
 
 /* Credit description */
 "Animation and icon sets code" = "Код за анимация и комплекти от икони";
@@ -2046,6 +2194,12 @@
 
 /* Credit description */
 "Catalan translation" = "Каталонска локализация";
+
+/* Checkbox text */
+"Check for IP address changes" = "Провери за промени на IP адреса";
+
+/* Checkbox text */
+"Check for updates" = "Провери за актуализации";
 
 /* Credit description */
 "Chinese (simplified) translation" = "Китайски (опростен) локализация";
@@ -2080,12 +2234,14 @@
 /* Checkbox */
 "Do not show this again" = "Не показвай повече това";
 
+/* Checkbox text */
+"Do not warn about this again, never re-enable" = "Не предупреждавай за това отново, никога не активирай отново";
+
 /* Credit description */
 "Dutch translation" = "Холандска локализация";
 
 /* Toolbar text for 'Lock' icon
-   Toolbar text for 'Lock' item
-*/
+   Toolbar text for 'Lock' item */
 "Enter admin mode" = "Влизане в административен режим";
 
 /* Credit description */
@@ -2108,6 +2264,9 @@
 
 /* Credit description */
 "Greek translation" = "Гръцка локализация";
+
+/* Credit description */
+"Hebrew translation" = "Еврейска локализация";
 
 /* Credit description */
 "Hungarian translation" = "Унгарска локализация";
@@ -2134,7 +2293,7 @@
 "LANGUAGE_TRANSLATION" = "LANGUAGE_TRANSLATION";
 
 /* Names of lead translators */
-"LEAD_TRANSLATORS" = "Boian Mihailov, Nikolay Zhelev, и Mihail Stoynov";
+"LEAD_TRANSLATORS" = "Boian Mihailov, Nikolay Zhelev, Mihail Stoynov, и Alexander Strashilov";
 
 /* Credit description */
 "Latvian translation" = "Латвийска локализация";
@@ -2204,6 +2363,9 @@
 
 /* Notification text */
 "Updated to %@." = "Актуализирано до версия %@.";
+
+/* Credit description */
+"Vietnamese translation" = "Виетнамска локализация";
 
 /* Credit description */
 "Xcode help and OpenSSL integration" = "Xcode help и OpenSSL интеграция";

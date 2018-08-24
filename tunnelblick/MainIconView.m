@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, 2013, 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2012, 2013, 2015, 2016, 2017, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -40,6 +40,8 @@ extern BOOL              gShuttingDownWorkspace;
     if (  gShuttingDownWorkspace  ) {
         return;
     }
+	
+	[(MenuController *)[NSApp delegate] recreateMainMenuClearCache: NO];
     
 	// Detect a triple-click:
 	//        First click comes here and pops up the menu
@@ -79,6 +81,15 @@ extern BOOL              gShuttingDownWorkspace;
     mainIconTrackingRectTagIsValid = TRUE;
     TBLog(@"DB-SI", @"setupTrackingRect: Added main tracking rectangle (%f,%f, %f, %f) for MainIconView",
           trackingRect.origin.x, trackingRect.origin.y, trackingRect.size.width, trackingRect.size.height)
+}
+
+-(void) drawRect: (NSRect) rect
+{
+    NSStatusItem * statusI = [((MenuController *)[NSApp delegate]) statusItem];
+    BOOL menuIsOpen = [((MenuController *)[NSApp delegate]) menuIsOpen];
+    [statusI drawStatusBarBackgroundInRect: rect withHighlight: menuIsOpen];
+    
+    [super drawRect: rect];
 }
 
 

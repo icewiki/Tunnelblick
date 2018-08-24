@@ -32,10 +32,10 @@
 # So, to do a clean build of the third party items, make sure that the
 # third_party/do-not-clean file does not exist, and then build Tunnelblick normally.
 
-# Make sure we have the correct version of tunnelblick.xcodeproj for the version of Xcode that we are using
-if [ ${XCODE_VERSION_ACTUAL} -lt 0630 ] ; then
+# Make sure we have a recent version of Xcode
+if [ ${XCODE_VERSION_ACTUAL} -lt 0731 ] ; then
   outer_dir="${PWD%/*}"
-  echo "error: Tunnelblick must be built with Xcode 6.3 or higher, or 3.3.2. This version of Tunnelblick.xcodeproj is for Xcode 6.3 or higher on OS X 10.10.3 or higher. See ${outer_dir}/README.txt"
+  echo "error: Tunnelblick must be built with Xcode 6.3 or higher. This version of Tunnelblick.xcodeproj is for Xcode 7.3.1 or higher on OS X 10.10.3 or higher. See ${outer_dir}/README.txt"
   exit 1
 fi
 
@@ -46,22 +46,6 @@ COMMAND_MODE=unix2003
 
 # The following line is needed so up-to-date autotools are used
 PATH="/usr/local/bin:$PATH"
-
-# Test for version 2.69 of autoconf
-autoconf_version="$(autoconf --version | grep autoconf | sed -e 's/autoconf (GNU Autoconf) //')"
-if [ "${autoconf_version}" != "2.69" ] ; then
-  echo "warning: autoconf is version '${autoconf_version}'; expected version 2.69. Autotools may be out-of-date which can cause problems building some of the third_party programs"
-fi
-
-# Test for version 1.9 or 1.15 of automake
-automake_version="$(automake --version | grep automake | sed -e 's/automake (GNU automake) //')"
-if [ "${automake_version}" != "1.9" ]
-then
-  if [ "${automake_version}" != "1.15" ]
-    then
-      echo "warning: automake is version '${automake_version}'; expected version 1.9 or 1.15. Autotools may be out-of-date which can cause problems building some of the third_party programs"
-  fi
-fi
 
 if [ ! -e do-not-clean ]; then
   make clean

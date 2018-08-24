@@ -1,5 +1,5 @@
 /*
- * Copyright 2011, 2012, 2013, 2014, 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -23,6 +23,7 @@
 #import "InfoView.h"
 
 #import "helper.h"
+#import "sharedRoutines.h"
 
 #import "UIHelper.h"
 #import "NSTimer+TB.h"
@@ -118,19 +119,23 @@ extern TBUserDefaults * gTbDefaults;
     NSString * aboutPath    = [[[NSBundle mainBundle] bundlePath] stringByAppendingString: @"/Contents/Resources/about.html"];
 	NSString * htmlFromFile = [NSString stringWithContentsOfFile: aboutPath encoding:NSASCIIStringEncoding error:NULL];
     if (  htmlFromFile  ) {
-        NSString * basedOnHtml  = NSLocalizedString(@"<br>Based on Tunnel" @"blick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Technologies, Inc.", @"Window text");
+        NSString * basedOnHtml  = NSLocalizedString(@"<br>Based on Tunnel" @"blick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Inc.", @"Window text");
         NSString * html         = [NSString stringWithFormat:@"%@%@%@%@",
                                    @"<html><body><center><div style=\"font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px\">",
                                    htmlFromFile,
                                    basedOnHtml,
                                    @"</div></center><body></html>"];
         NSData * data = [html dataUsingEncoding:NSASCIIStringEncoding];
+		if (  ! data  ) {
+			NSLog(@"Cannot get dataUsingEncoding:NSASCIIStringEncoding for html; stack trace = %@", callStack());
+			data = [NSData data];
+		}
         NSAttributedString * description = [[[NSAttributedString alloc] initWithHTML:data documentAttributes:NULL] autorelease];
         [[infoDescriptionTV textStorage] setAttributedString: description];
     } else {
         
         // Create the base string with localized content (the leading space is needed to keep the prefix from becoming a link; it is removed if the prefix is not needed)
-		NSString * localizedContent = NSLocalizedString(@" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Technologies, Inc.", @"Window text");
+		NSString * localizedContent = NSLocalizedString(@" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Inc.", @"Window text");
         NSMutableAttributedString * descriptionString = [[[NSMutableAttributedString alloc] initWithString: localizedContent] autorelease];
         
         // Replace the placeholders in the localized content with links
@@ -220,25 +225,33 @@ extern TBUserDefaults * gTbDefaults;
     NSArray * locCredits = [NSArray arrayWithObjects:
 							[NSArray arrayWithObjects: @"Sobhi Abufool",                 NSLocalizedString(@"Arabic translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Khalid Alhumud",                NSLocalizedString(@"Arabic translation",                  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Ali#",							 NSLocalizedString(@"Persian translation",                 @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Vittorio Anselmo",				 NSLocalizedString(@"Italian translation",                 @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Felin Arch",					 NSLocalizedString(@"Hungarian translation",               @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Alejandro Azadte",              NSLocalizedString(@"Spanish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"b123400",                       NSLocalizedString(@"Chinese (traditional) translation",   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Matej Bačík",                   NSLocalizedString(@"Slovak translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Stefan Bethke",                 NSLocalizedString(@"German translation",                  @"Credit description"), nil],
+                            [NSArray arrayWithObjects: @"Simon Biber",					 NSLocalizedString(@"Chinese (traditional) translation",                  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Simon Biber",					 NSLocalizedString(@"Chinese (simplified) translation",                  @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Dariusz Bogdanski",             NSLocalizedString(@"Polish translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Olivier Borowski",              NSLocalizedString(@"French translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Martin Bratteng",               NSLocalizedString(@"Norwegian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Alican Cakil",                  NSLocalizedString(@"Turkish translation",                 @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Charlie Brown",                 NSLocalizedString(@"Vietnamese translation",              @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Sergio Andrés Castro Cárdenas", NSLocalizedString(@"Spanish translation",                 @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Adam Černý",                    NSLocalizedString(@"Czech translation",                   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"cert.lv",                       NSLocalizedString(@"Latvian translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Zhanchong Chen",                NSLocalizedString(@"Chinese (simplified) translation",    @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Vadim Chumachenko",             NSLocalizedString(@"Ukrainian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Iris Coeligena",                NSLocalizedString(@"Turkish translation",                 @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Diego Silva Cogo",              NSLocalizedString(@"Portuguese (Brazilian) translation",  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Catalin Comanici",              NSLocalizedString(@"Romanian translation",                @"Credit description"), nil],
-                            [NSArray arrayWithObjects: @"Diego Silva Cogo",              NSLocalizedString(@"Portuguese (Brazilian) translation",  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Redian Copa",					 NSLocalizedString(@"Albanian translation",				   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Mats Cronqvist",                NSLocalizedString(@"Swedish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Grzegorz Danecki",              NSLocalizedString(@"Polish translation",                  @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Mohamad Deek",                  NSLocalizedString(@"Arabic translation",                  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Sergiy Dolnyy",                 NSLocalizedString(@"Ukrainian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Aleix Dorca",                   NSLocalizedString(@"Catalan translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Andreas Finke",                 NSLocalizedString(@"German translation",                  @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Marco Firsching",               NSLocalizedString(@"German translation",                  @"Credit description"), nil],
@@ -255,8 +268,10 @@ extern TBUserDefaults * gTbDefaults;
 							[NSArray arrayWithObjects: @"Robbert Hamburg CISA, CISSP, CEH", NSLocalizedString(@"Flemish translation",              @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Takatoh Herminghaus",           NSLocalizedString(@"German translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Oliver Hill",                   NSLocalizedString(@"French translation",                  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Cam Hoang",                     NSLocalizedString(@"Vietnamese translation",              @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"'Dr Hok'",                      NSLocalizedString(@"German translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Evandro Curvelo Hora",          NSLocalizedString(@"Portuguese (Brazilian) translation",  @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Johan Hornof",                  NSLocalizedString(@"Czech translation",                   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Jesse Hulkko",                  NSLocalizedString(@"Finnish translation",                 @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Christophe Icard",              NSLocalizedString(@"French translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Jarmo Isotalo",                 NSLocalizedString(@"Finnish translation",                 @"Credit description"), nil],
@@ -268,6 +283,7 @@ extern TBUserDefaults * gTbDefaults;
                             [NSArray arrayWithObjects: @"Alexander Kaydannik",           NSLocalizedString(@"Ukrainian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Kornél Keszthelyi",             NSLocalizedString(@"Hungarian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Kyoungmin Kim",                 NSLocalizedString(@"Korean translation",                  @"Credit description"), nil],
+                            [NSArray arrayWithObjects: @"Laurens de Knijff",             NSLocalizedString(@"Dutch translation",                   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Mikael Kolkinn",                NSLocalizedString(@"Norwegian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Andrejs Kotovs",                NSLocalizedString(@"Latvian translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"kskmt",                         NSLocalizedString(@"Japanese translation",                @"Credit description"), nil],
@@ -277,6 +293,7 @@ extern TBUserDefaults * gTbDefaults;
                             [NSArray arrayWithObjects: @"Isaac Kwan",                    NSLocalizedString(@"Chinese (traditional) translation",   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Aming Lau",                     NSLocalizedString(@"Chinese (traditional) translation",   @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Aleksey Likholob",              NSLocalizedString(@"Ukrainian translation",               @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Yen-Ting Liu",                  NSLocalizedString(@"Chinese (traditional) translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Jon Luberth",                   NSLocalizedString(@"Norwegian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Łukasz M",                      NSLocalizedString(@"Polish translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Jakob Bo Søndergaard Madsen",   NSLocalizedString(@"Danish translation",                  @"Credit description"), nil],
@@ -288,6 +305,7 @@ extern TBUserDefaults * gTbDefaults;
 							[NSArray arrayWithObjects: @"Klaus Marx",                    NSLocalizedString(@"German translation",                  @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Rustam Mehmandarov",            NSLocalizedString(@"Azerbaijani translation",             @"Credit description"), nil],
 							[NSArray arrayWithObjects: @"Rustam Mehmandarov",            NSLocalizedString(@"Norwegian translation",               @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Rustam Mehmandarov",            NSLocalizedString(@"Russian translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Atakan Meray",                  NSLocalizedString(@"Turkish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Boian Mihailov",                NSLocalizedString(@"Bulgarian translation",               @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Richárd Murvai",                NSLocalizedString(@"Hungarian translation",               @"Credit description"), nil],
@@ -299,7 +317,9 @@ extern TBUserDefaults * gTbDefaults;
                             [NSArray arrayWithObjects: @"Feetu Nyrhinen",                NSLocalizedString(@"Finnish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Kenji Obata",                   NSLocalizedString(@"Japanese translation",                @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Peter K. O'Connor",             NSLocalizedString(@"Chinese (simplified) translation",    @"Credit description"), nil],
+                            [NSArray arrayWithObjects: @"Tzvika Ofek",					 NSLocalizedString(@"Hebrew translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Tzanos Panagiotis",             NSLocalizedString(@"Greek translation",                   @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"La Pegunta Foundation",         NSLocalizedString(@"Catalan translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Petra Penttila",                NSLocalizedString(@"Finnish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Matteo Pillon",                 NSLocalizedString(@"Italian translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Ioannis Pinakoulakis",          NSLocalizedString(@"Greek translation",                   @"Credit description"), nil],
@@ -308,6 +328,7 @@ extern TBUserDefaults * gTbDefaults;
                             [NSArray arrayWithObjects: @"Ricardo Rezende",               NSLocalizedString(@"Portuguese (Brazilian) translation",  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Diego Rivera",                  NSLocalizedString(@"Spanish translation",                 @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Nicolas Rodriguez (Tupaca)",    NSLocalizedString(@"Spanish translation",                 @"Credit description"), nil],
+							[NSArray arrayWithObjects: @"Michoel Samuels",               NSLocalizedString(@"Hebrew translation",                  @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Saulo Santos",                  NSLocalizedString(@"Portuguese translation",              @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Ranal Saron",                   NSLocalizedString(@"Estonian translation",                @"Credit description"), nil],
                             [NSArray arrayWithObjects: @"Markus Schneider",              NSLocalizedString(@"German translation",                  @"Credit description"), nil],
@@ -567,6 +588,14 @@ extern TBUserDefaults * gTbDefaults;
 - (void)scrollCredits:(NSTimer *)timer
 {
 	(void) timer;
+    
+    if (  lastPosition != [[infoCreditSV contentView] bounds].origin.y  ) {
+        // Manual scroll has occurred. Pause the auto-scroll for at least a second.
+        startTime = [NSDate timeIntervalSinceReferenceDate] + 1.0;
+        
+        requestedPosition = lastPosition;
+        restartAtTop = NO;
+    }
 	
     if ([NSDate timeIntervalSinceReferenceDate] >= startTime) {
         if (  restartAtTop  ) {
@@ -581,12 +610,7 @@ extern TBUserDefaults * gTbDefaults;
             }
             // Set the position
             [infoCreditTV scrollPoint:NSMakePoint( 0.0, 0.0 )];
-            
-            return;
-        }
-        
-        CGFloat actualPosition = [[infoCreditSV contentView] bounds].origin.y;
-        if (  requestedPosition > actualPosition + 200.0  ) {
+        } else if (  requestedPosition > [infoCreditTV bounds].size.height + 200.0  ) {
             // Reset the startTime
             startTime = [NSDate timeIntervalSinceReferenceDate] + 1.0;  // Time from fading out at end to fade in at top
             
@@ -607,6 +631,8 @@ extern TBUserDefaults * gTbDefaults;
             requestedPosition += 1.0;
         }
     }
+    
+    lastPosition = [[infoCreditSV contentView] bounds].origin.y;
 }
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSButton        *, infoHelpButton)

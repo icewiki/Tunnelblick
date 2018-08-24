@@ -7,7 +7,7 @@ CONTENTS
     THE THIRD_PARTY FOLDER CONTENTS
     SOURCES FOLDER DETAILS
     CHANGING THIRD PARTY PROGRAMS
-    
+
 
 INTRODUCTION
 
@@ -33,7 +33,7 @@ versions of the GNU autotools be installed. The "autotools" programs consist of 
 versions of the autotools programs, and OS X 10.8.5 with Xcode 4 and higher does not
 include the autotools programs at all.
 
-The "ShellScriptToInstallAutotools.sh" script will download recent (possibly not the most
+The "third+party/ShellScriptToInstallAutotools.sh" script will download recent (possibly not the most
 recent) versions of the autotools and install them into /usr/local/bin.
 
 When building Tunnelblick, the first build phase "Run Script" that builds the third party
@@ -81,6 +81,7 @@ Two programs are used slightly differently:
 Four programs are built as libraries and statically linked to OpenVPN:
 
     LZO:           A compression/decompression library
+    LZ4:           A compression/decompression library
     OpenSSL:       A TLS/SSL library
     LibreSSL:	    A TLS/SSL library
     pkcs11-helper: A library for dealing with PKCS#11 devices
@@ -95,16 +96,16 @@ The third_party folder contains the following files and folders:
         third party programs. It builds the third-party programs for Intel 64-bit (only)
         on whatever deployment target is specified by Xcode for the main
         Tunnelblick application. It uses make's "include" directive to include all of the
-        files in the "makefiles" subfolder. 
+        files in the "makefiles" subfolder.
 
     makefiles
         This folder contains a Makefile for each of the third-party programs.
-        
+
     sources
         This folder contains the source code for each of the third party programs. See
         "SOURCES FOLDER DETAILS", below.
 
-The build process results in the creation of the following files and folders:
+The build process results in the creation of the following files and folders in third_party:
 
     do-not-clean
         The "do-not-clean" file is created by the "Run script" at the end of the third
@@ -138,36 +139,40 @@ The "sources" folder contains the source code for each of the third party progra
 that the version numbers in this document may not match the versions included in the
 current Tunnelblick source code.
 
-    lzo-2.08.tar.gz
-        This is an archive of the source code for LZO 2.08, as downloaded from
-        http://www.oberhumer.com/opensource/lzo on 2014-03-26.
+    libressl-2.5.5.tar.gz
+        This is an archive of the source code for LibreSSL 2.5.5, as downloaded from
+        https://ftp.openbsd.org/pub/OpenBSD/LibreSSL on 2017-08-11.
 
-    openssl-1.0.1k.tar.gz
-        This is an archive of the source code for OpenSSL 1.0.1k, as downloaded from
-        http://www.openssl.org/source on 2014-03-26.
+    lz4-1.7.5.tar.gz
+        This is an archive of the source code for LZ4 1.7.5, as downloaded from
+        https://github.com/lz4/lz4/releases.
 
-    libressl-2.5.0.tar.gz
-        This is an archive of the source code for LibreSSL 2.5.0, as downloaded from
-        http://ftp.openbsd.org/pub/OpenBSD/LibreSSL on 2016-10-06.
+    lzo-2.10.tar.gz
+        This is an archive of the source code for LZO 2.10, as downloaded from
+        https://www.oberhumer.com/opensource/lzo on 2017-08-11.
 
-    pkcs11-helper-1.11.tar.bz2
-        This is an archive of the source code for pkcs11-helper 1.11, as downloaded from
-        http://sourceforge.net/projects/opensc/files/pkcs11-helper on 2014-03-26.
+    openssl-1.0.2l.tar.gz
+        This is an archive of the source code for OpenSSL 1.0.2l, as downloaded from
+        https://www.openssl.org/source on 2017-08-11.
 
-    Sparkle 1.5b6.zip
-        This is an archive of the source code for Sparkle 1.5b6, as downloaded from
-        http://sparkle-project.org in 2010.
+    pkcs11-helper-1.22.tar.bz2
+        This is an archive of the source code for pkcs11-helper 1.22, as downloaded from
+        https://github.com/OpenSC/pkcs11-helper on 2017-08-11.
+
+    Sparkle-077c64419f9460263bad99ab24dff962a103b1e2.zip
+        This is an archive of the source code for Sparkle 077c644, as downloaded from
+        https://github.com/sparkle-project/Sparkle in 2016.
 
     patches
         This folder contains patches for OpenSSL and Sparkle. tuntap and OpenVPN each have
         a similar folder of patches for each version. The process of creating the third
         party programs expands the source code into the third_party/build folder, patches
         the source code, and then builds the patched source code. As of 2016-07-31, only
-        Sparkle have patches. (If easy-rsa, LZO, LZ4, or pkcs11-helper need patches, it
+        Sparkle has patches. (If easy-rsa, LZO, LZ4, or pkcs11-helper need patches, it
         will be necessary to modify their respective makefiles to implement the patching process.)
 
     tuntap
-        This folder contains source code and patches to create the three versions of
+        This folder contains source code and patches to create the version(s)s of
         tuntap that are used by Tunnelblick. If additional newer versions are required,
         they should be put in this folder and the makefile modified to build them.
 
@@ -187,8 +192,10 @@ current Tunnelblick source code.
             OpenVPN.
 
             openvpn-x.y.z.tar.gz
+            or
+            openvpn-x.y.z.tar.xz
                 This archive contains the source code for this version of OpenVPN, as
-                downloaded from http://openvpn.net/index.php/open-source/downloads.html.
+                downloaded from https://openvpn.net/index.php/open-source/downloads.html.
 
             patches
                 This folder contains patches for this version of OpenVPN. All versions
@@ -210,11 +217,11 @@ current Tunnelblick source code.
         This folder contains three folders that are used to create the final
         "easy-rsa-tunnelblick" folder that is contained within Tunnelblick.app.
 
-        easy-rsa-3.0.0-rc2
-            This is the source code for easy-rsa-3.0.0-rc2.
+        easy-rsa-3.0.1
+            This is the source code for easy-rsa-3.0.1.
 
         easy-rsa-from-openvpn-2.2.1
-            This is the source code for easy-rsa 2 take from the OpenVPN 2.2.1 source
+            This is the source code for easy-rsa 2 taken from the OpenVPN 2.2.1 source
             code.
 
         easy-rsa-2-tunnelblick
@@ -227,7 +234,7 @@ CHANGING THIRD PARTY PROGRAMS
     When a new version of a third party program is released, it is usually appropriate
     to include the new version in Tunnelblick.
 
-To replace an older version of LZO, OpenSSL, LibreSSL, or pkcs11-helper:
+To replace an older version of LibreSSL, LZ4, LZO, OpenSSL, or pkcs11-helper:
 
     1. Download an archive containing the source code and copy it to the "sources"
        subfolder. Download the same type of archive (".tar.gz", ".tar.bz2", or ".zip") as
@@ -243,7 +250,8 @@ To replace an older version of LZO, OpenSSL, LibreSSL, or pkcs11-helper:
 To add a new version of OpenVPN:
     1. Download an archive containing the source code and copy it to a new subfolder in
        third_party/openvpn. (The subfolder must be named "openvpn-x.y.z", where x.y.z is
-       the version of OpenVPN that it contains.) Download the archive as a ".tar.gz" file.
+       the version of OpenVPN that it contains.) Download the archive as a ".tar.gz" or
+       ".tar.xz" file.
     2. If necessary, create or modify a .diff file for each patch that is needed and
        copy the .diff file into the subfolder.
     3. If necessary, or create or modify a 'configuration-options.txt' file to specify
@@ -252,23 +260,23 @@ To add a new version of OpenVPN:
 
 To remove a version of OpenVPN:
     Remove the version's folder from /third_party/openvpn.
-    
+
 To add a new version of tuntap:
     1. Download an archive containing the source code and copy it to a new subfolder in
-       third_party/tuntap. Download the archive as a ".tar.gz" file.
+       third_party/sources/tuntap. Download the archive as a ".tar.gz" file.
     2. Delete the archive of the older version.
     3. If necessary, create or modify a .diff file for each patch that is needed and
        copy the .diff file into the appropriate subfolder in third_party/patches.
-    4. Modify Makefile-tuntap to create the newer version. This will involve changes in
+    4. Modify third_party/Makefile-tuntap to create the newer version. This will involve changes in
        several places.
     5. Other changes may be needed in the Tunnelblick source code to use the new version
        (for example, if it is only for specific versions of OS X).
 
 To replace Sparkle:
-    
+
     Note: Replacing Sparkle is complicated because of the extensive patches that are made
     to Sparkle to implement extensions used by Tunnelblick. That said:
-    
+
     1. Download an archive containing the source code and copy it to the "sources"
        subfolder. Download the archive as a ".zip" file or a ".tar.gz" file.
     2. Delete the archive of the older version.

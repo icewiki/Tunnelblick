@@ -1,7 +1,9 @@
 Tunnelblick
 ===========
 
-https://tunnelblick.net
+The official Tunnelblick website is at https://tunnelblick.net
+
+The official Tunnelblick source code respository is at https://github.com/Tunnelblick/Tunnelblick
 
 What is Tunnelblick?
 ----------------
@@ -13,9 +15,23 @@ License
 
 Tunnelblick is released under the terms of the GNU General Public License, version 2.
 
-Bugs
-----
+Bugs / Issues
+-------------
+We welcome reports of issues and bugs. We prefer you post issues and bug reports on the [Tunnelblick Discussion Group](https://groups.google.com/forum/#!forum/tunnelblick-discuss), but also accept [Tunnelblick GitHub Issues](https://github.com/Tunnelblick/Tunnelblick/issues).
 
-Please report problems using Tunnelblick on the [Tunnelblick Discussion Group](https://groups.google.com/forum/#!forum/tunnelblick-discuss).
+Pull Requests
+-------------
 
-*This repository was automatically exported from the official [Google Code](https://code.google.com/p/tunnelblick) site on 2015-07-17.*
+We welcome PRs for everything **except** translations and localization. We **do not** accept PRs for localization or translations. To help with translations and localization, please see
+[Localizing and Translating Tunnelblick](https://tunnelblick.net/cLocalizeTranslate.html).
+
+
+Code of Conduct
+---------------
+
+See our [Code of Conduct](https://github.com/Tunnelblick/Tunnelblick/blob/master/.github/CODE_OF_CONDUCT.md)
+
+Contributing
+------------
+
+See [Contributing](https://github.com/Tunnelblick/Tunnelblick/blob/master/.github/CONTRIBUTING.md).

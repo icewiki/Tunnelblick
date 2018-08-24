@@ -1,7 +1,7 @@
 /*
  * Copyright 2004, 2005, 2006, 2007, 2008, 2009 Angelo Laub
  * Contributions by Dirk Theisen, Jens Ohlig, Waldemar Brodkorb
- * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+ * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -76,42 +76,25 @@ enum StatusIconPosition {
     iconNormal          = 2
 };
 
-// The following line is needed to avoid a crash on load on 10.4 and 10.5. The crash is caused by the use of "block" structures in the code,
-// even though the block structures are not used when running under 10.4 or 10.5.
-// The code that uses blocks is the line
-//      [idxSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-// which appears in the setPreferenceForSelectedConfigurationsWithKey:to:isBOOL: method.
-// This fix was found at http://lists.apple.com/archives/xcode-users/2009/Oct/msg00608.html
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-void * _NSConcreteStackBlock __attribute__((weak));
-#endif
-
 @interface NSStatusBar (NSStatusBar_Private)
 - (id)_statusItemWithLength:(CGFloat)l withPriority:(long long)p;
 - (id)_insertStatusItem:(NSStatusItem *)i withPriority:(long long)p;
 @end
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-@class NSStatusBarButton;
-#endif
-
-// The following conditional is needed because the SDK in Xcode 3.2.2 does not include NSUserNotificationCenterDelegate, which was introduced in 10.8
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-@interface MenuController : NSObject <NSAnimationDelegate,NSMenuDelegate>
-#else
 @interface MenuController : NSObject <NSAnimationDelegate,NSMenuDelegate,NSUserNotificationCenterDelegate>
-#endif
 
 {
     IBOutlet NSMenu         * myVPNMenu;                    // Tunnelblick's menu, displayed in Status Bar
+	NSArray                 * cachedMenuItems;				// Cached copy of configuration items and folders for menu
     NSStatusItem            * statusItem;                   // Our place in the Status Bar
     NSStatusBarButton       * statusItemButton;             // Or nil if not on 10.10 or higher
     MainIconView            * ourMainIconView;              // View for the main icon
     IBOutlet NSMenuItem     * statusMenuItem;               // First line of menu, displays status (e.g. "Tunnelblick: 1 connection active"
     NSMenuItem              * noConfigurationsItem;         // Displayed if there are no configurations installed
-    NSMenuItem              * vpnDetailsItem;               //    "VPN Details..." item for menu
-    NSMenuItem              * addConfigurationItem;         //    "Add a VPN..." menu item
-    NSMenuItem              * contactTunnelblickItem;       //    "Contact Tunnelblick..." menu item (if beta version)
+	NSMenuItem              * reenableInternetItem;         // "Re-enable Network Access" item for menu
+    NSMenuItem              * vpnDetailsItem;               // "VPN Details..." item for menu
+    NSMenuItem              * addConfigurationItem;         // "Add a VPN..." menu item
+    NSMenuItem              * contactTunnelblickItem;       // "Contact Tunnelblick..." menu item (if beta version)
     
 #ifdef INCLUDE_VPNSERVICE
     NSMenuItem              * registerForTunnelblickItem;//    "Register for Tunnelblick..." menu item
@@ -206,6 +189,8 @@ void * _NSConcreteStackBlock __attribute__((weak));
 	BOOL volatile             doingSetupOfUI;				// Indicates we are setting up the UI, and not making changes to preferences
 	
 	BOOL volatile             menuIsOpen;					// Indicates the main Tunnelblick menu is open
+
+	BOOL					  quittingAfterAnInstall;		// Used to control cleanup: after an install
 	
     unsigned                  tapCount;                     // # of instances of openvpn that are using our tap kext
     unsigned                  tunCount;                     // # of instances of openvpn that are using our tun kext
@@ -249,8 +234,9 @@ void * _NSConcreteStackBlock __attribute__((weak));
 -(void)             setBooleanPreferenceForSelectedConnectionsWithKey: (NSString *)	key
 																   to: (BOOL)       newValue
 															 inverted: (BOOL)		inverted;
+-(BOOL)				askAndMaybeReenableNetworkAccessAllowCancel:	(BOOL) allowCancel;
 -(void)             showConfirmIconNearSpotlightIconDialog;
--(void)             changedDisplayConnectionSubmenusSettings;
+-(void)             recreateMainMenuClearCache:				(BOOL)				clearCache;
 -(void)             changedDisplayConnectionTimersSettings;
 -(void)             checkForUpdates:                        (id)                sender;
 -(BOOL)             cleanup;
@@ -284,6 +270,7 @@ void * _NSConcreteStackBlock __attribute__((weak));
                                       event:                (NSEvent *)         theEvent;
 -(BOOL)             mouseIsInsideAnyView;
 -(NSString *)       openVPNLogHeader;
+-(NSString *)		openvpnVersionToUseInsteadOfVersion: (NSString *) prefVersion;
 -(void)             reactivateTunnelblick;
 -(void)             reconnectAfterBecomeActiveUser;
 -(void)             removeConnection:                       (VPNConnection *)   connection;
@@ -294,7 +281,6 @@ void * _NSConcreteStackBlock __attribute__((weak));
 -(void)             saveConnectionsToRestoreOnRelaunch;
 -(void)             setHotKeyIndex:                         (unsigned)          newIndex;
 -(void)             setState:                               (NSString *)        newState;
--(void)             setOurPreferencesFromSparkles;
 -(void)             setPreferenceForSelectedConfigurationsWithDict: (NSDictionary * ) dict;
 -(void)             setupUpdaterAutomaticChecks;
 -(NSArray *)        sortedSounds;
@@ -360,6 +346,7 @@ TBPROPERTY_READONLY(NSMutableArray *, cancellingIPCheckThreads)
 TBPROPERTY_READONLY(ConfigurationMultiUpdater *, myConfigMultiUpdater)
 
 TBPROPERTY(SystemAuth   *, startupInstallAuth,        setStartupInstallAuth)
+TBPROPERTY(NSArray      *, cachedMenuItems,			  setCachedMenuItems)
 TBPROPERTY(NSArray      *, screenList,                setScreenList)
 TBPROPERTY(MainIconView *, ourMainIconView,           setOurMainIconView)
 TBPROPERTY(NSDictionary *, myVPNConnectionDictionary, setMyVPNConnectionDictionary)

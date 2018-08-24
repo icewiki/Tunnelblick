@@ -1,6 +1,6 @@
 /*
  * Copyright 2005, 2006, 2007, 2008, 2009 Angelo Laub
- * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+ * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -24,6 +24,7 @@
 
 #import <mach/mach_time.h>
 #import <pthread.h>
+#import <Security/Security.h>
 #import <sys/stat.h>
 #import <sys/sysctl.h>
 #import <sys/utsname.h>
@@ -62,6 +63,85 @@ void appendLog(NSString * msg)
 	NSLog(@"%@", msg);
 }
 
+
+// The following base64 routines were inspired by an answer by denis2342 to the thread at https://stackoverflow.com/questions/11386876/how-to-encode-and-decode-files-as-base64-in-cocoa-objective-c
+
+static NSData * base64helper(NSData * input, SecTransformRef transform) {
+	
+	NSData * output = nil;
+	
+	if (  input  ) {
+		if (  transform  ) {
+			if (  SecTransformSetAttribute(transform, kSecTransformInputAttributeName, input, NULL)  ) {
+				output = [(NSData *)SecTransformExecute(transform, NULL) autorelease];
+				if (  ! output  ) {
+					appendLog(@"base64helper: SecTransformExecute() returned NULL");
+				}
+			} else {
+				appendLog(@"base64helper: SecTransformSetAttribute() returned FALSE");
+			}
+		} else {
+			appendLog(@"base64helper: transform is nil");
+		}
+	} else {
+		appendLog(@"base64helper: input is nil");
+	}
+	
+	return output;
+}
+
+NSString * base64Encode(NSData * input) {
+	
+	// Returns an empty string on error after logging the reason for the error.
+	
+	NSString * output = @"";
+	
+	if (  input  ) {
+		SecTransformRef transform = SecEncodeTransformCreate(kSecBase64Encoding, NULL);
+		if (  transform != NULL  ) {
+			NSData * data = base64helper(input, transform);
+			CFRelease(transform);
+			if (  data  ) {
+				output = [[[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding] autorelease];
+			} else {
+				appendLog(@"base64Encode: base64helper() returned nil");
+			}
+		} else {
+			appendLog(@"base64Decode: SecEncodeTransformCreate() returned NULL");
+		}
+	} else {
+		appendLog(@"base64Decode: input is nil");
+	}
+	
+	return output;
+}
+
+NSData * base64Decode(NSString * input) {
+	
+	// Returns nil on error after logging the reason for the error.
+	
+	NSData * output = nil;
+	
+	if (  input  ) {
+		NSData * data = [input dataUsingEncoding: NSASCIIStringEncoding];
+		if (  data  ) {
+			SecTransformRef transform = SecDecodeTransformCreate(kSecBase64Encoding, NULL);
+			if (  transform != NULL  ) {
+				output = base64helper(data, transform);
+				CFRelease(transform);
+			} else {
+				appendLog(@"base64Decode: SecEncodeTransformCreate() returned NULL");
+			}
+		} else {
+			appendLog(@"base64Decode: [input dataUsingEncoding: NSASCIIStringEncoding] returned nil");
+		}
+	} else {
+		appendLog(@"base64Decode: input is nil");
+	}
+	
+	return output;
+}
+
 uint64_t nowAbsoluteNanoseconds (void)
 {
     // The next three lines were adapted from http://shiftedbits.org/2008/10/01/mach_absolute_time-on-the-iphone/
@@ -89,31 +169,6 @@ BOOL runningOnNewerThan(unsigned majorVersion, unsigned minorVersion)
     return ( (major > majorVersion) || (minor > minorVersion) );
 }
 
-BOOL runningOnSnowLeopardPointEightOrNewer(void) {
-    
-    unsigned major, minor, bugFix;
-    OSStatus status = getSystemVersion(&major, &minor, &bugFix);
-    if (  status != 0) {
-        NSLog(@"getSystemVersion() failed");
-        [((MenuController *)[NSApp delegate]) terminateBecause: terminatingBecauseOfError];
-        return FALSE;
-    }
-    
-    if (  major < 10  ) {
-        return FALSE;
-    }
-    
-    if (  (major > 10) || (minor > 6)  ) {
-        return TRUE;
-    }
-    
-    return (  (minor == 6) && (bugFix > 7)  );
-}
-
-BOOL runningOnLionOrNewer(void)
-{
-    return runningOnNewerThan(10, 6);
-}
 
 BOOL runningOnMountainLionOrNewer(void)
 {
@@ -140,58 +195,10 @@ BOOL runningOnSierraOrNewer(void)
     return runningOnNewerThan(10, 11);
 }
 
-BOOL runningOnIntel(void) {
-    
-    // Returns NO if it can be determined that this is a PowerPC, YES otherwise
-    
-	unsigned value = 0;
-	unsigned long length = sizeof(value);
-	
-	int error = sysctlbyname("hw.cputype", &value, &length, NULL, 0);
-	if (  error == 0 ) {
-		switch(value) {
-			case 7:
-                return YES; // Intel
-                break;
-                
-			case 18:
-                return NO;  // PPC
-                break;
-                
-			default:
-                NSLog(@"Unknown CPU type %u; assuming Intel", value);
-                return YES;
-		}
-	}
-    
-    NSLog(@"An error occured trying to detect CPU type with sysctlbyname; assuming Intel; error was %lu: %s", (long)errno, strerror(errno));
-    return YES;
+BOOL runningOnHighSierraOrNewer(void)
+{
+	return runningOnNewerThan(10, 12);
 }
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED != MAC_OS_X_VERSION_10_4
-BOOL runningOn64BitKernel(void) {
-    
-    // Returns NO if it can be determined that this is a 32-bit kernel, YES otherwise
-    
-    struct utsname name;
-    
-    int error = uname(&name);
-    
-	if (  error == 0 ) {
-        NSString * version = [NSString stringWithUTF8String: name.version];
-        if (  [version rangeOfString: @"i386"].length != 0  ) {
-            return NO;
-        }
-        if (  [version rangeOfString: @"X86_64"].length == 0  ) {
-            NSLog(@"Unable to determine  32- or 64-bit kernel with uname(), assuming 64-bit kernel; version was '%@'", version);
-        }
-	} else {
-        NSLog(@"An error occured trying to determine 32- or 64-bit kernel with uname(), assuming 64-bit kernel; error was %lu: %s", (long)errno, strerror(errno));
-    }
-    
-    return YES;
-}
-#endif // MAC_OS_X_VERSION_MIN_REQUIRED != MAC_OS_X_VERSION_10_4
 
 BOOL okToUpdateConfigurationsWithoutAdminApproval(void) {
     BOOL answer = (   [gTbDefaults boolForKey: @"allowNonAdminSafeConfigurationReplacement"]
@@ -288,7 +295,16 @@ NSString *condensedConfigFileContentsFromString(NSString * fullString) {
 NSAttributedString * attributedStringFromHTML(NSString * html) {
     
     NSData * htmlData = [html dataUsingEncoding: NSUTF8StringEncoding];
+	if ( htmlData == nil  ) {
+		NSLog(@"attributedStringFromHTML: cannot get dataUsingEncoding: NSUTF8StringEncoding; stack trace = %@", callStack());
+		return nil;
+	}
+	
     NSMutableAttributedString * as = [[NSMutableAttributedString alloc] initWithHTML: htmlData options: @{NSTextEncodingNameDocumentOption: @"UTF-8"} documentAttributes: nil];
+	if ( htmlData == nil  ) {
+		NSLog(@"attributedStringFromHTML: cannot initWithHTML:; stack trace = %@", callStack());
+		return nil;
+	}
     return as;
 }
 
@@ -441,24 +457,107 @@ NSString * tunnelblickVersion(NSBundle * bundle)
     return (version);
 }
 
-AlertWindowController * TBShowAlertWindow (NSString * title,
-                                           NSString * msg) {
+NSString * defaultOpenVpnFolderName (void) {
 	
-	// Displays an alert window and returns the window controller immediately, so it doesn't block the main thread.
-	// Used for informational messages that do not return a choice or have any side effects.
+	// Returns the name of the folder in Resources/openvpn that contains the version of OpenVPN to use as a default.
+	// The name will be of the form openvpn-A.B.C-openssl-D.E.F
+	//
+	// Use the default version of OpenVPN, from the "default" link
+	NSString * defaultLinkPath = [[[NSBundle mainBundle] bundlePath]
+								  stringByAppendingPathComponent: @"/Contents/Resources/openvpn/default"];
+	NSString * defaultLinkTarget = [[gFileMgr tbPathContentOfSymbolicLinkAtPath: defaultLinkPath]
+									stringByDeletingLastPathComponent];
+	return defaultLinkTarget;
+}
+
+AlertWindowController * TBShowAlertWindowExtended(NSString * title,
+												  id				   msg, // NSString or NSAttributedString only
+												  NSString			 * preferenceToSetTrue,
+												  NSString			 * preferenceName,
+												  id				   preferenceValue,
+												  NSString			 * checkboxTitle,
+												  NSAttributedString * checkboxInfoTitle,
+												  BOOL				   checkboxIsOn) {
+	
+	// Displays an alert window and returns the window controller immediately, so it doesn't block the thread. (Or nil may returned, see below.)
+	//
+	// The window controller is returned so that it can be closed programmatically if there is a change to the
+	// conditions that caused the window to be opened.
+	//
+	// (Note: the alert window is always displayed on the main thread, regarless of what thread this routine is called on.)
+	//
+	// The "msg" argument can be an NSString or an NSAttributedString.
     //
-    // The window controller is returned so that it can be closed programmatically if the conditions that caused
-    // the window to be opened change.
-	
-    if ( ! [NSThread isMainThread]  ) {
-        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys: title, @"title", msg, @"msg", nil];
+	// If "preferenceToSetTrue" is not nil:
+	//
+	//		If the preferences is true, no alert window will be displayed, and nil will be returned;
+	//
+	//		Otherwise:
+	//
+	//			A checkbox will be displayed and the corresponding preference will be set TRUE when the window is closed if the checkbox
+	//			had a check in it at the time the window was closed (via the "OK" button, the close button, or the ESC key).
+	//
+	//			The title of the checkbox will be the string in "checkboxTitle", the infoTitle will be the string in
+	//			"checkboxInfoTitle", and the checkbox will be checked if "checkboxIsOn" is true.
+	//
+	//			If nil, "checkboxTitle" defaults to "Do not warn about this again".
+	//			If nil, "checkboxInfoTitle" defaults to
+	//				    "When checked, Tunnelblick will not show this warning again. When not checked, Tunnelblick will show this warning again."
+	//
+	// If "preferenceName" and "preferenceValue are both not nil:
+	//
+	//		A checkbox will be displayed and the preference "preferenceName" will be set to the preferenceValue when the window is
+	//		closed if the checkbox had a check in it at the time the window was closed (via the "OK" button, the close button, or the ESC key).
+	//
+	//			The title of the checkbox will be the string in "checkboxTitle", the infoTitle will be the string in
+	//			"checkboxInfoTitle", and the checkbox will be checked if "checkboxIsOn" is true.
+	//
+	//			If nil, "checkboxTitle" defaults to "Do not warn about this again".
+	//			If nil, "checkboxInfoTitle" defaults to
+	//				    "When checked, Tunnelblick will not show this warning again. When not checked, Tunnelblick will show this warning again."
+
+	// Always show the alert window on the main thread
+	if ( ! [NSThread isMainThread]  ) {
+		NSDictionary * dict =  [NSDictionary dictionaryWithObjectsAndKeys:
+								NSNullIfNil(title),               @"title",
+								NSNullIfNil(msg),                 @"msg",
+								NSNullIfNil(preferenceToSetTrue), @"preferenceToSetTrue",
+								NSNullIfNil(preferenceName),	  @"preferenceName",
+								NSNullIfNil(preferenceValue),	  @"preferenceName",
+								NSNullIfNil(checkboxTitle),       @"checkboxTitle",
+								NSNullIfNil(checkboxInfoTitle),   @"checkboxInfoTitle",
+								[NSNumber numberWithBool: checkboxIsOn], @"checkboxIsOn",
+								nil];
         [UIHelper performSelectorOnMainThread: @selector(showAlertWindow:) withObject: dict waitUntilDone: NO];
         return nil;
     }
+
+	// If user has previously checked "Do not warn about this again", don't do anything and return nil
+	if (  preferenceToSetTrue  ) {
+		if (  [gTbDefaults boolForKey: preferenceToSetTrue]  ) {
+			return nil;
+		}
+	}
     
 	AlertWindowController * awc = [[[AlertWindowController alloc] init] autorelease];
-	[awc setHeadline: title];
-	[awc setMessage:  msg];
+
+	[awc setHeadline:			 title];
+	[awc setPreferenceToSetTrue: preferenceToSetTrue];
+	[awc setPreferenceName:      preferenceName];
+	[awc setPreferenceValue:     preferenceValue];
+	[awc setCheckboxTitle:       checkboxTitle];
+	[awc setCheckboxInfoTitle:   checkboxInfoTitle];
+	[awc setCheckboxIsChecked:   checkboxIsOn];
+	
+	if (  [[msg class] isSubclassOfClass: [NSString class]]  ) {
+		[awc setMessage: msg];
+	} else if (  [[msg class] isSubclassOfClass: [NSAttributedString class]]  ) {
+		[awc setMessageAS: msg];
+	} else {
+		NSLog(@"TBShowAlertWindow invoked with invalid message type %@; stack trace: %@", [msg className], callStack());
+		[awc setMessageAS: [[[NSAttributedString alloc] initWithString: NSLocalizedString(@"Program error, please see the Console log.", @"Window text")] autorelease]];
+	}
+	
 	NSWindow * win = [awc window];
     [win center];
 	[awc showWindow:  nil];
@@ -467,6 +566,12 @@ AlertWindowController * TBShowAlertWindow (NSString * title,
 	return awc;
 }
 
+AlertWindowController * TBShowAlertWindow (NSString * title,
+										   id         msg) {
+	
+	return TBShowAlertWindowExtended(title, msg, nil, nil, nil, nil, nil, NO);
+
+}
 
 // Alow several alert panels to be open at any one time, keeping track of them in AlertRefs.
 // TBCloseAllAlertPanels closes all of them when Tunnelblick quits.
@@ -570,13 +675,28 @@ int TBRunAlertPanelExtended(NSString * title,
                             BOOL     * checkboxResult,
 							int		   notShownReturnValue)
 {
-    return TBRunAlertPanelExtendedPlus(title, msg, defaultButtonLabel, alternateButtonLabel, otherButtonLabel, doNotShowAgainPreferenceKey, checkboxLabel, checkboxResult, notShownReturnValue, nil, nil);
+	NSArray * checkboxLabels = (  checkboxLabel
+								 ? [NSArray arrayWithObject: checkboxLabel]
+								 : nil);
+	NSArray * checkboxResults = (  checkboxResult
+								 ? [NSArray arrayWithObject: [NSNumber numberWithBool: *checkboxResult]]
+								 : nil);
+	int result = TBRunAlertPanelExtendedPlus(title, msg, defaultButtonLabel, alternateButtonLabel, otherButtonLabel,
+									   doNotShowAgainPreferenceKey,
+									   checkboxLabels,
+									   &checkboxResults, notShownReturnValue, nil, nil);
+	if (  checkboxResult  ) {
+		*checkboxResult = [[checkboxResults firstObject] boolValue];
+	}
+	
+	return result;
 }
+
 // Like TBRunAlertPanel but allows a "do not show again" preference key and checkbox, or a checkbox for some other function, and a target/selector which is polled to cancel the panel.
-// If the "do not show again"preference is set, the panel is not shown and "notShownReturnValue" is returned.
-// If the preference can be changed by the user, and the checkboxResult pointer is not nil, the panel will include a checkbox with the specified label.
+// If the "do not show again" preference has been set, the panel is not shown and "notShownReturnValue" is returned.
+// If the preference can be changed by the user, and the checkboxResults pointer is not nil, the panel will include checkboxes with the specified labels.
 // If the preference can be changed by the user, the preference is set if the user checks the box and the button that is clicked corresponds to the notShownReturnValue.
-// If the checkboxResult pointer is not nil, the initial value of the checkbox will be set from it, and the value of the checkbox is returned to it.
+// If the checkboxResults pointer is not nil, the initial value of the checkbox(es) will be set from it, and the values of the checkboxes is returned to it.
 // Every 0.2 seconds while the panel is being shown, this routine invokes [shouldCancelTarget performSelector: shouldCancelSelector] and cancels the dialog if it returns [NSNumber numberWithBool: TRUE].
 
 int TBRunAlertPanelExtendedPlus (NSString * title,
@@ -585,8 +705,8 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
                                  NSString * alternateButtonLabel,
                                  NSString * otherButtonLabel,
                                  NSString * doNotShowAgainPreferenceKey,
-                                 NSString * checkboxLabel,
-                                 BOOL     * checkboxResult,
+								 NSArray  * checkboxLabels,
+								 NSArray  * * checkboxResults,
                                  int		notShownReturnValue,
                                  id         shouldCancelTarget,
                                  SEL        shouldCancelSelector)
@@ -634,27 +754,30 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
                  forKey: (NSString *)kCFUserNotificationOtherButtonTitleKey];
     }
     
-    if (  checkboxLabel  ) {
-        if (   checkboxResult
+    if (  checkboxLabels  ) {
+        if (   checkboxResults
             || ( doNotShowAgainPreferenceKey && [gTbDefaults canChangeValueForKey: doNotShowAgainPreferenceKey] )
             ) {
-            [dict setObject: checkboxLabel forKey:(NSString *)kCFUserNotificationCheckBoxTitlesKey];
+            [dict setObject: checkboxLabels forKey:(NSString *)kCFUserNotificationCheckBoxTitlesKey];
         }
     }
     
     SInt32 error = 0;
     CFOptionFlags response = 0;
 
-    CFOptionFlags checkboxChecked = 0;
-    if (  checkboxResult  ) {
-        if (  * checkboxResult  ) {
-            checkboxChecked = CFUserNotificationCheckBoxChecked(0);
-        }
+    CFOptionFlags checkboxesChecked = 0;
+    if (  checkboxResults  ) {
+		NSUInteger i;
+		for (  i=0; (  (i<[checkboxLabels count]) && (i < 8)  ); i++  ) {
+			if (  [[*checkboxResults objectAtIndex: i] boolValue]  ) {
+				checkboxesChecked |= CFUserNotificationCheckBoxChecked(i);
+			}
+		}
     }
     
     [NSApp activateIgnoringOtherApps:YES];
     
-    CFUserNotificationRef panelRef = CFUserNotificationCreate(NULL, 0.0, checkboxChecked, &error, (CFDictionaryRef) dict);
+    CFUserNotificationRef panelRef = CFUserNotificationCreate(NULL, 0.0, checkboxesChecked, &error, (CFDictionaryRef) dict);
 
     if (   error
         || (panelRef == NULL)
@@ -745,13 +868,16 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
     
     IfShuttingDownAndNotMainThreadSleepForeverAndNeverReturn();
     
-    if (  checkboxResult  ) {
-        if (  response & CFUserNotificationCheckBoxChecked(0)  ) {
-            * checkboxResult = TRUE;
-        } else {
-            * checkboxResult = FALSE;
+    if (  checkboxResults  ) {
+        NSMutableArray * cbResults = [[NSMutableArray alloc] initWithCapacity:8];
+        NSUInteger i;
+		for (  i=0; (  (i<[checkboxLabels count]) && (i < 8)  ); i++  ) {
+			[cbResults addObject: (  ((response & CFUserNotificationCheckBoxChecked(i)) != 0)
+								   ? [NSNumber numberWithBool: TRUE]
+								   : [NSNumber numberWithBool: FALSE])];
         }
-    } 
+		*checkboxResults = [[cbResults copy] autorelease];
+    }
 
     // If we are shutting down Tunnelblick, force the response to be "Cancel"
     if (   gShuttingDownTunnelblick
@@ -763,7 +889,7 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
     switch (response & 0x3) {
         case kCFUserNotificationDefaultResponse:
 			if (  notShownReturnValue == NSAlertDefaultReturn  ) {
-				if (  checkboxLabel  ) {
+				if (  checkboxLabels  ) {
 					if (   doNotShowAgainPreferenceKey
 						&& [gTbDefaults canChangeValueForKey: doNotShowAgainPreferenceKey]
 						&& ( response & CFUserNotificationCheckBoxChecked(0) )  ) {
@@ -776,7 +902,7 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
             
         case kCFUserNotificationAlternateResponse:
 			if (  notShownReturnValue == NSAlertAlternateReturn  ) {
-				if (  checkboxLabel  ) {
+				if (  checkboxLabels  ) {
 					if (   doNotShowAgainPreferenceKey
 						&& [gTbDefaults canChangeValueForKey: doNotShowAgainPreferenceKey]
 						&& ( response & CFUserNotificationCheckBoxChecked(0) )  ) {
@@ -789,7 +915,7 @@ int TBRunAlertPanelExtendedPlus (NSString * title,
             
         case kCFUserNotificationOtherResponse:
 			if (  notShownReturnValue == NSAlertOtherReturn  ) {
-				if (  checkboxLabel  ) {
+				if (  checkboxLabels  ) {
 					if (   doNotShowAgainPreferenceKey
 						&& [gTbDefaults canChangeValueForKey: doNotShowAgainPreferenceKey]
 						&& ( response & CFUserNotificationCheckBoxChecked(0) )  ) {
@@ -1329,4 +1455,106 @@ BOOL appHasValidSignature(void) {
     }
     
     return NO;
+}
+
+NSString * displayNameForOpenvpnName(NSString * openvpnName) {
+	
+	// OpenVPN binaries are held in folders in the 'openvpn' folder in Resources.
+	// The name of the folder includes the version of OpenVPN and the name and version of the SSL/TLS library it is linked to.
+	// The folder name must have a prefix of 'openvpn-' followed by the version number, followed by a '-' and a library name, followed by a '-' and a library version number.
+	// The folder name must not contain any spaces, but underscores will be shown as spaces to the user, and "known" library names will be upper-cased appropriately.
+	// The version numbers and library name cannot contain '-' characters.
+	// Example: a folder named 'openvpn-1.2.3_git_master_123abcd-libressl-4.5.6' will be shown to the user as "123 git master 123abcd - LibreSSL v4.5.6"
+	//
+	// NOTE: This method's input openvpnName is the part of the folder name _after_ 'openvpn-'
+	
+	NSArray * parts = [openvpnName componentsSeparatedByString: @"-"];
+	
+	NSString * name;
+	
+	if (   [parts count] == 3  ) {
+		NSMutableString * mName = [[[NSString stringWithFormat: NSLocalizedString(@"%@ - %@ v%@", @"An entry in the drop-down list of OpenVPN versions that are available on the 'Settings' tab. "
+																				  "The first %@ is an OpenVPN version number, e.g. '2.3.10'. The second %@ is an SSL library name, e.g. 'LibreSSL'. The third %@ is the SSL library version, e.g. 1.0.1a"),
+									 [parts objectAtIndex: 0], [parts objectAtIndex: 1], [parts objectAtIndex: 2]]
+									mutableCopy] autorelease];
+		[mName replaceOccurrencesOfString: @"openssl"   withString: @"OpenSSL"   options: 0 range: NSMakeRange(0, [mName length])];
+		[mName replaceOccurrencesOfString: @"libressl"  withString: @"LibreSSL"  options: 0 range: NSMakeRange(0, [mName length])];
+		[mName replaceOccurrencesOfString: @"mbedtls"   withString: @"mbed TLS"  options: 0 range: NSMakeRange(0, [mName length])];
+		[mName replaceOccurrencesOfString: @"boringssl" withString: @"BoringSSL" options: 0 range: NSMakeRange(0, [mName length])];
+		[mName replaceOccurrencesOfString: @"_"         withString: @" "         options: 0 range: NSMakeRange(0, [mName length])];
+		name = [NSString stringWithString: mName];
+	} else {
+		NSLog(@"Invalid name (must have 3 '-') for an OpenVPN folder: 'openvpn-%@'.", openvpnName);
+		name = nil;
+	}
+	
+	return name;
+}
+
+NSString * messageIfProblemInLogLine(NSString * line) {
+	
+	NSArray * messagesToWarnAbout = [NSArray arrayWithObjects:
+									 @"WARNING: Your certificate is not yet valid!",
+									 @"WARNING: Your certificate has expired!",
+									 @"Unrecognized option or missing parameter(s)",
+									 @"Unrecognized option or missing or extra parameter(s)",
+									 nil];
+	
+	NSArray * correspondingInfo = [NSArray arrayWithObjects:
+								   @"",
+								   @"",
+								   NSLocalizedString(@"\n\n"
+													 @"This error means that an option that is contained in the OpenVPN configuration file or was"
+													 @" \"pushed\" by the OpenVPN server:\n\n"
+													 @"     • has been misspelled,\n\n"
+													 @"     • has missing or extra arguments, or\n\n"
+													 @"     • is not implemented by the version of OpenVPN which is being used for this configuration."
+													 @" It may be a new option that is not implemented in an old version of OpenVPN, or an old option"
+													 @" that has been removed in a new version of OpenVPN. You can choose what version of OpenVPN to use"
+													 @" with this configuration in the \"Settings\" tab of the \"Configurations\" panel of Tunnelblick's"
+													 @" \"VPN Details\" window.\n\n"
+													 @"See the VPN log in the \"Log\" tab of the \"Configurations\" panel of Tunnelblick's"
+													 @" \"VPN Details\" window for details.",
+													 
+													 @"Window text"),
+								   NSLocalizedString(@"\n\n"
+													 @"This error means that an option that is contained in the OpenVPN configuration file or was"
+													 @" \"pushed\" by the OpenVPN server:\n\n"
+													 @"     • has been misspelled,\n\n"
+													 @"     • has missing or extra arguments, or\n\n"
+													 @"     • is not implemented by the version of OpenVPN which is being used for this configuration."
+													 @" It may be a new option that is not implemented in an old version of OpenVPN, or an old option"
+													 @" that has been removed in a new version of OpenVPN. You can choose what version of OpenVPN to use"
+													 @" with this configuration in the \"Settings\" tab of the \"Configurations\" panel of Tunnelblick's"
+													 @" \"VPN Details\" window.\n\n"
+													 @"See the VPN log in the \"Log\" tab of the \"Configurations\" panel of Tunnelblick's"
+													 @" \"VPN Details\" window for details.",
+													 
+													 @"Window text"),
+								   nil];
+	
+	if (  [messagesToWarnAbout count] != [correspondingInfo count]  ) {
+		NSLog(@"messageForProblemsSeenInLogLine: messagesToWarnAbout and correspondingInfo do not have the same number of entries");
+		[(MenuController *)[NSApp delegate] terminateBecause: terminatingBecauseOfError];
+		return nil;
+	}
+	
+	NSUInteger ix;
+	for (  ix=0; ix<[messagesToWarnAbout count]; ix++  ) {
+		
+		NSString * message = [messagesToWarnAbout objectAtIndex: ix];
+		if (  [line rangeOfString: message].length != 0  ) {
+			
+			NSString * moreInfo = (  ([correspondingInfo count] >= ix)
+								   ? [correspondingInfo objectAtIndex: ix]
+								   : @"");
+			
+			return [NSString stringWithFormat:
+					NSLocalizedString(@"The OpenVPN log contains the following message: \n\n\"%@\".%@",
+									  @"Window text. The first '%@' will be replaced by an OpenVPN warning or error message (in English) such as 'WARNING: Your certificate is not yet valid!'. The second '%@' will be replaced with an empty string or an already-translated comment that explains the warning or error in more detail."),
+					message, moreInfo];
+		}
+	}
+	
+	return nil;
 }

@@ -23,18 +23,19 @@
 #import "defines.h"
 
 @class TBButton;
+@class TBPopUpButton;
 
 @interface GeneralView : NSView {
     
     IBOutlet NSTextFieldCell    * keyboardShortcutTFC;
     IBOutlet NSTextField        * keyboardShortcutTF;
     IBOutlet NSArrayController  * keyboardShortcutArrayController;
-    IBOutlet NSButton           * keyboardShortcutButton;
+    IBOutlet TBPopUpButton      * keyboardShortcutButton;
     
     IBOutlet NSTextFieldCell    * maxLogDisplaySizeTFC;
     IBOutlet NSTextField        * maxLogDisplaySizeTF;
     IBOutlet NSArrayController  * maximumLogSizeArrayController;
-    IBOutlet NSButton           * maximumLogSizeButton;
+    IBOutlet TBPopUpButton      * maximumLogSizeButton;
     
     IBOutlet NSTextFieldCell    * warningsTFC;
     IBOutlet NSTextField        * warningsTF;
@@ -52,7 +53,6 @@
     IBOutlet NSTextField        * updatesUpdatesTF;
     IBOutlet TBButton           * updatesCheckAutomaticallyCheckbox;
     IBOutlet TBButton           * updatesCheckForBetaUpdatesCheckbox;
-    IBOutlet TBButton           * updatesSendProfileInfoCheckbox;
     IBOutlet TBButton           * updatesCheckNowButton;
     IBOutlet NSTextFieldCell    * updatesLastCheckedTFC;
     IBOutlet NSTextField        * updatesLastCheckedTF;
@@ -72,14 +72,13 @@ TBPROPERTY_READONLY(NSTextFieldCell *,   updatesUpdatesTFC)
 TBPROPERTY_READONLY(NSTextField *,       updatesUpdatesTF)
 TBPROPERTY_READONLY(TBButton *,          updatesCheckAutomaticallyCheckbox)
 TBPROPERTY_READONLY(TBButton *,          updatesCheckForBetaUpdatesCheckbox)
-TBPROPERTY_READONLY(TBButton *,          updatesSendProfileInfoCheckbox)
 TBPROPERTY_READONLY(NSTextFieldCell *,   updatesLastCheckedTFC)
 TBPROPERTY_READONLY(NSTextField *,       updatesLastCheckedTF)
 
 TBPROPERTY_READONLY(NSArrayController *, keyboardShortcutArrayController)
-TBPROPERTY_READONLY(NSButton *,          keyboardShortcutButton)
+TBPROPERTY_READONLY(TBPopUpButton *,     keyboardShortcutButton)
 
 TBPROPERTY_READONLY(NSArrayController *, maximumLogSizeArrayController)
-TBPROPERTY_READONLY(NSButton *,          maximumLogSizeButton)
+TBPROPERTY_READONLY(TBPopUpButton *,     maximumLogSizeButton)
 
 @end

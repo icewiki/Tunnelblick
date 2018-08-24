@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, 2015 Jonathan Bullard
+ * Copyright 2014, 2015, 2018 Jonathan Bullard
  *
  *  This file is part of Tunnelblick.
  *
@@ -23,13 +23,38 @@
 
 #import "defines.h"
 #import "helper.h"
+#import "sharedRoutines.h"
 
 #import "MenuController.h"
+#import "TBButton.h"
+#import "TBUserDefaults.h"
 #import "UIHelper.h"
 
-extern BOOL gShuttingDownWorkspace;
+extern TBUserDefaults  * gTbDefaults;
 
 @implementation AlertWindowController
+
+
+TBSYNTHESIZE_OBJECT(retain, NSString *,			  headline,			      setHeadline)
+TBSYNTHESIZE_OBJECT(retain, NSString *,			  message,			      setMessage)
+TBSYNTHESIZE_OBJECT(retain, NSAttributedString *, messageAS,		      setMessageAS)
+TBSYNTHESIZE_OBJECT(retain, NSString *,			  preferenceToSetTrue,    setPreferenceToSetTrue)
+TBSYNTHESIZE_OBJECT(retain, NSString *,			  preferenceName,         setPreferenceName)
+TBSYNTHESIZE_OBJECT(retain, id,					  preferenceValue,        setPreferenceValue)
+TBSYNTHESIZE_OBJECT(retain, NSString *,			  checkboxTitle,          setCheckboxTitle)
+TBSYNTHESIZE_OBJECT(retain, NSAttributedString *, checkboxInfoTitle,      setCheckboxInfoTitle)
+TBSYNTHESIZE_OBJECT(retain, TBButton *,           doNotWarnAgainCheckbox, setDoNotWarnAgainCheckbox)
+TBSYNTHESIZE_NONOBJECT(BOOL,                      checkboxIsChecked,      setCheckboxIsChecked)
+
+TBSYNTHESIZE_OBJECT_GET(retain, NSImageView     *, iconIV)
+
+TBSYNTHESIZE_OBJECT_GET(retain, NSTextField     *, headlineTF)
+TBSYNTHESIZE_OBJECT_GET(retain, NSTextFieldCell *, headlineTFC)
+
+TBSYNTHESIZE_OBJECT_GET(retain, NSScrollView    *, messageSV)
+TBSYNTHESIZE_OBJECT_GET(retain, NSTextView      *, messageTV)
+
+TBSYNTHESIZE_OBJECT_GET(retain, NSButton        *, okButton)
 
 -(id) init
 {
@@ -44,15 +69,33 @@ extern BOOL gShuttingDownWorkspace;
 
 - (void) dealloc {
     
-    [headline release]; headline = nil;
-    [message  release]; message = nil;
-    
+    [headline			    release]; headline				 = nil;
+    [message			    release]; message				 = nil;
+	[messageAS			    release]; messageAS				 = nil;
+	[doNotWarnAgainCheckbox release]; doNotWarnAgainCheckbox = nil;
+	[preferenceToSetTrue    release]; preferenceToSetTrue	 = nil;
+	[checkboxTitle          release]; checkboxTitle			 = nil;
+	[checkboxInfoTitle      release]; checkboxInfoTitle		 = nil;
+	
 	[super dealloc];
 }
 
 -(void) windowWillClose: (NSNotification *) notification {
 	
     (void) notification;
+
+	if (  [doNotWarnAgainCheckbox state] == NSOnState  ) {
+		if (  preferenceToSetTrue  ) {
+			[gTbDefaults setBool: TRUE forKey: preferenceToSetTrue];
+		}
+		
+		if (   preferenceName
+			&& preferenceValue  ) {
+			[gTbDefaults setObject: preferenceValue forKey: preferenceName];
+		}
+		
+	}
+	
 	[self autorelease];
 }
 
@@ -96,16 +139,19 @@ float heightForStringDrawing(NSString *myString,
 			usedRectForTextContainer:textContainer].size.height;
 }
 
--(void) setupMessage {
+-(void) setupMessageAndCheckbox {
 	
 	NSTextView * tv = [self messageTV];
 	
 	// Calculate the change in height required to fit the text
 	NSRect tvFrame = [tv frame];
 	NSFont * font = [NSFont systemFontOfSize: 11.9];
-    NSString * msgWithLfLfX = (  [message hasSuffix: @"\n\n"]
-                               ? [self message]
-                               : [[self message] stringByAppendingString: @"\n\nX"]);
+	NSString * messageS = (  message
+						   ? [[message copy] autorelease]
+						   : [messageAS string]);
+    NSString * msgWithLfLfX = (  [messageS hasSuffix: @"\n\n"]
+                               ? messageS
+                               : [messageS stringByAppendingString: @"\n\nX"]);
     CGFloat newHeight = heightForStringDrawing(msgWithLfLfX, font, tvFrame.size.width);
 	
 	CGFloat heightChange = newHeight - tvFrame.size.height;
@@ -134,11 +180,50 @@ float heightForStringDrawing(NSString *myString,
 	
 	// Set the string
 	NSString * msg = [self message];
-	NSAttributedString * msgAs = [[[NSAttributedString alloc] initWithString: msg] autorelease];
-	[[tv textStorage] setAttributedString: msgAs];
+	NSAttributedString * msgAS = (   msg
+								  ? [[[NSAttributedString alloc] initWithString: msg] autorelease]
+								  : [self messageAS]);
+	if (  ! msgAS  ) {
+		msgAS = [[[NSAttributedString alloc] initWithString: NSLocalizedString(@"Program error, please see the Console log.", @"Window text")] autorelease];
+		NSLog(@"AlertWindowController: no message or messageAS; stack trace: %@", callStack());
+	}
+	[[tv textStorage] setAttributedString: msgAS];
 	
 	// Make the cursor disappear
 	[tv setSelectedRange: NSMakeRange([msg length] + 1, 0)];
+	
+	[self setupCheckboxWithHeightChange: heightChange];
+}
+
+-(void) setupCheckboxWithHeightChange: (CGFloat) heightChange {
+	
+	if (   ( ! preferenceToSetTrue )
+		&& ( ! (   preferenceName
+				&& preferenceValue))) {
+		[doNotWarnAgainCheckbox setHidden: TRUE];
+		return;
+	}
+	
+	NSRect frame = [doNotWarnAgainCheckbox frame];
+	frame.origin.y -= heightChange;
+	[doNotWarnAgainCheckbox setFrame: frame];
+	
+	NSAttributedString * infoTitle = (  checkboxInfoTitle
+									  ? checkboxInfoTitle
+									  : attributedStringFromHTML([NSString stringWithFormat:
+															   NSLocalizedString(@"<p><strong>When checked</strong>, Tunnelblick will not show this warning again.</p>\n"
+																				 @"<p><strong>When not checked</strong>, Tunnelblick will show this warning again.</p>\n",
+																				 @"HTML info for the 'Do not warn about this again' checkbox.")]));
+	NSString * checkboxText = (  checkboxTitle
+							   ? checkboxTitle
+							   : NSLocalizedString(@"Do not warn about this again", @"Checkbox"));
+	
+	[doNotWarnAgainCheckbox setTitle: checkboxText
+						   infoTitle: infoTitle];
+	
+	[doNotWarnAgainCheckbox setState: (  checkboxIsChecked
+									   ? NSOnState
+									   : NSOffState)];
 }
 
 -(void) awakeFromNib {
@@ -149,8 +234,8 @@ float heightForStringDrawing(NSString *myString,
     
 	[self setupHeadline];
     
-	[self setupMessage];
-
+	[self setupMessageAndCheckbox];
+	
     BOOL rtl = [UIHelper languageAtLaunchWasRTL];
     [UIHelper setTitle: NSLocalizedString(@"OK", @"Button") ofControl: [self okButton] shift: ( !rtl ) narrow: NO enable: YES];
     
@@ -168,18 +253,4 @@ float heightForStringDrawing(NSString *myString,
 	
     [w makeKeyAndOrderFront: self];
 }
-
-TBSYNTHESIZE_OBJECT(retain, NSString *, headline, setHeadline)
-TBSYNTHESIZE_OBJECT(retain, NSString *, message,  setMessage)
-
-TBSYNTHESIZE_OBJECT_GET(retain, NSImageView     *, iconIV)
-
-TBSYNTHESIZE_OBJECT_GET(retain, NSTextField     *, headlineTF)
-TBSYNTHESIZE_OBJECT_GET(retain, NSTextFieldCell *, headlineTFC)
-
-TBSYNTHESIZE_OBJECT_GET(retain, NSScrollView    *, messageSV)
-TBSYNTHESIZE_OBJECT_GET(retain, NSTextView      *, messageTV)
-
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton        *, okButton)
-
 @end

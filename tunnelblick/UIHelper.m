@@ -1,5 +1,5 @@
 /*
- * Copyright 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2015, 2016, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -207,10 +207,15 @@ extern TBUserDefaults * gTbDefaults;
         [self performSelectorOnMainThread: @selector(showAlertWindow:)  withObject: dict waitUntilDone: NO];
         return;
     }
-    
-    NSString * title = [dict objectForKey: @"title"];
-    NSString * msg   = [dict objectForKey: @"msg"];
-    TBShowAlertWindow(title, msg);
+
+	TBShowAlertWindowExtended(nilIfNSNull([dict objectForKey: @"title"]),
+							  nilIfNSNull([dict objectForKey: @"msg"]),
+							  nilIfNSNull([dict objectForKey: @"preferenceToSetTrue"]),
+							  nilIfNSNull([dict objectForKey: @"preferenceName"]),
+							  nilIfNSNull([dict objectForKey: @"preferenceValue"]),
+							  nilIfNSNull([dict objectForKey: @"checkboxTitle"]),
+							  nilIfNSNull([dict objectForKey: @"checkboxInfoTitle"]),
+							             [[dict objectForKey: @"checkboxIsOn"] boolValue]);
 }
 
 +(void) showSuccessNotificationTitle: (NSString *) title
@@ -218,27 +223,25 @@ extern TBUserDefaults * gTbDefaults;
     
 	if (  runningOnMountainLionOrNewer()  ) {
 		
-        // NSUserNotification and NSUserNotificationCenter are not defined in the Xcode 3.2.2 SDK, so we use NSClassFromString() to access them
-        
-		id notification = [[[NSClassFromString(@"NSUserNotification") alloc] init] autorelease];
+        NSUserNotification * notification = [[[NSUserNotification alloc] init] autorelease];
         if (  ! notification  ) {
-            NSLog(@"No result from '[[[NSClassFromString(@\"NSUserNotification\") alloc] init] autorelease]'");
+            NSLog(@"Cannot create NSUserNotification");
             TBShowAlertWindow(title, msg);
             return;
         }
         
-		[notification performSelector: @selector(setTitle:)           withObject: title];
-		[notification performSelector: @selector(setInformativeText:) withObject: msg];
-		[notification performSelector: @selector(setSoundName:)       withObject: @"NSUserNotificationDefaultSoundName"];
+		[notification setTitle:           title];
+		[notification setInformativeText: msg];
+		[notification setSoundName:       @"NSUserNotificationDefaultSoundName"];
 		
-		id center = [NSClassFromString(@"NSUserNotificationCenter") performSelector: @selector(defaultUserNotificationCenter)];
+		NSUserNotificationCenter * center = [NSUserNotificationCenter defaultUserNotificationCenter];
         if (  ! center  ) {
-            NSLog(@"No result from '[NSClassFromString(@\"NSUserNotificationCenter\") performSelector: @selector(defaultUserNotificationCenter)]'");
+            NSLog(@"Cannot create NSUserNotificationCenter");
             TBShowAlertWindow(title, msg);
             return;
         }
         
-		[center performSelector: @selector(deliverNotification:) withObject: notification];
+		[center deliverNotification: notification];
 		
 	} else {
 		

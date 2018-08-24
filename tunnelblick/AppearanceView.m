@@ -57,8 +57,8 @@ extern NSString       * gDeployPath;
 }
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSArrayController *, appearanceIconSetArrayController)
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton *,        appearanceIconSetButton)
-TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearancePlaceIconNearSpotlightCheckbox)
+TBSYNTHESIZE_OBJECT_GET(retain, TBPopUpButton *,     appearanceIconSetButton)
+TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,          appearancePlaceIconNearSpotlightCheckbox)
 
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayConnectionSubmenusCheckbox)
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayConnectionTimersCheckbox)
@@ -66,10 +66,10 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayConnectionTi
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplaySplashScreenCheckbox)
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSArrayController *, appearanceConnectionWindowDisplayCriteriaArrayController)
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton *,        appearanceConnectionWindowDisplayCriteriaButton)
+TBSYNTHESIZE_OBJECT_GET(retain, TBPopUpButton *,     appearanceConnectionWindowDisplayCriteriaButton)
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSArrayController *, appearanceConnectionWindowScreenArrayController)
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton *,          appearanceConnectionWindowScreenButton)
+TBSYNTHESIZE_OBJECT_GET(retain, TBPopUpButton *,     appearanceConnectionWindowScreenButton)
 
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWindowsCheckbox)
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWindowsWhenDisconnectedCheckbox)
@@ -118,6 +118,9 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWi
 	
 	BOOL rtl = [UIHelper languageAtLaunchWasRTL];
 	
+	[appearanceIconSetButton
+	 setTitle: nil	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Specifies the icon which Tunnelblick should display in the menu bar.</p>",
+														   @"HTML info for the 'Icon' button."))];
     [UIHelper setTitle: nil ofControl: appearanceIconSetButton shift: rtl narrow: YES enable: YES];
     
     // Icon placement checkbox
@@ -128,7 +131,7 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWi
                                                                                             @"<p>%@</p>\n"
                                                                                             @"<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n"
                                                                                             @"<p>%@</p>\n"
-                                                                                            @"<p><strong>This checkbox is disabled</strong> on macOS Sierra because it is not needed, and on systems for which it is known to cause problems.</p>\n"
+                                                                                            @"<p><strong>This checkbox is disabled</strong> on macOS Sierra and higher because it is not needed, and on systems for which it is known to cause problems.</p>\n"
                                                                                             @"<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>",
                                                                                             @"HTML info for the 'Place near Spotlight icon' checkbox. The two '%@' are replaced by images of the menu bar showing the position of the Tunnelblick icon."),
                                                                onRightImageTag, onLeftImageTag]);
@@ -160,11 +163,16 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWi
     // VPN status windows display criteria
     [appearanceConnectionWindowDisplayCriteriaTFC setTitle: NSLocalizedString(@"VPN status windows:", @"Window text")];
     NSArray * cwContent = [NSArray arrayWithObjects:
-                            [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Never show",                          @"Button"), @"name", @"neverShow", @"value", nil],
-                            [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Show while connecting",               @"Button"), @"name", @"showWhenConnecting", @"value", nil],
-                            [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Show when connection status changes", @"Button"), @"name", @"showWhenChanges", @"value", nil],
-                            nil];
+						   [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Never show",                          @"Button"), @"name", @"neverShow",          @"value", nil],
+						   [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Show while connecting",               @"Button"), @"name", @"showWhenConnecting", @"value", nil],
+						   [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Show while connecting and connected", @"Button"), @"name", @"showWhenConnectingAndConnected" , @"value", nil],
+						   [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString(@"Show when connection status changes", @"Button"), @"name", @"showWhenChanges",    @"value", nil],
+						   nil];
     [appearanceConnectionWindowDisplayCriteriaArrayController setContent: cwContent];
+	[appearanceConnectionWindowDisplayCriteriaButton
+	 setTitle: nil
+	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Specifies when Tunnelblick should display VPN status windows.</p>",
+														   @"HTML info for the 'VPN status windows' button."))];
     [UIHelper setTitle: nil ofControl: appearanceConnectionWindowDisplayCriteriaButton shift: rtl narrow: YES enable: YES];
 
     // Connection window screen assignment popup
@@ -192,6 +200,10 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWi
     }
 	
     [appearanceConnectionWindowScreenArrayController setContent: cwsContent];
+	[appearanceConnectionWindowScreenButton
+	 setTitle: nil
+	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Specifies the screen on which Tunnelblick should display VPN status windows.</p>",
+														   @"HTML info for the button for selecting which screen to show status windows."))];
     [UIHelper setTitle: nil ofControl: appearanceConnectionWindowScreenButton shift: rtl narrow: YES enable: YES];
     
 	[appearanceDisplayStatisticsWindowsCheckbox
@@ -230,10 +242,8 @@ TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,        appearanceDisplayStatisticsWi
             if (  [[file pathExtension] isEqualToString: @"TBMenuIcons"]  ) {
                 NSString * iconName = [file stringByDeletingPathExtension];
                 if (  ! [iconName hasPrefix: @"large-"]  ) {
-					if (  ! [iconName hasPrefix: @"highlighted-"]  ) {
-						if (  ! [iconNames containsObject: iconName]  ) {
-							[paths addObject: [folder stringByAppendingPathComponent: file]];
-						}
+                    if (  ! [iconNames containsObject: iconName]  ) {
+                        [paths addObject: [folder stringByAppendingPathComponent: file]];
                     }
                 }
             }

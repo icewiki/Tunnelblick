@@ -76,6 +76,10 @@ extern TBUserDefaults * gTbDefaults;
     BOOL rtl = [UIHelper languageAtLaunchWasRTL];
     
     [keyboardShortcutArrayController setContent: kbsContent];
+	[keyboardShortcutButton
+	 setTitle: nil
+	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Specifies the keys to press to invoke Tunneblick's main menu.</p>",
+														   @"HTML info for the 'Keyboard shortcut' button."))];
     [UIHelper setTitle: nil ofControl: keyboardShortcutButton shift: rtl narrow: YES enable: YES];
     
     // Log display size popup
@@ -88,6 +92,10 @@ extern TBUserDefaults * gTbDefaults;
                             [NSDictionary dictionaryWithObjectsAndKeys: NSLocalizedString( @"10 MB", @"Button"), @"name", [NSNumber numberWithUnsignedInt:  10*1024*1024], @"value", nil],
                             nil];
     [maximumLogSizeArrayController setContent: mlsContent];
+	[maximumLogSizeButton
+	 setTitle: nil
+	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Specifies the maximum amount of storage to use to display the VPN log.</p>",
+														   @"HTML info for the 'Maximum log display size' button."))];
     [UIHelper setTitle: nil ofControl: maximumLogSizeButton shift: rtl narrow: YES enable: YES];
     
     [warningsTFC setTitle: NSLocalizedString(@"Warnings:", @"Window text")];
@@ -115,7 +123,7 @@ extern TBUserDefaults * gTbDefaults;
 	[generalAdminApprovalForKeyAndCertificateChangesCheckbox
 	 setTitle: NSLocalizedString(@"Require administrator authorization for key and certificate changes", @"Checkbox name")
 	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n"
-														   @"<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p>"
+														   @"<p><strong>When not checked</strong>, a standard user will be allowed to make changes to key and certificate files.</p>"
 														   @"<p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>",
 														   @"HTML info for the 'Require administrator authorization for key and certificate changes' checkbox."))];
 	
@@ -134,13 +142,6 @@ extern TBUserDefaults * gTbDefaults;
 														   @"<p><strong>This checkbox is disabled</strong> and checked when using a beta version.</p>",
 														   @"HTML info for the 'Check for updates to beta versions' checkbox."))];
 	
-	[updatesSendProfileInfoCheckbox
-	 setTitle: NSLocalizedString(@"Send anonymous profile information when checking", @"Checkbox name")
-	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p><strong>When checked</strong>, Tunnelblick will send information about your computer (the operating system version) to the Tunnelblick website when checking for updates.</p>\n"
-														   @"<p><strong>When not checked</strong>, Tunnelblick will not send the information when checking for updates.</p>"
-														   @"<p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p>",
-														   @"HTML info for the 'Send anonymous profile information when checking' checkbox."))];
-	
 	[updatesCheckNowButton
 	 setTitle: NSLocalizedString(@"Check Now", @"Button")
 	 infoTitle: attributedStringFromHTML(NSLocalizedString(@"<p>Checks for updates to the Tunnelblick application.</p>"
@@ -155,10 +156,10 @@ extern TBUserDefaults * gTbDefaults;
 // Getters
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSArrayController *, keyboardShortcutArrayController)
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton *,          keyboardShortcutButton)
+TBSYNTHESIZE_OBJECT_GET(retain, TBPopUpButton *,     keyboardShortcutButton)
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSArrayController *, maximumLogSizeArrayController)
-TBSYNTHESIZE_OBJECT_GET(retain, NSButton *,          maximumLogSizeButton)
+TBSYNTHESIZE_OBJECT_GET(retain, TBPopUpButton *,     maximumLogSizeButton)
 
 TBSYNTHESIZE_OBJECT_GET(retain, NSTextFieldCell *,   tbInternetAccessTFC)
 TBSYNTHESIZE_OBJECT_GET(retain, NSTextField *,       tbInternetAccessTF)
@@ -172,7 +173,6 @@ TBSYNTHESIZE_OBJECT_GET(retain, NSTextFieldCell *,   updatesUpdatesTFC)
 TBSYNTHESIZE_OBJECT_GET(retain, NSTextField *,       updatesUpdatesTF)
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,          updatesCheckAutomaticallyCheckbox)
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,          updatesCheckForBetaUpdatesCheckbox)
-TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,          updatesSendProfileInfoCheckbox)
 TBSYNTHESIZE_OBJECT_GET(retain, TBButton *,          updatesCheckNowButton)
 TBSYNTHESIZE_OBJECT_GET(retain, NSTextFieldCell *,   updatesLastCheckedTFC)
 TBSYNTHESIZE_OBJECT_GET(retain, NSTextField *,       updatesLastCheckedTF)

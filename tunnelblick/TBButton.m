@@ -19,6 +19,8 @@
  *  or see http://www.gnu.org/licenses/.
  */
 
+// THIS FILE IS IDENTICAL TO TBButton.h except for the class and base class and the import of TBPopUpButton.h instead of TBButton.h
+
 #import "helper.h"
 #import "sharedRoutines.h"
 
@@ -57,6 +59,10 @@ TBSYNTHESIZE_NONOBJECT(CGFloat, minimumWidth, setMinimumWidth)
 -(void) setTitle: (NSString *)           label
 	   infoTitle: (NSAttributedString *) infoTitle
 		disabled: (BOOL)                 disabled {
+	
+	if (  infoTitle == nil  ) {
+		NSLog(@"setTitle:%@ infoTitle:nil; call stack = %@", label, callStack());
+	}
 	
 	BOOL rtl = [UIHelper languageAtLaunchWasRTL];
 	[UIHelper setTitle: label ofControl: self frameHolder: self shift: rtl narrow: YES enable: YES];

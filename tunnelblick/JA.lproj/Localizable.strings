@@ -1,3 +1,6 @@
+/* THIS FILE SHOULD NOT BE EDITED. IT IS GENERATED AUTOMATICALLY. */
+/* See https://tunnelblick.net/cLocalizeTranslate.html.           */
+
 /* Status message. First '%@' is the name of a configuration. Second '%@' is an IP address (e.g. '8.8.4.4') */
 "Disconnect All (%@) - apparent public IP address %@" = "全て切断 (%1$@) - 対外パブリックIPアドレス %2$@";
 
@@ -62,9 +65,6 @@
 "Check Now" = "チェック";
 
 /* Button */
-"Check for a change" = "変更のチェック";
-
-/* Button */
 "Connect" = "接続";
 
 /* Button */
@@ -98,13 +98,19 @@
 "Delete" = "削除";
 
 /* Button */
+"Disable network access" = "ネットワーク接続を切断する";
+
+/* Button */
 "Disconnect" = "切断";
 
 /* Button */
-"Do not check for a change" = "変更をチェックしない";
+"Do Not Re-enable Network Access" = "ネットワーク接続を再開しない";
 
 /* Button */
 "Do not use the plugin" = "プラグインを使用しない";
+
+/* Button */
+"Do nothing" = "何もしない";
 
 /* Button */
 "Download" = "ダウンロード";
@@ -138,6 +144,9 @@
 
 /* Button */
 "Monochrome icon" = "白黒アイコン";
+
+/* Button. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"More Info [%@]" = "詳しい情報[%@]";
 
 /* Button */
 "More Info" = "詳しくはこちら";
@@ -176,13 +185,14 @@
 "Place Icon Normally" = "適当な位置に配置される";
 
 /* Button */
-"Privacy info..." = "プライバシー情報";
-
-/* Button */
 "Quit All OpenVPN Processes" = "全ての OpenVPN プロセスを終了";
 
 /* Button */
 "Quit" = "終了";
+
+/* Button
+   Menu item */
+"Re-enable Network Access" = "ネットワーク接続を再開する";
 
 /* Button */
 "Reinstall" = "再インストール";
@@ -197,6 +207,9 @@
 "Reset Disabled Warnings" = "非表示の警告をリセット";
 
 /* Button */
+"Reset primary interface" = "メインインターフェイスをリセットする";
+
+/* Button */
 "Restart connection" = "再接続を開始";
 
 /* Button */
@@ -206,7 +219,13 @@
 "Retry" = "再試行";
 
 /* Button */
+"Revert to the Last Secured Copy" = "最後に保存された環境設定に戻す";
+
+/* Button */
 "Revert" = "変更を取り消す";
+
+/* Button */
+"Secure the Configuration" = "環境設定の保護";
 
 /* Button */
 "Show on default screen (%u x %u)" = "デフォルトスクリーン (%1$u x %2$u) に表示する";
@@ -216,6 +235,9 @@
 
 /* Button */
 "Show when connection status changes" = "接続状況が変化した時に表示する";
+
+/* Button */
+"Show while connecting and connected" = "接続状況を表示";
 
 /* Button */
 "Show while connecting" = "接続が完了するまで表示する";
@@ -311,12 +333,6 @@
 "OpenVPN level 3 - normal output" = "OpenVPNレベル３（通常出力）";
 
 /* Menu Item */
-"OpenVPN level 4 - also outputs values for all options" = "OpenVPNレベル４（全オプションの価値も出力）";
-
-/* Menu Item */
-"OpenVPN level 5 - also outputs \"R\" or \"W\" for each packet" = "OpenVPNレベル５（パケットごとにRかWも出力）";
-
-/* Menu Item */
 "OpenVPN level 6 - very verbose output" = "OpenVPNレベル６（大変冗長出力）";
 
 /* Menu Item */
@@ -386,13 +402,10 @@
 "Do not ask again, always convert" = "次回から表示せず、常に変換する";
 
 /* Checkbox name */
-"Do not check for IP address changes" = "IPアドレスの変更をチェックしない";
-
-/* Checkbox name on a warning dialog */
-"Do not show again for any configuration" = "今後どの設定にも表示しない";
+"Do not show this type of warning again" = "今後はこの種類の警告を表示しない";
 
 /* Checkbox name */
-"Do not show this type of warning again" = "今後はこの種類の警告を表示しない";
+"Do not warn about this again for any configuration" = "次回から環境設定についての警告を表示しない";
 
 /* Checkbox name */
 "Do not warn about this again for this configuration" = "次回からこの接続先についての警告を表示しない";
@@ -431,9 +444,6 @@
 "Require administrator authorization for key and certificate changes" = "キーと証明書の変更に管理者権限が必要";
 
 /* Checkbox name */
-"Reset the primary interface after disconnecting" = "切断後にプライマリインターフェースをリセットする";
-
-/* Checkbox name */
 "Route all IPv4 traffic through the VPN" = "すべてのトラフィックをVPN経由で接続する";
 
 /* Checkbox name */
@@ -441,9 +451,6 @@
 
 /* Checkbox name */
 "Save in Keychain" = "キーチェーンに保存する";
-
-/* Checkbox name */
-"Send anonymous profile information when checking" = "プロファイル情報を匿名で送信する";
 
 /* Checkbox name */
 "Set DNS after routes are set" = "経路を設定した後にDNSを設定する";
@@ -560,9 +567,6 @@
 "Alert" = "警告";
 
 /* Window title */
-"All OpenVPN process were terminated." = "全ての OpenVPN プロセスは停止しました。";
-
-/* Window title */
 "All configuration files removed" = "全ての接続先設定ファイルを削除しました";
 
 /* Window title */
@@ -626,16 +630,10 @@
 "Name not allowed" = "使用できない名前です";
 
 /* Window title */
-"New Feature" = "新しい機能";
-
-/* Window title */
 "No 'dev tun', 'dev utun', or 'dev tap' found" = "'dev tun'か'dev utun'か'dev tap'が見つかりませんでした";
 
 /* Window title */
 "No Credentials" = "認証情報がありません";
-
-/* Window title */
-"One or more OpenVPN processes could not be terminated." = "いくつかの OpenVPN プロセスを停止できませんでした。";
 
 /* Window title */
 "Only computer administrators should update Tunnelblick" = "コンピュータの管理者だけが Tunnelblick を更新できます";
@@ -666,9 +664,6 @@
 
 /* Window title */
 "System Requirements Not Met" = "必要なシステムがありません";
-
-/* Window title */
-"There are no OpenVPN processes running." = "実行中OpenVPNプロセスがありません";
 
 /* Window title */
 "Tunnelblick Configuration Problem" = "Tunnelblick 接続先に問題があります";
@@ -785,9 +780,6 @@
 "  • Secure configurations\n" = "  • 接続先設定ファイルを安全にします\n";
 
 /* Window text */
-" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Technologies, Inc." = " %1$@ はフリーウェアです。%3$@ によって発行された %2$@ に基づき、再配布や改変が可能です。\n\n%4$@ は OpenVPN Technologies, Inc. の登録商標です。";
-
-/* Window text */
 " Do you wish to install %@ to %@%@?\n\n" = " 「%1$@」を %2$@%3$@ にインストールしますか？\n\n";
 
 /* Window text */
@@ -829,6 +821,9 @@
 /* Window text */
 "'%@' was not terminated." = "'%@' が正しく終端されていません。";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The second and third '%@' will each be replaced by the name of a version of OpenVPN, e.g. '2.3 - OpenSSL v1.0.2n */
+"'%@' will connect using OpenVPN %@ instead of the requested version (OpenVPN %@)." = "'%1$@' は要求されたバージョン(OpenVPN %3$@) の代わりにOpenVPN %2$@ で接続します。";
+
 /* Window text */
 "'easy-rsaPath' preference ignored; it does not specify a folder" = "'easy-rsaPath' がフォルダを指定していないので無視されます。";
 
@@ -849,9 +844,6 @@
 
 /* Window text */
 "(if connected when user switched out)" = "(切り替え前に接続していた時のみ)";
-
-/* Window text */
-"<br>Based on Tunnelblick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Technologies, Inc." = "<br>Based on Tunnelblick, free software available at<br><a href=\"http://code.google.com/p/tunnelblick\">http://code.google.com/p/tunnelblick</a><br><br>OpenVPNは OpenVPN Technologies, Inc. の登録商標です。";
 
 /* Window text */
 "A TBPreference or TBAlwaysSetPreference key refers to an unknown preference '%@' in %@" = "%2$@ に、TBPreferenceまたはTBAlwaysSetPreferenceが未知な設定 %1$@ を指定しています";
@@ -900,6 +892,9 @@
 
 /* Window text */
 "After connecting to %@, the Internet does not appear to be reachable.\n\nThis may mean that your VPN is not configured correctly.\n\n" = "%@ へ接続しましたがインターネットに接続できないようです。\n\nこの VPN は正しく設定されていない可能性があります。\n\n";
+
+/* Window text */
+"All OpenVPN processes have quit" = "全てのOpenVPNプロセスを終了しました";
 
 /* Window text */
 "All configuration files have been removed. Tunnelblick must quit." = "全ての設定ファイルを削除しました。Tunnelblick を終了してください。";
@@ -966,6 +961,9 @@
 
 /* Window text */
 "Backslash at end of line %u is not allowed" = "%u行目: 行末のバックスラッシュは許可されていません";
+
+/* Window text */
+"Cancelled trying to quit all OpenVPN processes" = "全てのOpenVPNプロセスの終了をキャンセルしました。";
 
 /* Window text */
 "Cannot find configuration file at %@" = "%@ で設定ファイルを見つからないです";
@@ -1127,6 +1125,9 @@
 "File '%@' appears to be in 'rich text' format because it starts with a '{' character. All OpenVPN-related files must be 'plain text' or 'UTF-8' files." = "ファイル '%@' はリッチテキストフォーマットと思われます。OpenVPNで使用するファイルはプレーンテキスト(ASCIIもしくはUTF-8)である必要があります。";
 
 /* Window text */
+"File '%@' contains one or more NUL characters." = "'%@'のファイルの中身でNULLカラクターがあります";
+
+/* Window text */
 "File '%@' ends with a backslash, which is not allowed." = "ファイル'%@' はバックスラッシュで終わってます、これは対応できないです。";
 
 /* Window text */
@@ -1134,6 +1135,9 @@
 
 /* Window text */
 "File '%@' is missing" = "ファイルが存在しません: %@";
+
+/* Window text */
+"File '%@' is not a plain text or UTF-8 file." = "'%@'のファイルはプラインテクストかUTF-8でわない";
 
 /* Window text */
 "File '%@' is too short (%lu bytes)" = "ファイル '%1$@' は小さすぎます(%2$lu バイト)";
@@ -1232,6 +1236,12 @@
 "NetBIOS name:" = "NetBIOS 名:";
 
 /* Window text */
+"Network access was disabled when a VPN disconnected." = "VPNが停止したためネットワークに接続できません。";
+
+/* Window text */
+"Network access was disabled when a VPN disconnected.\n\nDo you wish to re-enable network access?\n\n" = "VPNが停止したためネットワークに接続できません。\n　\nネットワークに再接続しますか？\n\n";
+
+/* Window text */
 "Network setting" = "ネットワーク設定";
 
 /* Window text */
@@ -1265,6 +1275,12 @@
 "Not replacing an existing configuration, so configuration '%@' cannot use 'TBKeepExistingFilesList'" = "存在する設定を上書きしない為、'%@'は'TBKeepExistingFilesList'を使えません";
 
 /* Window text */
+"On expected disconnect:" = "管理された切断時:";
+
+/* Window text */
+"On unexpected disconnect:" = "不意の切断時:";
+
+/* Window text */
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation. Do you wish to terminate all OpenVPN processes?" = "Tunnelblick が管理していない OpenVPN プロセスが動いています。もし Tunnelblick とは別の OpenVPN ソフトウェアを動かしているのでなければ、これは以前の Tunnelblick がプロセスをうまく停止できなかったということで、停止させる必要があります。Tunnelblick の動作と干渉するかもしれません。全ての OpenVPN プロセスを停止させますか？";
 
 /* Window text */
@@ -1272,15 +1288,6 @@
 
 /* Window text */
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation.\n\nThey can be terminated in the 'Activity Monitor' application.\n\n" = "Tunnelblick が管理していない OpenVPN プロセスが動いています。もし Tunnelblick とは別の OpenVPN ソフトウェアを動かしているのでなければ、これは以前の Tunnelblick がプロセスをうまく停止できなかったということで、停止させる必要があります。Tunnelblick の動作と干渉するかもしれません。\n\nこれらは「Activity Monitor」アプリケーションで停止させることができます。\n\n";
-
-/* Window text */
-"One or more VPN configurations that are being updated include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "更新される設定の中にはVPNに接続する時にrootとして起動されるプログラムが含まれています。このプログラムは完全にパソコンを支配することができます。\n\nこの設定の作者を信用できなければ、絶対にインストールしないで下さい。\n\n設定の作者を信頼して、インストールしますか？\n\n";
-
-/* Window text */
-"One or more VPN configurations you are installing include OpenVPN options that were not recognized by Tunnelblick. That may be an error in the configuration or an error in Tunnelblick, or the configurations might include programs which will run as root when you connect to a VPN. Such programs would be able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "インストールするVPN設定ファイルの中に、Tunnelblickが認識できないOpenVPNオプションが含まれています。それは設定ファイルのエラーまたはTunnelblickのエラー、またはVPNに接続する際にルートとして起動されるプログラムが含まれている可能性があります。そのようなプログラムは、あなたのパソコンを完全にコントロールする可能性があります。\n\n！！！信頼できる作成者でなければ、インストールするべきではありません！！！\n\n作成者を信頼し、インストールしてもよろしいですか？\n\n";
-
-/* Window text */
-"One or more VPN configurations you are installing include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "インストールされる設定の中にはVPNに接続する時にrootとして起動されるプログラムが含まれています。このプログラムは完全にパソコンを支配することができます。\n\nこの設定の作者を信用できなければ、絶対にインストールしないで下さい。\n\n設定の作者を信頼して、インストールしますか？\n";
 
 /* Window text */
 "One or more VPNs are currently connected. Please disconnect all VPNs and quit Tunnelblick before proceeding." = "VPNが接続中です。処理を続ける前に、全てのVPNを切断しTunnelblick を終了してください。";
@@ -1297,11 +1304,8 @@
 /* Window text */
 "OpenVPN is not responding to requests to disconnect %@.\n\nTunnelblick will disconnect when OpenVPN starts responding to disconnection requests.\n\nTHIS MAY TAKE UP TO TWO MINUTES in certain unusual circumstances.\n\nThe connection will be unavailable until it is disconnected." = "%@ の切断要求にOpenVPNが応答しません。\n\nTunnelblickは、OpenVPNが切断要求を処理し始めるまでは切断されません。\n\nこれは2分程度かかる場合があります。\n\n切断が完了するまでは接続出来ません。";
 
-/* Window text */
-"OpenVPN version %@ is not available. Changing this configuration to use the latest version (%@) that is included in this version of Tunnelblick." = "OpenVPNのバージョン %1$@ は利用出来ません。Tunnelblickに含まれている最新バージョン(%2$@)を使用するように設定を変更します。";
-
-/* Window text */
-"OpenVPN version %@ is not available. Using the latest version (%@) as the default." = "OpenVPNのバージョン %1$@ は利用出来ません。最新バージョン(%2$@)を使用します。";
+/* Window text. Each '%@' will be replaced by OpenVPN and SLL version information (e.g., '2.3.18-openssl-1.0.2n' or '2.3.18-libressl-2.6.3') */
+"OpenVPN version %@ is not available. Using %@ as the default." = "OpenVPNのバージョン %1$@ は利用出来ません。バージョン(%2$@) をデフォルトとして使用します。";
 
 /* Window text */
 "OpenVPN version:" = "OpenVPN バージョン:";
@@ -1332,6 +1336,9 @@
 
 /* Window text */
 "Private configurations cannot connect when the computer starts.\n\nFirst make the configuration shared, then change this setting." = "コンピュータ起動時に個人用の接続先につなぐ事はできません。\n\nまず接続先を共有して、次にこの設定を変更してください。";
+
+/* Window text */
+"Program error, please see the Console log." = "プログラムにエラーがあります。コンソールログを確認してください。";
 
 /* Window text */
 "Received fatal signal %d." = "致命的なシグナル %d を受け取りました。";
@@ -1417,6 +1424,9 @@
 /* Window text */
 "The OpenVPN configuration file in %@ contains a '%@' option, which is a Windows-only option. It cannot be used on OS X." = "%1$@ に含まれるOpenVPN設定 '%2$@' はWIndows専用のオプションです。OS Xでは使用できません。";
 
+/* Window text. The first '%@' will be replaced by an OpenVPN warning or error message (in English) such as 'WARNING: Your certificate is not yet valid!'. The second '%@' will be replaced with an empty string or an already-translated comment that explains the warning or error in more detail. */
+"The OpenVPN log contains the following message: \n\n\"%@\".%@" = "Open Vpn ログは以下のメッセージを含んでいました。\n\n\"%1$@\".%2$@";
+
 /* Window text */
 "The OpenVPN log does not yet exist or has been deleted." = "OpenVPN のログは、作成されていないか、削除されました。";
 
@@ -1481,6 +1491,9 @@
 "There are no OpenVPN configurations to install." = "インストールするOpenVPN設定が存在しません。";
 
 /* Window text */
+"There are no OpenVPN processes running" = "実行中のOpen VPN プロセスがありません";
+
+/* Window text */
 "There are no VPN configurations installed.\n\nTunnelblick needs one or more installed configurations to connect to a VPN. Configurations are installed from files that are usually supplied to you by your network manager or VPN service provider. The files must be installed to be used.\n\nConfiguration files have extensions of .tblk, .ovpn, or .conf.\n\n(There may be other files associated with the configuration that have other extensions; ignore them for now.)\n\nDo you have any configuration files?\n" = "VPN の接続先がインストールされていません。\n\nVPN 接続のためには、一つ以上の接続先をインストールする必要があります。接続先は、通常ネットワーク管理者や VPN サービスプロバイダーから提供されるファイルからインストールします。\n\n設定ファイルの拡張子は .tblk、.ovpn、.confのいずれかです。\n\n（これら以外の拡張子を持つ設定ファイルもあるかもしれませんが、現在は無視します。）\n\nいずれかの設定ファイルがありますか？\n";
 
 /* Window text */
@@ -1514,21 +1527,6 @@
 "This copy of Tunnelblick is not digitally signed.\n\nThere is no way to verify that this copy has not been tampered with.\n\n Check with the provider of this copy of Tunnelblick before using it.\n\n" = "この Tunnelblick のコピーには電子署名がありません。\n\nこのコピーが不正に書き換えられているかどうか調べる手段がありません。\n\n使用する前にこの Tunnelblick のコピーの提供元を調べてください。\n\n";
 
 /* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly if it uses tun or tap kexts." = "Tunnelblick 64ビット Intelバージョンは、tun または tap kext を使用すると正しく動作しません。";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses a tap connection. Use a universal version of Tunnelblick instead." = "Tunnelblick 64ビット Intelバージョンでは、tap接続を使用する設定は正しく動作しません。ユニバーサル版のTunnelblickを使用してください。";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. Use a universal version of Tunnelblick instead." = "Tunnelblick 64ビット Intelバージョンでは、tun kextを使用する設定は正しく動作しません。ユニバーサル版のTunnelblickを使用してください。";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. You can use a universal version of Tunnelblick or use the OS X 'utun' driver by removing OpenVPN 'dev-type' options - see the OpenVPN documentation." = "Tunnelblick 64ビット Intelバージョンでは、tun kextを使用する設定は正しく動作しません。ユニバーサル版のTunnelblickを使用するか、OpenVPNの「dev-type」オプションを削除して、OS Xのutunドライバを使用してください。詳細についてはOpenVPNのドキュメントを参照してください。";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will only run on OS X with a 64-bit kernel, or on OS X 10.6.8 or higher if there is no use of tun or tap kexts." = "Tunnelblick 64ビット Intelバージョンは、64ビットカーネルのOS Xか、tunまたはtap kextを使用していない場合は OS X 10.6.8 以降でのみ動作します。";
-
-/* Window text */
 "This version of Tunnelblick cannot be launched or installed because it has an invalid update URL.\n\n" = "このバージョンの Tunnelblick は起動したりインストールしたりできません。更新用の URL が不正です。\n\n";
 
 /* Window text */
@@ -1543,6 +1541,9 @@
 /* Window text */
 "Translation by" = "翻訳者";
 
+/* Window text */
+"Trying to quit all OpenVPN processes..." = "全てのOpenVPNプロセスを終了しています...";
+
 /* Window text; '%@' will be replaced with a version number such as '3.2.1 (build 1234)' */
 "Tunnelblick %@ has been secured successfully." = "Tunnelblick %@ の安全を確保しました。";
 
@@ -1550,13 +1551,10 @@
 "Tunnelblick %@ is ready." = "Tunnelblick %@ の準備ができました。";
 
 /* Window text */
-"Tunnelblick Admin Mode\n\n Temporarily authorize changes that require an administrator password.\n\n The session expires after five minutes or when the 'VPN Details' window is closed." = "Tunnelblick 管理者モード\n\n 一時的な権限の変更には管理者パスワードが必要です。\n\n 5分経過するか'VPNの詳細'を閉じると無効になります。";
-
-/* Window text */
 "Tunnelblick Internet Use:" = "Tunnelblickがインターネットを使用する:";
 
-/* Window text */
-"Tunnelblick can check that the apparent public IP address of your computer changes when you connect to a VPN, and warn you if it doesn't.\n\nThis may help Tunnelblick diagnose problems with your connection.\n\nThis process attempts to access\n%@\n\nDo you wish to check for this IP address change?\n" = "このコンピュータの見かけ上のグローバルIPアドレスが VPN 接続で変化したかどうかチェックして、変化しなかった時に警告できます。\n\nこれによって接続の問題が診断しやすくなります。\n\nチェック時には以下のURLにアクセスします。\n%@\n\nIPアドレスの変化をチェックしますか？\n";
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick can access %@ to check for updates when it is launched and periodically while it is running.\n\n" = "Tunnelblickは起動時から定期的に%@にアップデートを確認します。\n\n";
 
 /* Window text */
 "Tunnelblick could not be configured to automatically launch itself after you log in.\n\nSee the Console log for details." = "Tunnelblickをログイン後自動起動させられなかった";
@@ -1652,9 +1650,6 @@
 "Tunnelblick needs to create or update a secure (shadow) copy of the configuration file." = "設定ファイルの安全な(シャドー)コピーを作成または更新する必要があります。";
 
 /* Window text */
-"Tunnelblick needs to perform an action that requires administrator authorization.\n" = "管理者権限が必要な操作です。\n";
-
-/* Window text */
 "Tunnelblick needs to:\n" = "Tunnelblick では以下の変更が必要です:\n";
 
 /* Window text: '* Installed/Replaced/Uninstalled' */
@@ -1701,6 +1696,9 @@
 
 /* Window text */
 "Unable to install the '%@' configuration\n" = "%@の設定をインストールできませんでした\n";
+
+/* Window text */
+"Unable to load contents of %@ as UTF-8" = "%@ をUTF-5形式で読み取れません";
 
 /* Window text */
 "Unable to open configuration file for modification" = "設定ファイルを編集用にオープンできません";
@@ -1853,9 +1851,6 @@
 "You may not remove a configuration which is set to start when the computer starts." = "コンピューター起動時に接続する設定は削除できません";
 
 /* Window text */
-"You will not be able to use Tunnelblick after updating unless you provide an administrator username and password.\n\nAre you sure you wish to check for updates?" = "管理者のユーザー名とパスワードがないと更新後に Tunnelblick を使用することができなくなります。\n\n更新をチェックしてもよいですか？";
-
-/* Window text */
 "Your computer may not be able to reliably show the Tunnelblick icon near the Spotlight icon.\n\nThis may cause the Tunnelblick icon to sometimes DISAPPEAR from the menu bar.\n\nAre you sure you want to place the Tunnelblick icon near the Spotlight icon?\n\n" = "このコンピュータでは、Tunnelblick アイコンを Spotlight アイコンの近くに配置することはできません。\n\nメニューバーにTunnelblick アイコンが表示されなくなる場合がありますが、unnelblick アイコンを Spotlight アイコンの近くに配置するようにしますか？\n";
 
 /* Window text */
@@ -1906,6 +1901,9 @@
 /* Tooltip */
 "%d days %d:%02d:%02d" = "%1$d 日 %2$d:%3$02d:%4$02d";
 
+/* The first '%@' is the name of an OpenVPN option. The second '%@' is an OpenVPN version string such as '2.3' or '2.5' */
+"'%@' was added in OpenVPN %@\n" = "'%1$@' は OpenVPN %2$@ に追加されました\n";
+
 /* Credit description */
 "64-bit enabling and testing" = "64ビット化とテスト";
 
@@ -1927,95 +1925,11 @@
 /* HTML info for the 'Check for updates automatically' checkbox. */
 "<p><strong>When checked</strong>, Tunnelblick will check for updates when launched and periodically thereafter.</p><p><strong>This checkbox is disabled</strong> and un-checked when 'Inhibit automatic update checking and IP Address checking' is checked.</p>" = "<p><strong>チェックされている場合</strong>、Tunnelblickは起動時及びその後に定期的にアップデートを確認しに行きます、</p><p>自動アップデートを無効にし、IPアドレスをチェックするオプションがチェックされている場合、<strong>このチェックボックスは無効になり</strong>、またチェックが外されます。</p>";
 
-/* HTML info for the 'Check if the apparent public IP address changed after connecting' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will determine the computer's apparent public IP address before and after the VPN is connected and warn if the IP address does not change.</p>\n<p>The tunnelblick.net website will be accessed to perform this function. The access is usually done via https: using the tunnelblick.net name, except that if that access fails, access is attempted using http: and the IP address of the website.</p>\n<p><strong>When not checked</strong>, Tunnelblick does not check for IP address changes and does not warn if the IP address does not change after the VPN is connected.</p>\n" = "<p><strong>When checked</strong>, Tunnelblick will determine the computer's apparent public IP address before and after the VPN is connected and warn if the IP address does not change.</p>\n<p>The tunnelblick.net website will be accessed to perform this function. The access is usually done via https: using the tunnelblick.net name, except that if that access fails, access is attempted using http: and the IP address of the website.</p>\n<p><strong>When not checked</strong>, Tunnelblick does not check for IP address changes and does not warn if the IP address does not change after the VPN is connected.</p>\n";
-
-/* HTML info for the 'Route all IPv4 traffic through the VPN' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n" = "<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n";
-
-/* HTML info for the 'Require administrator authorization for key and certificate changes' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>" = "<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>";
-
-/* HTML info for the 'Reset the primary interface after disconnecting' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will reset the primary network interface after the VPN is disconnected. This can work around problems caused by some misconfigured VPN servers and by some OpenVPN configuration errors.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not reset the primary network interface.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver'.</p>" = "<p><strong>When checked</strong>, Tunnelblick will reset the primary network interface after the VPN is disconnected. This can work around problems caused by some misconfigured VPN servers and by some OpenVPN configuration errors.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not reset the primary network interface.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver'.</p>";
-
-/* HTML info for the 'Send anonymous profile information when checking' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will send information about your computer (the operating system version) to the Tunnelblick website when checking for updates.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not send the information when checking for updates.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p>" = "<p><strong>チェックした場合</strong>、アップデートの際にあなたのパソコンにTunnelblickウェブサイトのインフォメーションを送信します (オペレーティングシステムバージョン)</p>\n<p><strong>チェックしなかった場合</strong>、アップデートの際にはインフォメーションを送信しません。</p><p>プライバシーやセキュリティの詳細については <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] をご覧ください</p>";
-
-/* HTML info for the 'Monitor network settings' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>" = "<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>";
-
-/* HTML info for the 'Show the VPN status window when the pointer is over the Tunnelblick icon' checkbox. */
-"<p><strong>When checked</strong>, VPN status windows for all 'active' configurations are displayed when the pointer is over the Tunnelblick icon.</p><p>'Active' configurations are configurations that you have attempted to connect since Tunnelblick was launched.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>When checked</strong>, VPN status windows for all 'active' configurations are displayed when the pointer is over the Tunnelblick icon.</p><p>'Active' configurations are configurations that you have attempted to connect since Tunnelblick was launched.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>";
-
-/* HTML info for the 'Display window while Tunnelblick is starting up' checkbox. */
-"<p><strong>When checked</strong>, a window will display Tunnelblick's progress while starting up.</p>" = "<p><strong>When checked</strong>, a window will display Tunnelblick's progress while starting up.</p>";
-
-/* HTML info for the 'All configurations use ___ credentials' checkbox. */
-"<p><strong>When checked</strong>, all configurations will share the same username, password, and/or private key.</p>\n" = "<p><strong>When checked</strong>, all configurations will share the same username, password, and/or private key.</p>\n";
-
-/* HTML info for the 'Display connection submenus' checkbox. */
-"<p><strong>When checked</strong>, configurations that are inside folders are shown in submenus of the Tunnelblick menu.</p>\n<p><strong>When not checked</strong>, configurations that are inside folders are shown in the Tunnelblick menu.</p>" = "<p><strong>When checked</strong>, configurations that are inside folders are shown in submenus of the Tunnelblick menu.</p>\n<p><strong>When not checked</strong>, configurations that are inside folders are shown in the Tunnelblick menu.</p>";
-
-/* HTML info for the 'Keep connected' checkbox. */
-"<p><strong>When checked</strong>, if the VPN disconnects unexpectedly, Tunnelblick will attempt to reconnect it.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not try to reconnect a VPN if it disconnects unexpectedly.</p>\n" = "<p><strong>When checked</strong>, if the VPN disconnects unexpectedly, Tunnelblick will attempt to reconnect it.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not try to reconnect a VPN if it disconnects unexpectedly.</p>\n";
-
-/* HTML info for the 'Allow changes to manually-set network settings' checkbox. */
-"<p><strong>When checked</strong>, network settings which were set manually may be changed when the VPN connects. This will only happen if changes are specified by options in the OpenVPN configuration file or from the OpenVPN server.</p>\n<p><strong>When not checked</strong>, network settings which were set manually will not be changed when the VPN connects.</p>" = "<p><strong>When checked</strong>, network settings which were set manually may be changed when the VPN connects. This will only happen if changes are specified by options in the OpenVPN configuration file or from the OpenVPN server.</p>\n<p><strong>When not checked</strong>, network settings which were set manually will not be changed when the VPN connects.</p>";
-
-/* HTML info for the 'Inhibit automatic update checking and IP Address checking' checkbox. */
-"<p><strong>When checked</strong>, no automatic checking for updates or checking for IP address changes will be done, regardless of other settings. Note: both of these activities access the Tunnelblick website.</p>\n<p><strong>When not checked</strong>, automatic checking for updates will be done if enabled below, and checking for IP address changes will be done when connecting a configuration if the configuration's setting to do so is enabled.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p><p>&nbsp;</p>" = "<p><strong>When checked</strong>, no automatic checking for updates or checking for IP address changes will be done, regardless of other settings. Note: both of these activities access the Tunnelblick website.</p>\n<p><strong>When not checked</strong>, automatic checking for updates will be done if enabled below, and checking for IP address changes will be done when connecting a configuration if the configuration's setting to do so is enabled.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p><p>&nbsp;</p>";
-
-/* HTML info for the 'Place near Spotlight icon' checkbox. The two '%@' are replaced by images of the menu bar showing the position of the Tunnelblick icon. */
-"<p><strong>When checked</strong>, the Tunnelblick icon is positioned near the Spotlight icon:</p>\n<p>%@</p>\n<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n<p>%@</p>\n<p><strong>This checkbox is disabled</strong> on macOS Sierra because it is not needed, and on systems for which it is known to cause problems.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>" = "<p><strong>チェックを入れた場合</strong>、Tunnelblick アイコンは Spotlight アイコンの近くに配置されます:</p>\n<p>%1$@</p>\n<p><strong>チェックを入れない場合</strong>、Tunnelblick アイコンは適当な位置に配置されます:</p>\n<p>%2$@</p>\n<p>このチェックボックスは macOS Sierra では<strong>無効です。</strong></p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">詳しくはこちら</a></p>";
-
-/* HTML info for the 'Show the VPN status window when disconnected' checkbox. */
-"<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>";
-
-/* HTML info for the 'Disconnect when user switches out' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be disconnected when switching to another user.</p>\n<p><strong>When not checked</strong>, the VPN will not be disconnected when switching to another user.</p>" = "<p><strong>When checked</strong>, the VPN will be disconnected when switching to another user.</p>\n<p><strong>When not checked</strong>, the VPN will not be disconnected when switching to another user.</p>";
-
-/* HTML info for the 'Disconnect when computer goes to sleep' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be disconnected when the computer goes to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will stay connected when the computer goes to sleep.</p>" = "<p><strong>When checked</strong>, the VPN will be disconnected when the computer goes to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will stay connected when the computer goes to sleep.</p>";
-
-/* HTML info for the 'Reconnect when user switches in' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be reconnected when switching back to the current user if it was disconnected when a switch to another user was done.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when switching back to the current user.</p>" = "<p><strong>When checked</strong>, the VPN will be reconnected when switching back to the current user if it was disconnected when a switch to another user was done.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when switching back to the current user.</p>";
-
-/* HTML info for the 'Reconnect when computer wakes up' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be reconnected when the computer wakes up if it was disconnected when the computer went to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when the computer wakes up.</p>" = "<p><strong>When checked</strong>, the VPN will be reconnected when the computer wakes up if it was disconnected when the computer went to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when the computer wakes up.</p>";
-
-/* HTML info for the 'Prepend domain name to search domains' checkbox. */
-"<p><strong>When checked</strong>, the VPN-specified domain name will be added to the start of the search domain list.</p>\n<p><strong>When not checked</strong>, the search domain list will be replaced by the VPN-specified domain name.</p>" = "<p><strong>When checked</strong>, the VPN-specified domain name will be added to the start of the search domain list.</p>\n<p><strong>When not checked</strong>, the search domain list will be replaced by the VPN-specified domain name.</p>";
-
-/* HTML info for the 'Display connection timers' checkbox. */
-"<p><strong>When checked</strong>, the time since a connection was established is displayed in the Tunnelblick menu and in the title of the VPN Details window.</p>" = "<p><strong>When checked</strong>, the time since a connection was established is displayed in the Tunnelblick menu and in the title of the VPN Details window.</p>";
-
-/* HTML info for the 'Load Tap driver' popdown list. */
-"<p>A 'tap' device driver is needed for Tap connections. Tunnelblick includes its own Tap driver because the system does not include one. If you have installed a different Tap driver, Tunnelblick may not be able to load its driver.</p><p>You can choose if and when Tunnelblick loads its driver:</p>\n<p><strong>Load Tap driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed.</p>\n<p><strong>Always load Tap driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tap driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>" = "<p>A 'tap' device driver is needed for Tap connections. Tunnelblick includes its own Tap driver because the system does not include one. If you have installed a different Tap driver, Tunnelblick may not be able to load its driver.</p><p>You can choose if and when Tunnelblick loads its driver:</p>\n<p><strong>Load Tap driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed.</p>\n<p><strong>Always load Tap driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tap driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>";
-
-/* HTML info for the 'Load Tun driver' popdown list. */
-"<p>A 'tun' device driver is needed for Tun connections. Usually the system's Tun driver is used, but Tunnelblick also includes its own Tun driver. If you have installed a different Tun driver, Tunnelblick may not be able to load its driver.</p>\n<p>OpenVPN will use the system's driver unless the OpenVPN configuration includes the 'dev-type tun' option.</p>\n<p>You can choose if and when Tunnelblick loads its Tun driver:</p>\n<p><strong>Load Tun driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed. (Tunnelblick will only load its driver if the OpenVPN configuration includes the 'dev-type tun' option.)</p>\n<p><strong>Always load Tun driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tun driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tap configurations.</p>" = "<p>A 'tun' device driver is needed for Tun connections. Usually the system's Tun driver is used, but Tunnelblick also includes its own Tun driver. If you have installed a different Tun driver, Tunnelblick may not be able to load its driver.</p>\n<p>OpenVPN will use the system's driver unless the OpenVPN configuration includes the 'dev-type tun' option.</p>\n<p>You can choose if and when Tunnelblick loads its Tun driver:</p>\n<p><strong>Load Tun driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed. (Tunnelblick will only load its driver if the OpenVPN configuration includes the 'dev-type tun' option.)</p>\n<p><strong>Always load Tun driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tun driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tap configurations.</p>";
-
-/* HTML info for the 'Check Now' button. */
-"<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>" = "<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>";
-
-/* HTML info for the 'Copy Console Log to Clipboard' button. */
-"<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>" = "<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>";
-
 /* HTML info for the 'Open Uninstall Instructions in Browser' button. */
-"<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>" = "<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>";
+"<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>" = "<p> OpenVPNをアンインストールする方法を案内するページをウェブブラウザで開く </p>";
 
 /* HTML info for the 'Advanced...' button. */
 "<p>Opens a window with additional settings.</p><p>Any changes will be applied to all configurations that are selected in the 'VPN Details' window.</p>" = "<p>追加設定の画面を新しいウィンドウで開く。</p><p>'VPN Details windowで'なされた変更は全て反映されます。</p>";
-
-/* HTML info for the 'Quit All OpenVPN Processes' button. */
-"<p>Quits all OpenVPN processes, including those which were not started by Tunnelblick. You should use the Tunnelblick 'Disconnect' or 'Disconnect All' buttons and menu commands to disconnect configurations which were connected using Tunnelblick.</p><p>Clicking this button sends a 'SIGTERM' signal to all processes named 'openvpn'. Normally this will cause OpenVPN to close all connections and quit. If this button does not quit all OpenVPN processes, you may need to use the OS X Activity Monitor application to 'Force Quit' the process.</p>" = "<p>Quits all OpenVPN processes, including those which were not started by Tunnelblick. You should use the Tunnelblick 'Disconnect' or 'Disconnect All' buttons and menu commands to disconnect configurations which were connected using Tunnelblick.</p><p>Clicking this button sends a 'SIGTERM' signal to all processes named 'openvpn'. Normally this will cause OpenVPN to close all connections and quit. If this button does not quit all OpenVPN processes, you may need to use the OS X Activity Monitor application to 'Force Quit' the process.</p>";
-
-/* HTML info for the 'Reset Disabled Warnings' button. */
-"<p>Restores warnings that have been inhibited by a 'Do not warn about this again' checkbox.</p>" = "<p>Restores warnings that have been inhibited by a 'Do not warn about this again' checkbox.</p>";
-
-/* HTML info for the 'Flush DNS cache after connecting or disconnecting' checkbox. */
-"<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>" = "<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>";
 
 /* HTML info for the 'Open easy-rsa in Terminal' button. */
 "<p>Tunnelblick includes a customized version of 'easy-rsa', which is a set of command line scripts written by the OpenVPN developers for creating and maintaining certificates and keys.</p><p>Clicking this button launches the OS X Terminal application with the working directory set to the folder containing the scripts.</p><p>The scripts are normally located in the folder at ~/Library/Application Support/Tunnelblick/easy-rsa. An 'easy-rsaPath' preference can contain the path to a folder that Tunnelblick will use instead. 'easy-rsaPath' must be an absolute path or start with a '~', and the parent folder of the path must exist. If a folder exists at the path, it will be used; if it does not exist, it will be created and the easy-rsa scripts will be installed into it when Tunnelblick is launched.</p><p>For information about using easy-rsa, see <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients</a> [openvpn.net].</p><p>For details of Tunnelblick's customizations of easy-rsa, see the README file located in the folder.</p>" = "<p>Tunnelblickは証明書と鍵を発行し維持するためにOpenVPNの開発者によって書かれたコマンドラインスクリプトである 'easy-rss'をカスタマイズしたバージョンを使用しています。</p><p>このボタンをクリックすることで、スクリプトを保存しているフォルダーを含むワーキングディレクトリを含んだ状態でOS Xのターミナルアプリが起動します。</p><p>スクリプトは通常、t ~/Library/Application Support/Tunnelblick/easy-rsaに保管されています。 'easy-rsaPath' を設定することによって代わりにTunnelblickのために使うパスを変更できます。 'easy-rsaPath'はabsolute pathであるか、'~'から始まら無ければならず, かつ親フォルダが存在していなければいけません。もし、フォルダがパス上に存在すればそれが使われます。もし存在しなければ、自動で作られ'easy-rsa'スクリプトはTunnelblickが起動された時にインストールされます。</p><p>'easy-rsa'の使い方については以下のリンクをご参照下さい。 <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">自分自身の認証局（Certificate Authority）をセットアップし、証明書と鍵をOpenVPNのサーバーや複数のクライアントに発行する方法について。</a> [openvpn.net].</p><p>Tunnelblickのカスタマイズに付いてもっと知りたいときはフォルダに格納されているREADMEをお読み下さい。</p>";
@@ -2084,8 +1998,7 @@
 "Dutch translation" = "オランダ語翻訳";
 
 /* Toolbar text for 'Lock' icon
-   Toolbar text for 'Lock' item
-*/
+   Toolbar text for 'Lock' item */
 "Enter admin mode" = "管理者モードへ移行";
 
 /* Credit description */

@@ -1,3 +1,6 @@
+/* THIS FILE SHOULD NOT BE EDITED. IT IS GENERATED AUTOMATICALLY. */
+/* See https://tunnelblick.net/cLocalizeTranslate.html.           */
+
 /* Status message. First '%@' is the name of a configuration. Second '%@' is an IP address (e.g. '8.8.4.4') */
 "Disconnect All (%@) - apparent public IP address %@" = "Odpojiť všetko (%1$@) - získaná verejná IP adresa %2$@";
 
@@ -62,9 +65,6 @@
 "Check Now" = "Skontrolovať";
 
 /* Button */
-"Check for a change" = "Skontrolovať zmeny";
-
-/* Button */
 "Connect" = "Pripojiť";
 
 /* Button */
@@ -98,13 +98,19 @@
 "Delete" = "Vymazať";
 
 /* Button */
+"Disable network access" = "Zakázať prístup k sieti";
+
+/* Button */
 "Disconnect" = "Odpojiť";
 
 /* Button */
-"Do not check for a change" = "Nekontrolovať zmeny";
+"Do Not Re-enable Network Access" = "Neobnovovať prístup k sieti";
 
 /* Button */
 "Do not use the plugin" = "Nepoužiť plugin";
+
+/* Button */
+"Do nothing" = "Nerobiť nič";
 
 /* Button */
 "Download" = "Prebrať";
@@ -139,6 +145,9 @@
 /* Button */
 "Monochrome icon" = "Čiernobiela ikona";
 
+/* Button. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"More Info [%@]" = "Viac informácií [%@]";
+
 /* Button */
 "More Info" = "Viac informácii";
 
@@ -170,19 +179,20 @@
 "Open easy-rsa in Terminal" = "Otvoriť easy-rsa v termináli";
 
 /* Button */
-"Place Icon Near the Spotlight Icon" = "Zobraziť ikonu v lište vedľa Spotlight ikony";
+"Place Icon Near the Spotlight Icon" = "Zobraziť vedľa Spotlight ikony";
 
 /* Button */
-"Place Icon Normally" = "Zobraziť ikonu na bežnom mieste";
-
-/* Button */
-"Privacy info..." = "Informácie o ochrane súkromia…";
+"Place Icon Normally" = "Zobraziť ikonu na štandartnom mieste";
 
 /* Button */
 "Quit All OpenVPN Processes" = "Ukončiť všetky procesy OpenVPN";
 
 /* Button */
 "Quit" = "Koniec";
+
+/* Button
+   Menu item */
+"Re-enable Network Access" = "Znova povoliť prístup do siete";
 
 /* Button */
 "Reinstall" = "Preinštalovať";
@@ -197,16 +207,28 @@
 "Reset Disabled Warnings" = "Obnoviť vypnuté upozornenia";
 
 /* Button */
+"Reset primary interface" = "Resetovať primárne sieťové rozhranie";
+
+/* Button */
 "Restart connection" = "Reštartovať spojenie";
 
 /* Button */
 "Restore" = "Obnoviť";
 
+/* Button text */
+"Retry with manual response" = "Opakujte s manuálnou odpoveďou";
+
 /* Button */
 "Retry" = "Skúsiť znova";
 
 /* Button */
+"Revert to the Last Secured Copy" = "Obnoviť poslednú zabezpečenú kópiu";
+
+/* Button */
 "Revert" = "Vrátiť";
+
+/* Button */
+"Secure the Configuration" = "Zabezpečiť konfiguráciu";
 
 /* Button */
 "Show on default screen (%u x %u)" = "Zobrazovať na predvolenej obrazovke (%1$u x %2$u)";
@@ -216,6 +238,9 @@
 
 /* Button */
 "Show when connection status changes" = "Zobraziť pri zmene stavu pripojenia";
+
+/* Button */
+"Show while connecting and connected" = "Zobraziť počas pripájanie a pripojenia";
 
 /* Button */
 "Show while connecting" = "Zobraziť počas pripájania";
@@ -311,16 +336,16 @@
 "OpenVPN level 3 - normal output" = "OpenVPN úroveň 3 - normálny výstup";
 
 /* Menu Item */
-"OpenVPN level 4 - also outputs values for all options" = "OpenVPN úroveň 4 - vrátane výstupu pre všetky možnosti";
+"OpenVPN level 4 - values for all options" = "OpenVPN úroveň 4 - hodnoty pre všetky nastavenia";
 
 /* Menu Item */
-"OpenVPN level 5 - also outputs \"R\" or \"W\" for each packet" = "OpenVPN úroveň 5 - vrátane výstupu \"R\" alebo \"W\" pre každý paket";
+"OpenVPN level 5 - \"R\" or \"W\" for each packet" = "OpenVPN úroveň 5 - \"R\" alebo \"W\" pre každý paket";
 
 /* Menu Item */
 "OpenVPN level 6 - very verbose output" = "OpenVPN úroveň 6 - veľmi detailný výstup";
 
 /* Menu Item */
-"OpenVPN logging level set by the configuration" = "Úroveň záznamov OpenVPN nastavená konfiguráciou";
+"OpenVPN logging level set by the configuration" = "Úroveň logovania OpenVPN nastavená podľa konfigurácie";
 
 /* Menu item */
 "Quit Tunnelblick" = "Ukončiť Tunnelblick";
@@ -344,7 +369,7 @@
 "VPN Details..." = "Nastavenie VPN…";
 
 /* Checkbox name */
-"Allow changes to manually-set network settings" = "Allow changes to manually-set network settings";
+"Allow changes to manually-set network settings" = "Povoliť zmeny ručne nastaviteľnej siete";
 
 /* Checkbox name */
 "Apply to all" = "Uplatniť na všetko";
@@ -386,19 +411,19 @@
 "Do not ask again, always convert" = "Viac sa nepýtať, vždy konvertovať";
 
 /* Checkbox name */
-"Do not check for IP address changes" = "Nekontrolovať zmeny IP adresy";
-
-/* Checkbox name on a warning dialog */
-"Do not show again for any configuration" = "Nezobrazovať v buducnosti pre žiadnu konfiguráciu";
+"Do not show this type of warning again" = "Tieto varovania už viac nezobrazovať";
 
 /* Checkbox name */
-"Do not show this type of warning again" = "Tieto varovania už viac nezobrazovať";
+"Do not warn about this again for any configuration" = "Nezobrazovať znovu toto varovanie pre akúkoľvek konfiguráciu";
 
 /* Checkbox name */
 "Do not warn about this again for this configuration" = "V tejto konfigurácii viac na toto neupozorňovať";
 
 /* Checkbox name */
 "Do not warn about this again" = "Viac na toto neupozorňovať";
+
+/* Checkbox name */
+"Do not warn about this for %lu days" = "Neupozorňovať o toto %lu dní";
 
 /* Checkbox name */
 "Enable IPv6 (tap only)" = "Povoliť IPv6 (len zariadenie tap)";
@@ -431,9 +456,6 @@
 "Require administrator authorization for key and certificate changes" = "Vyžadovať autorizáciu správcu pri zmene klúča a certifikátu";
 
 /* Checkbox name */
-"Reset the primary interface after disconnecting" = "Obnoviť nastavenia hlavného sieťového rozhrania po odpojení";
-
-/* Checkbox name */
 "Route all IPv4 traffic through the VPN" = "Smerovať všetok IPv4 dátový prenos cez VPN";
 
 /* Checkbox name */
@@ -441,9 +463,6 @@
 
 /* Checkbox name */
 "Save in Keychain" = "Uložiť v Kľúčenke";
-
-/* Checkbox name */
-"Send anonymous profile information when checking" = "Poslať anonymný informácie o profil pri kontrole";
 
 /* Checkbox name */
 "Set DNS after routes are set" = "Nastav DNS záznam po nastavení routovania";
@@ -465,6 +484,9 @@
 
 /* PopUpButton */
 "Set nameserver (alternate 1)" = "Nastaviť nameserver (alternate 1)";
+
+/* PopUpButton */
+"Set nameserver (alternate 2)" = "Zadajte doménový server (alternatíva 2)";
 
 /* PopUpButton *//* System profile item */
 "Set nameserver" = "Nastaviť nameserver";
@@ -560,9 +582,6 @@
 "Alert" = "Upozornenie";
 
 /* Window title */
-"All OpenVPN process were terminated." = "Všetky procesy OpenVPN boli nútene ukončené.";
-
-/* Window title */
 "All configuration files removed" = "Všetky konfiguračné súbory boli odstránené";
 
 /* Window title */
@@ -626,16 +645,10 @@
 "Name not allowed" = "Nepovolený názov";
 
 /* Window title */
-"New Feature" = "Nová funkcia";
-
-/* Window title */
 "No 'dev tun', 'dev utun', or 'dev tap' found" = "Nebolo nájdené žiadne \"dev tun\", \"dev utun\" alebo \"dev tap\"";
 
 /* Window title */
 "No Credentials" = "Žiadne prístupové údaje";
-
-/* Window title */
-"One or more OpenVPN processes could not be terminated." = "Nebolo možné ukončiť systémové procesy OpenVPN.";
 
 /* Window title */
 "Only computer administrators should update Tunnelblick" = "Tunnelblick by mal aktualizovať iba správca systému";
@@ -668,7 +681,7 @@
 "System Requirements Not Met" = "Systémové požiadavky programu neboli naplnené";
 
 /* Window title */
-"There are no OpenVPN processes running." = "Neexistujú žiadne aktívne OpenVPN procesy.";
+"Tunnelblick %@ may need to be updated" = "Možno je potrebné aktualizovať program Tunnelblick %@";
 
 /* Window title */
 "Tunnelblick Configuration Problem" = "Chyba konfigurácie Tunnelblick";
@@ -724,6 +737,9 @@
 /* Window title */
 "While Connected" = "Počas spojenia";
 
+/* Window text. The first %@ will be replaced by the name of a configuration. The second %@ will be replaced by a message from a VPN server, such as 'Please insert your security token'. */
+"     From the VPN server for %@:\n\n%@" = "     Z VPN servera pre %1$@: \n%2$@";
+
 /* Window text: 'Tunnelblick successfully: *' */
 "     • Installed %lu configurations\n\n" = "     • Počet inštalovaných konfigurácií: %lu ";
 
@@ -773,7 +789,7 @@
 "  • Convert OpenVPN configurations\n" = "  • Previesť konfigurácie z formátu OpenVNP\n";
 
 /* Window text */
-"  • Install forced preferences\n" = "  • Inštalovať vnútené nastavenia\n";
+"  • Install forced preferences\n" = "  • Inštalovať vynútené nastavenia\n";
 
 /* Window text */
 "  • Install or update configuration(s)\n" = "  • Nainštalovať alebo aktualizovať konfigurácie\n";
@@ -785,7 +801,7 @@
 "  • Secure configurations\n" = "  • Ochrániť konfigurácie\n";
 
 /* Window text */
-" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Technologies, Inc." = " %1$@ je voľný software: môžete ho šíriť a/alebo modifikovať podľa podmienok %2$@ vydávanej %3$@.  \n%4$@ je ochranná známka spoločnosti OpenVPN Technologies, Inc.";
+" %1$@ is free software: you can redistribute it and/or modify it under the terms of the %2$@ as published by the %3$@.\n\n%4$@ is a registered trademark of OpenVPN Inc." = " %1$@ je slobodný softwér: môžete ho šíriť a modifikovať podľa podmienok %2$@ vydávanej %3$@.\n \n%4$@ je ochranná známka spoločnosti OpenVPN Technologies, Inc.";
 
 /* Window text */
 " Do you wish to install %@ to %@%@?\n\n" = " Prajete si nainštalovať %1$@ do %2$@%3$@?\n\n";
@@ -794,7 +810,7 @@
 " Do you wish to replace\n    %@\n    in %@\nwith %@%@?\n\n" = " Prajete si nahradiť\n    %1$@\n    v %2$@\nza %3$@%4$@?\n\n";
 
 /* Window text */
-" Forced preferences will also be installed or replaced.\n\n" = " Vynútené nastavenia tiež budú nainštalované alebo nahradené.\n\n";
+" Forced preferences will also be installed or replaced.\n\n" = " Vynútené nastavenia budú tiež nainštalované alebo nahradené.\n\n";
 
 /* Window text */
 " Note: OpenVPN configurations will be converted to Tunnelblick VPN Configurations.\n\n" = " Poznámka: Konfigurácie vo formáte OpenVPN budú prevedené do formátu konfigurácie Tunnelblick VPN.\n\n";
@@ -817,11 +833,17 @@
 /* Window text */
 "%@ has been reverted to its last secured (shadow) copy.\n\n" = "%@ bolo obnovené na poslednú známu bezpečnostnú kópiu.\n\n";
 
+/* Window text. The '%@' at the beginning is a separately translated string that describes an action that is to be taken. */
+"%@\n\n Note: Tunnelblick is in administrator mode, so a computer administrator's authorization is not required." = "%@\n\n Poznámka: Tunnelblick je v administračnom móde, takže autorizácia správcu počítača sa nie je potrebná.";
+
 /* Window text */
-"%ld configurations have been reverted to their last secured (shadow) copy.\n\n" = "%ld konfigurácie boli vrátené do ich poslednej bezpečnej (tieňovej) kópie.\n\n";
+"%ld configurations have been reverted to their last secured (shadow) copy.\n\n" = "%ld konfigurácie boli obnovené z poslednej bezpečnej (tieňovej) kópie.\n\n";
 
 /* Window text */
 "'%@' already exists on the Desktop.\n\nWould you like to replace it?" = "'%@' sa už nachádza na Ploche.\n\nPrajete si nahradiť ju?";
+
+/* Window text */
+"'%@' at line %u was not terminated properly" = "'%1$@' na riadku %2$u nebolo správne ukončené";
 
 /* Window text */
 "'%@' does not have any credentials (private key or username and password) stored in the Keychain." = "'%@' nemá žiadne prístupové údaje (súkromný kľúč alebo meno a heslo) uložené v Kľúčenke.";
@@ -829,14 +851,20 @@
 /* Window text */
 "'%@' was not terminated." = "\"%@\" nebolo ukončené.";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The second and third '%@' will each be replaced by the name of a version of OpenVPN, e.g. '2.3 - OpenSSL v1.0.2n */
+"'%@' will connect using OpenVPN %@ instead of the requested version (OpenVPN %@)." = "'%1$@' sa pripojí pomocou OpenVPN %2$@ namiesto požadovanej verzie (OpenVPN %3$@).";
+
 /* Window text */
 "'easy-rsaPath' preference ignored; it does not specify a folder" = "\"easy-rsaPath\" preferencie bola ignorovaná; neurčuje totižto priečinok";
 
 /* Window text */
 "'easy-rsaPath' preference ignored; it must be an absolute path or start with '~'" = "\"easy-rsaPath\" preferencie bola ignorovaná; musí byť defnovaná absolútna cesta alebo cesta začínať s \"~\"";
 
+/* Window text */
+"(An error occurred creating the help content.)" = "(Vyskytla sa chyba pri vytváraní kontextu nápovedy.)";
+
 /* Window text -- appears in log display when logging is disabled\n */
-"(Logging is disabled.)" = "(Záznamy sú zakázané.)";
+"(Logging is disabled.)" = "(Logovanie je zakázané)";
 
 /* Window text */
 "(Never checked)" = "(Zatiaľ neskontolované)";
@@ -845,13 +873,16 @@
 "(The 'easy-rsaPath' preference is invalid.)" = "(Nastavenie 'easy-rsaPath' je neplatné.)";
 
 /* Window text */
-"(if connected when computer went to sleep)" = "(ak pripojené, keď počítač zaspí)";
+"(if connected when computer went to sleep)" = "(ak pripojené, keď počítač prešiel do režimu spánku)";
 
 /* Window text */
 "(if connected when user switched out)" = "(ak je aktívne pri zmene aktívneho užívateľa)";
 
 /* Window text */
-"<br>Based on Tunnelblick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Technologies, Inc." = "<br>Založené na Tunnelblick, voľne šíriteľnom softwari, ktorý je dostupný na<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN je registrovaná ochranná známka OpenVPN Technologies, Inc.";
+"<br>Based on Tunnelblick, free software available at<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN is a registered trademark of OpenVPN Inc." = "<br>Založené na Tunnelblicku, voľne šíriteľnom softvéri, ktorý je dostupný na<br><a href=\"https://tunnelblick.net\">https://tunnelblick.net</a><br><br>OpenVPN je registrovaná ochranná známka OpenVPN Technologies, Inc.";
+
+/* Window text */
+"<p>This version of Tunnelblick is %lu days old.</p><p>Please check for a newer version:</p><ul><li>Manually on the 'Preferences' panel of Tunnelblick's 'VPN Details' window; or<br></li><li>By looking for a more recent version on the <a href=\"https://tunnelblick.net/downloads.html\">Tunnelblick Downloads page</a> [tunnelblick.net].</li></ul>" = "<p>Táto verzia Tunnelblicku je stará %lu dní.</p><p>Prosím, skontrolujte dostupnosť novej verzie:</p><ul><li>Ručne v okne \"Detaily VPN\", v paneli Predvoľby, alebo<br></li><li>dohľadaním novšej verzie na <a href=\"https://tunnelblick.net/downloads.html\">Tunnelblick stránke Downloads</a>[tunnelblick.net].</li></ul>";
 
 /* Window text */
 "A TBPreference or TBAlwaysSetPreference key refers to an unknown preference '%@' in %@" = "TBPreference alebo TBAlwaysSetPreference sa odkazuje na neznámu preferenciu \"%1$@\" %2$@";
@@ -869,10 +900,10 @@
 "A private configuration named '%@' already exists.\n\nDo you wish to replace it with the shared configuration?" = "Súkromná konfigurácia s názvom '%@' už existuje.\n\nPrajete si ju nahradiť zdieľanou konfiguráciou?";
 
 /* Window text */
-"A problem occurred while checking this computer's apparent public IP address.\n\nSee the Console log for details.\n\n" = "Vyskytol sa problém počas kontroly verejnej IP adresy tohto počítača.\n\nPre viac informácií si, prosím, prezrite Záznam konzoly.\n\n";
+"A problem occurred while checking this computer's apparent public IP address.\n\nSee the Console log for details.\n\n" = "Vyskytol sa problém počas kontroly verejnej IP adresy tohto počítača.\n\nPre viac informácií prezrite Záznam konzoly.\n\n";
 
 /* Window text */
-"A shared configuration named '%@' already exists.\n\nDo you wish to replace it with the private configuration?" = "Zdieľaná konfigurácia s názvom '%@' už existuje.\n\nPrajete si ju nahradiť súkromnou konfiguráciou?";
+"A shared configuration named '%@' already exists.\n\nDo you wish to replace it with the private configuration?" = "Zdieľaná konfigurácia s názvom '%@' už existuje.\n\nPrajete si ju nahradiť ju súkromnou konfiguráciou?";
 
 /* Window text */
 "A username and password are required to connect to\n  %@" = "Je potrevné zadať uživateľské meno a heslo na pripojenie k\n%@";
@@ -900,6 +931,9 @@
 
 /* Window text */
 "After connecting to %@, the Internet does not appear to be reachable.\n\nThis may mean that your VPN is not configured correctly.\n\n" = "Po vytvorení spojenia %@ sa nie je možné pripojiť na Internet.\n\nMožnou príčinou tohto problému je nesprávne nastavenie použitej VPN.\n\n";
+
+/* Window text */
+"All OpenVPN processes have quit" = "Všetky OpenVPN procesy boli ukončené";
 
 /* Window text */
 "All configuration files have been removed. Tunnelblick must quit." = "Všetky konfiguračné súbory boli odstránené. Tunnelblick bude ukončený.";
@@ -968,6 +1002,9 @@
 "Backslash at end of line %u is not allowed" = "Nie je dovolené spätné lomítko na konci riadku %u";
 
 /* Window text */
+"Cancelled trying to quit all OpenVPN processes" = "Snaha o ukončenie všetkých procesov OpenVPN bola prerušená";
+
+/* Window text */
 "Cannot find configuration file at %@" = "Konfiguračný súbor %@ sa nedá nájsť";
 
 /* Window text */
@@ -996,6 +1033,12 @@
 
 /* Window text */
 "Configuration '%@' is not updatable because it could not be marked as 'updatable'.\n" = "Konfigurácia \"%@\" nie je možné aktualizovať, pretože nie je označená ako \"aktualizovateľná\". ";
+
+/* Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02' */
+"Configuration '%@' requires Tunnelblick %@ or higher; you are using Tunnelblick %@.\n\nYou must update Tunnelblick to install this configuration." = "Konfigurácia '%1$@' vyžaduje Tunnelblick %2$@ a vyšší; aktuálne používate verziu Tunnelblick %3$@.\n\nMusíte aktualizovať Tunnelblick aby ste mohli nainštalovať túto konfiguráciu.";
+
+/* Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02' */
+"Configuration '%@' requires Tunnelblick %@ or lower; you are using Tunnelblick %@." = "Konfigurácia \"%1$@\" vyžaduje Tunnelblick %2$@ nebo staršiu: používate Tunnelblick %3$@.";
 
 /* Window text */
 "Configuration '%@' will be ignored because its name contains characters that are not allowed.\n\nCharacters that are not allowed: '%s'\n\n" = "Konfigurácia '%@' bude ignorovaná, pretože jej názov obsahuje neprípustné znaky..\n\nNepovolené znaky: '%2$s'\n\n";
@@ -1127,6 +1170,9 @@
 "File '%@' appears to be in 'rich text' format because it starts with a '{' character. All OpenVPN-related files must be 'plain text' or 'UTF-8' files." = "Vypadá to, že súbor '%@' je vo formáte 'rich text', pretože začína znakom '{'. Všetky súbory pre OpenVPN musia byť v obýčajnom texte 'plain text' alebo v 'UTF-8'.";
 
 /* Window text */
+"File '%@' contains one or more NUL characters." = "Súbor '%@' obsahuje jeden alebo viac NUL znakov.";
+
+/* Window text */
 "File '%@' ends with a backslash, which is not allowed." = "Súbor \"%@\" končí lomítkom, čo nie je povolené.";
 
 /* Window text */
@@ -1134,6 +1180,9 @@
 
 /* Window text */
 "File '%@' is missing" = "Súbor \"%@\" chýba";
+
+/* Window text */
+"File '%@' is not a plain text or UTF-8 file." = "Súbor '%@' neobsahuje text alebo UTF-8 súbor.";
 
 /* Window text */
 "File '%@' is too short (%lu bytes)" = "Súbor '%1$@' je príliš malý (%2$lu bytov)";
@@ -1231,6 +1280,15 @@
 /* Window text */
 "NetBIOS name:" = "NetBIOS názov:";
 
+/* Window text; the %@ will be replaced by a list of configuration names. */
+"Network access cannot be disabled after disconnecting for some or all of the selected configurations because they include 'user' and/or 'group' options. Those options will cause OpenVPN to not be running as root during disconnection, so it will not be able to disable network access.\n\nThe configurations that contain 'user' and/or 'group' are:\n\n%@\n\n" = "Prístup k sieti nemožno po odpojení vypnúť pre niektoré alebo pre všetky vybraté konfigurácie, pretože obsahujú možnosti \"používateľ\" a/alebo \"skupina\". Tieto možnosti spôsobia, že OpenVPN nebude počas odpojenia bežať ako root, takže nebude možné zakázať prístup do siete.\n\nKonfigurácie, ktoré obsahujú \"používateľ\" a/alebo \"skupina\", sú:\n\n%@\n\n";
+
+/* Window text */
+"Network access was disabled when a VPN disconnected." = "Prístup k sieti sa zakázal následkom ukončena spojenia VPN.";
+
+/* Window text */
+"Network access was disabled when a VPN disconnected.\n\nDo you wish to re-enable network access?\n\n" = "Prístup do siete bol po odpojení VPN zakázaný.\n\nPrajete si obnoviť prístup do siete?\n\n";
+
 /* Window text */
 "Network setting" = "Sieťové nastavenia";
 
@@ -1265,6 +1323,12 @@
 "Not replacing an existing configuration, so configuration '%@' cannot use 'TBKeepExistingFilesList'" = "Existujúca konfigurácie nebude nahradena, takže konfigurácia '%@' nemôže používať 'TBKeepExistingFilesList'";
 
 /* Window text */
+"On expected disconnect:" = "Pri očakávanom odpojení:";
+
+/* Window text */
+"On unexpected disconnect:" = "Pri neočakávanom odpojení:";
+
+/* Window text */
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation. Do you wish to terminate all OpenVPN processes?" = "Bola zistená prítomnosť jedného alebo viacerých procesov OpenVPN spustených nezávisle na aplikácii Tunnelblick. Ak nemáte spustené iné OpenVPN nezávisle na Tunnelblick, môže to často znamenať, že Tunnelblick nedokázal pri predchádzajúcom ukončení tieto procesy korektne zastaviť, a mali by ste ich ukončiť. Tieto procesy môžu narušiť chod aplikácie Tunnelblick. Prajete si vynútiť ukončenie všetkých procesov OpenVPN?";
 
 /* Window text */
@@ -1272,15 +1336,6 @@
 
 /* Window text */
 "One or more OpenVPN processes are running but are unknown to Tunnelblick. If you are not running OpenVPN separately from Tunnelblick, this usually means that an earlier launch of Tunnelblick was unable to shut them down properly and you should terminate them. They are likely to interfere with Tunnelblick's operation.\n\nThey can be terminated in the 'Activity Monitor' application.\n\n" = "Bola zistená prítomnosť jedného alebo viacerých procesov OpenVPN spustených nezávisle na aplikácii Tunnelblick. Ak nemáte spustené iné OpenVPN nezávisle na Tunnelblick, môže to často znamenať, že Tunnelblick nedokázal pri predchádzajúcom ukončení tieto procesy korektne zastaviť, a mali by ste ich ukončiť. Tieto procesy môžu narušiť chod aplikácie Tunnelblick.\n\nVynútiť ukončenie týchto procesov je možné v aplikácii 'Monitor aktivity'.\n\n";
-
-/* Window text */
-"One or more VPN configurations that are being updated include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Jedna alebo viacero konfigurácií VPN, ktoré majú byť aktualizované, obsahujú programy, ktoré po pripojení na VPN nadobudnú administrátorské práva. Tieto konfigurácie sú schopné PREVZIAŤ ÚPLNÚ KONTROLU NAD VAŠIM POČÍTAČOM.\n\nTIETO KONFIGURÁCIE BY STE MALI INŠTALOVAŤ LEN V PRÍPADE, ŽE PLNE DÔVERUJETE ICH AUTOROVI.\n\nDôverujete autorovi týchto konfigurácií a prajete si ich nainštalovať?\n\n";
-
-/* Window text */
-"One or more VPN configurations you are installing include OpenVPN options that were not recognized by Tunnelblick. That may be an error in the configuration or an error in Tunnelblick, or the configurations might include programs which will run as root when you connect to a VPN. Such programs would be able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Jedna alebo viacero VPN konfigurácií, ktoré inštalujete, obsahuje nastavenia OpenVPN, ktoré Tunnelblick nevie prečítať. Môžu predstavovať chybu danej konfigurácie, chybu v aplikácii Tunnelblick alebo konfigurácie obsahujú programy, ktoré sa po pripojení k VPN spustia s administrátorskými oprávneniami. Takéto programy by potom mohli PREVZIAŤ ÚPLNÚ KONTROLU NAD VAŠIM POČÍTAČOM.\n\nTIETO KONFIGURÁCIE BY STE MALI INŠTALOVAŤ LEN V PRÍPADE, ŽE PLNE DÔVERUJETE ICH AUTOROVI.\n\nDôverujete autorovi týchto konfigurácií a prajete si ich nainštalovať?\n\n";
-
-/* Window text */
-"One or more VPN configurations you are installing include programs which will run as root when you connect to a VPN. They are able to TAKE COMPLETE CONTROL OF YOUR COMPUTER.\n\nYOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\nDo you trust the author of the configurations and wish to install them?\n\n" = "Jedna alebo viacero konfigurácií VPN, ktoré inštalujete, obsahujú programy, ktoré po pripojení na VPN nadobudnú administrátorské práva. Tieto konfigurácie sú schopné PREVZIAŤ ÚPLNÚ KONTROLU NAD VAŠIM POČÍTAČOM.\n\nTIETO KONFIGURÁCIE BY STE MALI INŠTALOVAŤ LEN V PRÍPADE, ŽE PLNE DÔVERUJETE ICH AUTOROVI.\n\nDôverujete autorovi týchto konfigurácií a prajete si ich nainštalovať?\n\n";
 
 /* Window text */
 "One or more VPNs are currently connected. Please disconnect all VPNs and quit Tunnelblick before proceeding." = "Je aktívne jedno alebo viacej VPN pripojení. Ukončite všetky VPN pripojenia predtým než budete pokračovať ďalej.";
@@ -1297,11 +1352,8 @@
 /* Window text */
 "OpenVPN is not responding to requests to disconnect %@.\n\nTunnelblick will disconnect when OpenVPN starts responding to disconnection requests.\n\nTHIS MAY TAKE UP TO TWO MINUTES in certain unusual circumstances.\n\nThe connection will be unavailable until it is disconnected." = "OpenVPN neodpovedá na požiadavky na odpojenie %@.  Tunnelblick sa odpojí ak OpenVPN začíne reagovať na žiadosti o odpojenie.  Toto môže trvať až dve minúty v prípade neobvyklých okolností.  Spojenie nebude k dispozícii až kým nebude odpojené.";
 
-/* Window text */
-"OpenVPN version %@ is not available. Changing this configuration to use the latest version (%@) that is included in this version of Tunnelblick." = "OpenVPN verzie %1$@ nie je k dispozícii. Táto konfigurácia bude pozmenená tak, aby sa použila najnovšia verzia  (%2$@), ktorá je zahrnutá v tejto verzii programu Tunnelblick.";
-
-/* Window text */
-"OpenVPN version %@ is not available. Using the latest version (%@) as the default." = "OpenVPN verzia %1$@ nie je k dispozícii. Použie sa najnovšia verzie (%2$@) ako predvolené.";
+/* Window text. Each '%@' will be replaced by OpenVPN and SLL version information (e.g., '2.3.18-openssl-1.0.2n' or '2.3.18-libressl-2.6.3') */
+"OpenVPN version %@ is not available. Using %@ as the default." = "OpenVPN vo verzii %1$@ nie je dostupná. Použitie %2$@ ako predvolenej.";
 
 /* Window text */
 "OpenVPN version:" = "Verzia OpenVPN:";
@@ -1332,6 +1384,9 @@
 
 /* Window text */
 "Private configurations cannot connect when the computer starts.\n\nFirst make the configuration shared, then change this setting." = "Súkromné konfigurácie nie je možné pripojiť pri štarte systému.\n\nNajprv nastavte konfiguráciu ako zdieľanú a potom zmeňte nastavenia.";
+
+/* Window text */
+"Program error, please see the Console log." = "Chyba programu, pozrite si prosím záznam Konzoly.";
 
 /* Window text */
 "Received fatal signal %d." = "Bol obdržaný signál závažnej chyby %d.";
@@ -1414,8 +1469,14 @@
 /* Window text */
 "The 'namedCredentialsNames' preference must be an array of strings" = "Položka nastavení 'namedCredentialsNames' musí obsahovať skupinu znakov";
 
+/* Window text; the %@ will be replaced by the name of a configuration. */
+"The OpenVPN configuration file for '%@' was modified after it was last secured.\n\nDo you wish to secure the modified configuration or revert to the last secured configuration?\n\n" = "OpenVPN konfiguračný súbor pre '%@' bol zmenený od posledného zabezpečenia.\n\nPrajete si zabezpečiť modifikovanú konfiguráciu alebo vrátiť na poslednú zabezpečenú konfiguráciu?\n\n";
+
 /* Window text */
 "The OpenVPN configuration file in %@ contains a '%@' option, which is a Windows-only option. It cannot be used on OS X." = "Súbor OpenVPN konfigurácie v %1$@  obsahuje možnosť \"%2$@\" , ktorá je dostupná len v systéme Windows. Nie je možné teda túto možnosť použiť na OS X.";
+
+/* Window text. The first '%@' will be replaced by an OpenVPN warning or error message (in English) such as 'WARNING: Your certificate is not yet valid!'. The second '%@' will be replaced with an empty string or an already-translated comment that explains the warning or error in more detail. */
+"The OpenVPN log contains the following message: \n\n\"%@\".%@" = "OpenVPN log obsahuje nasledujúcu správu: \n\n\"%1$@\".%2$@";
 
 /* Window text */
 "The OpenVPN log does not yet exist or has been deleted." = "Záznam OpenVPN ešte neexistuje alebo bol vymazaný.";
@@ -1481,6 +1542,9 @@
 "There are no OpenVPN configurations to install." = "Neexistujú žiadne OpenVPN konfigurácie na inštaláciu.";
 
 /* Window text */
+"There are no OpenVPN processes running" = "Neexistujú žiadne aktívne OpenVPN procesy";
+
+/* Window text */
 "There are no VPN configurations installed.\n\nTunnelblick needs one or more installed configurations to connect to a VPN. Configurations are installed from files that are usually supplied to you by your network manager or VPN service provider. The files must be installed to be used.\n\nConfiguration files have extensions of .tblk, .ovpn, or .conf.\n\n(There may be other files associated with the configuration that have other extensions; ignore them for now.)\n\nDo you have any configuration files?\n" = "Nie sú nainštalované žiadne konfigurácie VPN.\n\nPre pripojenie na VPN Tunnelblick potrebuje aspoň jednu nainštalovanú konfiguráciu. Konfigurácie sa inštalujú zo súborov, ktoré Vám najčastejšie poskytne Váš správca siete alebo poskytovateľ služby VPN. Pre správnu funkciu musia byť tieto súbory nainštalované.\n\nKonfiguračné súbory majú väčšinou koncovku .tblk, .ovpn alebo .conf.\n\n(Môžu existovať ďalšie súbory s inou koncovkou súvisiace s danou konfiguráciou. Nateraz tieto súbory, prosím, ignorujte.)\n\nMáte k dispozícii konfiguračné súbory?\n";
 
 /* Window text */
@@ -1504,6 +1568,9 @@
 /* Window text */
 "This 'Deployed' version of Tunnelblick cannot be launched or installed because it does not have an Info.plist.\n\n" = "Túto centrálne spravovovanú verziu aplikácie Tunnelblick nie je možné spustiť ani nainštalovať, pretože neobsahuje súbor Info.plist.\n\n";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The second '%@' will be replaced by a list of names of OpenVPN options and when each was deprecated and removed. */
+"This VPN cannot be connected.\n\nThe OpenVPN configuration file for '%@' contains these OpenVPN options:\n\n%@\nNone of the versions of OpenVPN included in this version of Tunnelblick include the option(s).\n\nYou should update the configuration so it can be used with modern versions of OpenVPN." = "Túto VPN nejde pripojiť.\n\nKonfiguračný súbor OpenVPN pre '%1$@' obsahuje tieto nastavenia OpenVPN:\n\n%2$@\nŽiadna z verzií OpenVPN, zahrnutá v tejto verzii Tunnelblicku, nezahŕňa tieto nastavenia.\n\nMali by ste upraviť konfiguráciu tak, aby ju bolo možné použiť s modernými verziami OpenVPN.";
+
 /* Window text */
 "This computer's apparent public IP address was not different after connecting to %@. It is still %@.\n\nThis may mean that your VPN is not configured correctly.\n\n" = "Verejná IP adresa tohto počítača sa po pripojení k %1$@ nezmenila. IP adresa počítača je stále %2$@.\n\nToto môže znamenať, že Vaša VPN nie je správne nastavená.\n\n";
 
@@ -1512,21 +1579,6 @@
 
 /* Window text */
 "This copy of Tunnelblick is not digitally signed.\n\nThere is no way to verify that this copy has not been tampered with.\n\n Check with the provider of this copy of Tunnelblick before using it.\n\n" = "Táto kópia aplikácie Tunnelblick nie je digitálne podpísaná.\n\nNeexistuje možnosť overenia, či táto kópia nebolo neodborne upravená.\n\n Pred použitím tejto kópie aplikácie Tunnelblick, prosím, kontaktuje jej poskytovateľa.\n\n";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly if it uses tun or tap kexts." = "Táto verzia aplikácie Tunnelblick je určená pre 64-bitový Intel a nebude správne pracovať v prípade, ak používate tun kext alebo tap kext.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses a tap connection. Use a universal version of Tunnelblick instead." = "Táto verzia aplikácie Tunnelblick je určená pre 64-bitový Intel a nebude správne pracovať s nastavením používajúcim pripojenie pomocou tap. Prosím, použite univerzálnu verziu Tunnelblick.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. Use a universal version of Tunnelblick instead." = "Táto verzia aplikácie Tunnelblick je určená pre 64-bitový Intel a nebude správne pracovať s nastavením používajúcim tun kext. Prosím, použite univerzálnu verziu Tunnelblick.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will not work properly with a configuration that uses tun kexts. You can use a universal version of Tunnelblick or use the OS X 'utun' driver by removing OpenVPN 'dev-type' options - see the OpenVPN documentation." = "Táto verzia aplikácie Tunnelblick je určená pre 64-bitový Intel a nebude správne pracovať s nastavením používajúcim tun kext. Môžete použiť univerzálnu verziu Tunnelblick alebo nastavte použitie ovládača 'utun' pre OS X tak, že z OpenVPN odstránite možnosti 'dev-type' - viac nájdete v dokumentácii OpenVPN.";
-
-/* Window text */
-"This is a 64-bit Intel version of Tunnelblick which will only run on OS X with a 64-bit kernel, or on OS X 10.6.8 or higher if there is no use of tun or tap kexts." = "Táto verzia aplikácie Tunnelblick je určená pre 64-bitový Intel a bude správne pracovať len na OS X so 64-bitovým jadrom alebo na OS X 10.6.8 a vyššom bez tun kext a tap kext.";
 
 /* Window text */
 "This version of Tunnelblick cannot be launched or installed because it has an invalid update URL.\n\n" = "Túto verziu aplikácie Tunnelblick nie je možné spustiť ani nainštalovať, pretože URL pre aktualizácie je neplatná.\n\n";
@@ -1543,6 +1595,9 @@
 /* Window text */
 "Translation by" = "Preložil";
 
+/* Window text */
+"Trying to quit all OpenVPN processes..." = "Pokúšam sa ukončiť všetky OpenVPN procesy…";
+
 /* Window text; '%@' will be replaced with a version number such as '3.2.1 (build 1234)' */
 "Tunnelblick %@ has been secured successfully." = "Tunnelblick %@ bol úspešne zabezpečený.";
 
@@ -1550,13 +1605,16 @@
 "Tunnelblick %@ is ready." = "Tunnelblick %@ je pripravený.";
 
 /* Window text */
-"Tunnelblick Admin Mode\n\n Temporarily authorize changes that require an administrator password.\n\n The session expires after five minutes or when the 'VPN Details' window is closed." = "Tunnelblick - Režim správcu\n\nDočasne povolí zmeny ktoré vyžadujú heslo správcu počítača.\n\nTento režím sa automaticky ukončí po piatich minútach alebo po zavretí okna 'Nastavenie VPN'.";
+"Tunnelblick Admin Mode\n\n Temporarily allow changes that require a computer administrator's authorization.\n\n The session expires after five minutes or when the 'VPN Details' window is closed." = "Režim správcu Tunnelblick\n\nDočasne umožňuje vykonať zmeny, ktoré vyžadujú prihlasovacie údaje správcu počítača.\n\nTento režim sa automaticky ukončí po piatich minútach alebo po zavretí okna 'Nastavenie VPN'.";
 
 /* Window text */
 "Tunnelblick Internet Use:" = "Tunnelblick využitie Internetu:";
 
-/* Window text */
-"Tunnelblick can check that the apparent public IP address of your computer changes when you connect to a VPN, and warn you if it doesn't.\n\nThis may help Tunnelblick diagnose problems with your connection.\n\nThis process attempts to access\n%@\n\nDo you wish to check for this IP address change?\n" = "Tunnelblick dokáže skontrolovať, či sa verejná IP adresa Vášho počítača po pripojení k VPN zmenila a varovať Vás, ak sa nezmenila.\n\nTo môže pomôcť aplikácii Tunnelblick pri diagnóze problémov použitého spojenia.\n\nTento proces vyžiadaje prístup k\n%@\n\nPrajete si skontrolovať zmeny súčasnej IP adresy?\n";
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick can access %@ to check for updates when it is launched and periodically while it is running.\n\n" = "Tunnelblick môže pristupovať k %@, aby skontrolovala aktualizácie pri spustení a pravidelne počas jej spustenia.\n\n";
+
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick can access %@ to check that your computer's apparent public IP address changes each time you connect to a VPN.\n\n" = "Tunnelblick môže pristupovať k %@ pre overenie zmeny verejnej IP adresy pri každom pripojení k VPN.\n\n";
 
 /* Window text */
 "Tunnelblick could not be configured to automatically launch itself after you log in.\n\nSee the Console log for details." = "Nebolo možné nakonfigurovať Tunnelblick na automatické spustenie po prihlásení.  Pozri Podrobnosti v denníku konzoly.";
@@ -1652,7 +1710,7 @@
 "Tunnelblick needs to create or update a secure (shadow) copy of the configuration file." = "Tunnelblick vyžaduje vytvorenie alebo aktualizáciu bezpečnostnej kópie konfiguračného súboru.";
 
 /* Window text */
-"Tunnelblick needs to perform an action that requires administrator authorization.\n" = "Tunnelblick musí vykonať činnosť, ktorá vyžaduje autorizáciu správcu.\n";
+"Tunnelblick needs to perform an action that requires a computer administrator's authorization.\n" = "Tunnelblick potrebuje vykonať akciu, ktorá vyžaduje autorizáciu správcu počítača.\n";
 
 /* Window text */
 "Tunnelblick needs to:\n" = "Tunnelblick vyžaduje:\n";
@@ -1687,6 +1745,12 @@
 /* Window text */
 "Tunnelblick was unable to start OpenVPN to connect %@. For details, see the log in the VPN Details... window" = "Aplikácii Tunnelblick sa nepodarilo spustiť OpenVPN pre pripojenie k %@. Pre viac informácií si, prosím, prezrite Záznam konzoly v okne Nastavenia VPN…";
 
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick will access %@ to check for updates when it is launched and periodically while it is running. Contact the distributor of this copy of Tunnelblick for details.\n\n" = "Tunnelblick bude pristupovať k %@, aby skontrolovala aktualizácie pri spustení a periodicky počas jej spustenia. Kontaktujte distribútora tejto kópie programu Tunnelblicku pre získanie detailov.\n\n";
+
+/* Window text. The %@ will be replaced by an Internet address like 'tunnelblick .net'. */
+"Tunnelblick will access %@ to check that your computer's apparent public IP address changes each time you connect to a VPN. Contact the distributor of this copy of Tunnelblick for details.\n\n" = "Tunnelblick bude pristupovať k %@ pre overenie zmeny verejnej IP adresy pri každom pripojení k VPN. Kontaktujte distribútora tejto kópie programu Tunnelblicku pre získanie detailov.\n\n";
+
 /* Window text */
 "Unable to Establish Communication" = "Nepodarilo sa zahájiť spojenie";
 
@@ -1703,7 +1767,13 @@
 "Unable to install the '%@' configuration\n" = "Nie je možné nainštalovať \"%@\" konfiguráciu ";
 
 /* Window text */
+"Unable to load contents of %@ as UTF-8" = "Nie je možné načítať obsah %@ ako UTF-8";
+
+/* Window text */
 "Unable to open configuration file for modification" = "Nepodarilo sa otvoriť konfiguračný súbor pre úpravy";
+
+/* Window text */
+"Unable to parse configuration file as UTF-8" = "Nepodarilo sa analyzovať konfiguračný súbor ako UTF-8";
 
 /* Window text */
 "Unable to replace the '%@' configuration\n" = "Nie je možné nahradiť \"%@\" konfiguráciu ";
@@ -1783,6 +1853,9 @@
 /* Window text */
 "Warning: One or more preferences could not be renamed. See the Console Log for details." = "Upozornenie: Jedno alebo viacero nastavení nebolo možné premenovať. Pre viac informácií si, prosím, prezrite Záznam konzoly.";
 
+/* Window text. The first '%@' will be replaced by the name of a configuration. The third '%@' will be replaced by a list of names of OpenVPN options, one on each line. The forth '%@' will be replaced by the name of a version of OpenVPN, e.g. '2.3 - OpenSSL v1.0.2n' */
+"Warning: This VPN may not connect in the future.\n\nThe OpenVPN configuration file for '%@' contains these OpenVPN options:\n\n%@\nYou should update the configuration so it can be used with modern versions of OpenVPN.\n\nTunnelblick will use OpenVPN %@ to connect this configuration.\n\nHowever, you will not be able to connect to this VPN with future versions of Tunnelblick that do not include a version of OpenVPN that accepts the options." = "Varovanie: Táto VPN sa v budúcnosti nemusí pripojiť.\n\nKonfiguračný súbor OpenVPN pre '%1$@' obsahuje tieto nastavenia OpenVPN:\n\n%2$@\nMali by ste upraviť konfiguráciu tak, aby bolo možné ju použiť s modernými verziami OpenVPN.\n\nK pripojeniu tejto konfigurácie Tunnelblick použije OpenVPN %3$@.\n\nAvšak, nebudete sa môcť pripojiť k tejto VPN s budúcimi verziami Tunnelblicku, ktoré nezahrňujú verziu OpenVPN podporujúcu tieto nastavenia.";
+
 /* Window text */
 "Warnings:" = "Upozornenia:";
 
@@ -1853,7 +1926,7 @@
 "You may not remove a configuration which is set to start when the computer starts." = "Nie je možné odobrať konfiguráciu, ktorá je určená k spusteniu pri štarte počítača.";
 
 /* Window text */
-"You will not be able to use Tunnelblick after updating unless you provide an administrator username and password.\n\nAre you sure you wish to check for updates?" = "Bez zadania prihlasovacieho mena a hesla správcu nebude možné po aktualizácii aplikáciu Tunnelblick použiť.\n\nSkutočne si prajete skontrolovať aktualizácie?";
+"You will not be able to update Tunnelblick unless you provide a computer administrator's authorization.\n\nAre you sure you wish to check for updates?" = "Nemôžete aktualizovať Tunnelblick, kým nezadáte prihlasovacie údaje administrátora.\n\nNaozaj chcete skontrolovať aktualizácie?";
 
 /* Window text */
 "Your computer may not be able to reliably show the Tunnelblick icon near the Spotlight icon.\n\nThis may cause the Tunnelblick icon to sometimes DISAPPEAR from the menu bar.\n\nAre you sure you want to place the Tunnelblick icon near the Spotlight icon?\n\n" = "Je možné, že Váš počítač nedokáže za každých okolností správne zobraziť ikonu Tunnelblick vedľa Spotlight ikony.\n\nTo sa môže prejaviť tak, že ikona Tunnelblick niekedy ZMIZNE z lišty v pravom hornom rohu.\n\nSkutočne si prajete zobraziť ikonu Tunnelblick vedľa Spotlight ikony?\n\n";
@@ -1883,6 +1956,9 @@
 "\n\nNOTE: One or more of the configurations are currently connected. They will be disconnected, installs/replacements/uninstalls will be performed, and the configurations will be reconnected unless they have been uninstalled.\n\n" = "\n\nPOZNÁMKA: Jedna alebo viacero konfigurácií sú práve aktívne. Tieto konfigurácie budú odpojené, vykonajú sa inštalácie/nahradenia/odinštalovania a konfigurácie sa opätovne pripoja (ak neboli odinštalované).\n\n";
 
 /* Window text */
+"\n\nThis error means that an option that is contained in the OpenVPN configuration file or was \"pushed\" by the OpenVPN server:\n\n     • has been misspelled,\n\n     • has missing or extra arguments, or\n\n     • is not implemented by the version of OpenVPN which is being used for this configuration. It may be a new option that is not implemented in an old version of OpenVPN, or an old option that has been removed in a new version of OpenVPN. You can choose what version of OpenVPN to use with this configuration in the \"Settings\" tab of the \"Configurations\" panel of Tunnelblick's \"VPN Details\" window.\n\nSee the VPN log in the \"Log\" tab of the \"Configurations\" panel of Tunnelblick's \"VPN Details\" window for details." = "\n\nTáto chyba znamená, že voľba, ktorá je obsiahnutá v konfiguračnom súbore OpenVPN alebo bola \"odoslaná\" serverom OpenVPN:\n\n      • bola nesprávne napísaná\n\n      • chýbajú alebo majú ďalšie argumenty, alebo\n\n      • nie je implementovaná verziou OpenVPN, ktorá sa používa pre túto konfiguráciu. Možno to môže byť nová voľba, ktorá nie je implementovaná v staršej verzii OpenVPN, alebo stará voľba, ktorá bola odstránená v novej verzii OpenVPN. Môžete si vybrať, akú verziu OpenVPN použijete s touto konfiguráciou na karte \"Nastavenia\" v paneli \"Konfigurácie\" v okne \"Podrobnosti VPN\".\n\nViac informácií nájdete vo VPN logu v záložke \"Log\" na paneli \"Konfigurácie\" v okne \"Podrobnosti VPN\".";
+
+/* Window text */
 "\n\nand install %ld Tunnelblick VPN Configurations" = "\n\na nainštalovať %ld konfigurácií Tunnelblick VPN";
 
 /* Window text */
@@ -1906,8 +1982,29 @@
 /* Tooltip */
 "%d days %d:%02d:%02d" = "%1$d dní %2$d:%3$02d:%4$02d";
 
+/* The first '%@' is the name of an OpenVPN option. The second '%@' is an OpenVPN version string such as '2.3' or '2.5' */
+"'%@' was added in OpenVPN %@\n" = "'%1$@' bol pridaný do OpenVPN %2$@\n";
+
+/* The first '%@' is the name of an OpenVPN option. The second '%@' and third '%@' are OpenVPN version strings such as '2.3' or '2.5' */
+"'%@' was deprecated in OpenVPN %@ and removed in OpenVPN %@\n" = "'%1$@' je v OpenVPN %2$@ zastarané and odstránené v OpenVPN %3$@\n";
+
 /* Credit description */
 "64-bit enabling and testing" = "Beh a testovanie 64-bit";
+
+/* HTML info for the 'OpenVPN version' button. */
+"<p><strong>Specifies the version of OpenVPN and the SSL software that should be used to connect the VPN.</strong><ul><li><strong>The \"Default\" setting</strong> will use the default version of OpenVPN with OpenSSL that is included in this version of Tunnelblick. The default may be different in different versions of Tunnelblick.<br></li><li><strong>The \"Latest\" setting</strong> will use the latest version of OpenVPN with LibreSSL that is included in this version of Tunnelblick. The latest version may be different in different versions of Tunnelblick.<br></li><li><strong>Any other setting</strong> will use the specified version of OpenVPN and SSL software if they are available in this version of Tunnelblick. If not available, the closest match will be used.<br></li></ul>" = "<p><strong> Špecifikuje verziu OpenVPN a SSL softvér, ktorý by mal byť použitý pre VPN spojenie. </strong><ul><li> Nastavenie <strong> Default </strong> použije predvolenú verziu OpenVPN a OpenSSL, ktoré sú obsiahnuté v tejto verzii Tunnelblicku. Default nastavenie sa medzi verziami Tunnelblicku môže líšiť. <br></li><li> Nastavenie <strong> \"Posledné\" </strong> bude používať poslednú verziu OpenVPN s LibreSSL, ktoré sú obsiahnuté v tejto verzii Tunnelblicku. Posledná verzia sa medzi rôznymi verziami Tunnelblicku môže líšiť. <br></li><li><strong> Iné nastavenia </strong> bude používať špecifikované verzie OpenVPN a SSL, ak sú dostupné v tejto verzii Tunnelblicku. Ak dostupné nie sú, tak je použitá najbližšia verzia. <br></li></ul>";
+
+/* HTML info for the 'Set DNS/WINS' button. */
+"<p><strong>Specifies what (if anything) Tunnelblick does to modify DNS settings while the VPN is connected.</strong> The choices are:<ul><li><strong>Do not set nameserver</strong>: Nothing is done.<br></li><li><strong>Set nameserver</strong>: Tunnelblick uses its standard script to handle DNS and WINS settings. This is usually the best choice. It changes DNS and WINS settings according to instructions provided by OpenVPN. DNS and WINS settings that have been set manually will not be changed unless \"Allow changes to manually-set network settings\" has been selected in the \"Advanced\" settings window<br></li><li><strong>Set nameserver (3.1)</strong>: Tunnelblick uses the script from Tunnelblick 3.1 to handle DNS and WINS settings.<br></li><li><strong>Set nameserver (3.0b10)</strong>: Tunnelblick uses the script from Tunnelblick 3.0b10 to handle DNS and WINS settings.<br></li><li><strong>Set nameserver (alternate 1)</strong>: Tunnelblick uses an alternate script to handle DNS and WINS settings.<br></li></ul>" = "<p><strong>Určuje, čo (ak vôbec niečo) má Tunnelblick povolené upravovať v nastaveniach DNS keď je VPN pripojené.</strong> možnosti sú:<ul><li><strong>Nenastavuj nameserver</strong>: žiadne zmeny.<br></li><li><strong>Nastav nameserver</strong>: Tunnelblick použije svoj štandardný skript na nastavenie DNS a WINS. Toto je zvyčajne najlepšou voľbou. Zmení DNS a WINS nastavenia podľa pokynov poskytnutých OpenVPN. Nastavenia DNS a WINS, ktoré boli nastavené ručne sa zmenia iba v prípade pokiaľ ak bola v pokročilých nasteveniach zvolená možnosť \"Povoliť zmeny nastavenia manuálne nastavenie siete\"<br></li><li><strong>Nastavenie nameserver (3.1)</strong>: Tunnelblick použije skript Tunnelblick 3.1 na nastavenie DNS a WINS.<br></li><li><strong>Nastavenie nameserver (3.0b10)</strong>: Tunnelblick použije skript Tunnelblick 3.0b10 na nastavenie DNS a WINS.<br></li><li><strong>nastavenie nameserver (alternatívne 1)</strong>: Tunnelblick použije alternatívny skript na nastavenie DNS a WINS.<br></li></ul>";
+
+/* HTML info for the 'On unexpected disconnect' button. */
+"<p><strong>Specifies what Tunnelblick does when the VPN <em>unexpectedly</em> disconnects</strong> (for example, if OpenVPN crashes or loses its connection to the VPN and is set up to stop when that happens). The choices are:</p><ul><li><strong>Do nothing</strong><br></li><li><strong>Reset primary interface</strong>: Tunnelblick resets the primary network interface by issuing 'ipconfig down; ipconfig up' commands to the interface. This can be helpful when a configuration fails to restore network settings properly after a disconnection.<br></li><li><strong>Disable network access (\"Kill Switch\")</strong>: Tunnelblick cuts off all network access (local and Internet) by turning off Wi-Fi and disabling all other network services. This can help ensure that nothing leaks out of the computer except through the VPN. If Tunnelblick has disabled network access a menu command to re-enable all access that was disabled will be available from the Tunnelblick icon in the menu bar. You can also re-enable Wi-Fi by turning it on, or re-enable other network services in System Preferences : Network. <strong>This setting may not work properly when more than one VPN is connected simultaneously.</strong></li></ul>" = "<p><strong>Určuje ako sa má Tunnelblick správač v prípade ak sa VPN <em>neočakávane</em> odpojí</strong> (napríklad, ak OpenVPN spadne alebo stratí pripojenie k sieti VPN a pritom je nastavené jeho ukončiť v takomto prípade). Dostupné voľby sú: Nerobiť nič</p><ul><li><strong></strong><br></li><li><strong>Resetovanie primárne sietového rozhranie</strong>: Tunnelblick resetuje primárne sieťové rozhranie vykonaním príkazov \"ipconfig down; ipconfig up\". Toto môže byť užitočné v prípade ak po odpojení zlihá správna konfigurácia sietových nastavení.<br></li><li><strong>Vypnúť sieťový prístup (\"Kill Switch\")</strong>: Tunnelblick vypne všetky prístupy do siete (lokálnej a internetovej) vypnutím Wi-Fi a zakázaním všetkých ostatných sieťových služieb. To pomôže zaistiť, aby nedošlo k žiadnemu úniku informácií v prípade ze VPN nie je akívne. Ak Tunnelblick zakázal prístup na sieť, príkaz na povolenie sietového pripojenia bude k dispozícii v ikone Tunnelblick na paneli s ponukami. Takysto môžete opätovne zapnúť Wi-Fi jeho aktivovaním, alebo opätovne zapnúť iné sieťové služby v Nastaveniach Systému: Sieť. <strong>Toto nastavenie nemusí fungovať správne pri viacerých VPN pripojený súčasne.</strong></li></ul>";
+
+/* HTML info for the 'On expected disconnect' button. */
+"<p><strong>Specifies what Tunnelblick does when the VPN disconnects <em>as expected</em></strong> (for example, a \"Disconnect\" menu item or button is clicked). The choices are:</p><ul><li><strong>Do nothing</strong><br></li><li><strong>Reset primary interface</strong>: Tunnelblick resets the primary network interface by issuing 'ipconfig down; ipconfig up' commands to the interface. This can be helpful when a configuration fails to restore network settings properly after a disconnection.<br></li><li><strong>Disable network access (\"Kill Switch\")</strong>: Tunnelblick cuts off all network access (local and Internet) by turning off Wi-Fi and disabling all other network services. This can help ensure that nothing leaks out of the computer except through the VPN. If Tunnelblick has disabled network access a menu command to re-enable all access that was disabled will be available from the Tunnelblick icon in the menu bar. You can also re-enable Wi-Fi by turning it on, or re-enable other network services in System Preferences : Network. <strong>This setting may not work properly when more than one VPN is connected simultaneously.</strong></li></ul>" = "<p><strong>Určuje ako sa má Tunnelblick správač v prípade ak sa VPN <em>očakávane</em> odpojí</strong> (napríklad ak zvolíte voľbu \"Odpojiť\" v menu). Dostupné voľby sú: Nerobiť nič</p><ul><li><strong></strong><br></li><li><strong>Resetovanie primárne sietového rozhranie</strong>: Tunnelblick resetuje primárne sieťové rozhranie vykonaním príkazov \"ipconfig down; ipconfig up\". Toto môže byť užitočné v prípade ak po odpojení zlihá správna konfigurácia sietových nastavení.<br></li><li><strong>Vypnúť sieťový prístup (\"Kill Switch\")</strong>: Tunnelblick vypne všetky prístupy do siete (lokálnej a internetovej) vypnutím Wi-Fi a zakázaním všetkých ostatných sieťových služieb. To pomôže zaistiť, aby nedošlo k žiadnemu úniku informácií v prípade ze VPN nie je akívne. Ak Tunnelblick zakázal prístup na sieť, príkaz na povolenie sietového pripojenia bude k dispozícii v ikone Tunnelblick na paneli s ponukami. Takysto môžete opätovne zapnúť Wi-Fi jeho aktivovaním, alebo opätovne zapnúť iné sieťové služby v Nastaveniach Systému: Sieť. <strong>Toto nastavenie nemusí fungovať správne pri viacerých VPN pripojený súčasne.</strong></li></ul>";
+
+/* HTML info for the 'Connect' button. */
+"<p><strong>Specifies when Tunnelblick should connect to the VPN.</strong></p><p>\"When computer starts\" may only be used with \"Shared\" configurations.</p>" = "<p><strong>Určuje kedy sa Tunnelblick má pripojiť k VPN.</strong></p><p>\"Pri spustení počítača\" je možno použiť iba pri použití \"Zdieľanej\" konfigurácie.</p>";
 
 /* HTML info for the 'Disable IPv6 (tun only)' checkbox. */
 "<p><strong>When checked</strong>, IPv6 will be disabled.</p>\n<p>Disabling IPv6 is often recommended because many VPN configurations do not guard against information leaks caused by the use of IPv6. Most Internet access works fine without IPv6.</p>\n<p><strong>When not checked</strong>, IPv6 will not be disabled.</p>\n<p><strong>This checkbox is disabled</strong> when using a 'tap' connection because it cannot be enforced on a 'tap' connection .</p>" = "<p><strong>Ak je zaškrtnuté</strong>, IPv6 bude zakázané.</p>\n<p>Zakázanie IPv6 sa bežne odporúča, pretože mnohé konfigurácie VPN nechránia voči úniku informácií spôsobenému použitím IPv6. Prístup k internetu vo väčšine prípadov správne funguje aj bez IPv6.</p>\n<p><strong>Ak nie je zaškrtnuté</strong>, IPv6 nebude zakázané.</p>\n<p><strong>Tento výber je zakázaný</strong> pri použití pripojenia 'tap', pretože na tomto type pripojenia ho nie je možné vynútiť.</p>";
@@ -1916,7 +2013,7 @@
 "<p><strong>When checked</strong>, IPv6 will be enabled.</p>\n<p><strong>When not checked</strong>, IPv6 will not be enabled.</p>\n<p>Disabling IPv6 is often recommended because many VPN configurations do not guard against information leaks caused by the use of IPv6. Most Internet access works fine without IPv6.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>" = "<p><strong>Ak je zaškrtnuté</strong>, IPv6 bude povolené.</p>\n<p><strong>Ak nie je zaškrtnuté</strong>, IPv6 nebude povolené.</p>\n<p>Zakázanie IPv6 sa bežne odporúča, pretože mnohé konfigurácie VPN nechránia voči úniku informácií spôsobenému použitím IPv6. Prístup k internetu vo väčšine prípadov správne funguje aj bez IPv6.</p>\n<p><strong>Tento výber je zakázaný</strong> pre konfigurácie používajúce pripojenie 'tun'.</p>";
 
 /* HTML info for the 'Set DNS after routes are set' checkbox. */
-"<p><strong>When checked</strong>, OpenVPN will modify DNS and other settings after it sets up routing for the VPN instead of before setting up the routing.</p>\n<p><strong>When not checked</strong>, OpenVPN will modify DNS and other settings before it sets up routing for the VPN, instead of after setting up the routing. This can cause DNS failures or delays if the routes take a long time to set up -- for example, if there are many routes to set up.</p>\n" = "<p><strong>When checked</strong>, OpenVPN will modify DNS and other settings after it sets up routing for the VPN instead of before setting up the routing.</p>\n<p><strong>When not checked</strong>, OpenVPN will modify DNS and other settings before it sets up routing for the VPN, instead of after setting up the routing. This can cause DNS failures or delays if the routes take a long time to set up -- for example, if there are many routes to set up.</p>\n";
+"<p><strong>When checked</strong>, OpenVPN will modify DNS and other settings after it sets up routing for the VPN instead of before setting up the routing.</p>\n<p><strong>When not checked</strong>, OpenVPN will modify DNS and other settings before it sets up routing for the VPN, instead of after setting up the routing. This can cause DNS failures or delays if the routes take a long time to set up -- for example, if there are many routes to set up.</p>\n" = "<p><strong>Ak je začiarknuté</strong>, OpenVPN zmení DNS adresu a ďalšie nastavenia až potom ako nastaví smerovanie pre VPN (namiesto toho, aby to urobil pred nastavenim smerovania).</p> \n<p><strong>Ak nie je začiarknuté</strong>, OpenVPN zmení DNS adresu a ďalšie nastavenia predtým ako nastaví smerovanie pre VPN (namiesto toho, aby to urobil po nastaveni smerovania). Toto može spôsobiť chyby DNS alebo oneskorenia ak nastavenie ciest (routes) trvá príliš dlho -- napríklad, ak je potrebné nastaviť veľa ciest (routes).</p>\n";
 
 /* HTML info for the 'Run MTU maximum size test after connecting' checkbox. */
 "<p><strong>When checked</strong>, OpenVPN will run a test to determine the maximum MTU size for the connection. The test starts each time a connection is made, and can take several minutes. Test results appear in the Tunnelblick log.</p>\n" = "<p><strong>Ak je zaškrtnuté</strong>, OpenVPN spustí test, ktorý určí maximálnu možnú MTU hodnotu pripojenia. Test sa spustí pri každom vytvorení pripojenia a môže trvať niekoľko minút. Výsledky testu sa zobrazia v zázname konzoly aplikácie.</p>\n";
@@ -1928,103 +2025,130 @@
 "<p><strong>When checked</strong>, Tunnelblick will check for updates when launched and periodically thereafter.</p><p><strong>This checkbox is disabled</strong> and un-checked when 'Inhibit automatic update checking and IP Address checking' is checked.</p>" = "<p><strong>Ak je zaškrtnuté</strong>, Tunnelblick bude kontrolovať aktualizácie vždy po spustení a tiež v pravidelných časových intervaloch.</p><p><strong>Tento výber je zakázaný</strong> a nie je zaškrtnutý, ak je povolená možnosť 'Zabrániť automatickej kontrole aktualizácií a IP adresy'.</p>";
 
 /* HTML info for the 'Check if the apparent public IP address changed after connecting' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will determine the computer's apparent public IP address before and after the VPN is connected and warn if the IP address does not change.</p>\n<p>The tunnelblick.net website will be accessed to perform this function. The access is usually done via https: using the tunnelblick.net name, except that if that access fails, access is attempted using http: and the IP address of the website.</p>\n<p><strong>When not checked</strong>, Tunnelblick does not check for IP address changes and does not warn if the IP address does not change after the VPN is connected.</p>\n" = "<p><strong>When checked</strong>, Tunnelblick will determine the computer's apparent public IP address before and after the VPN is connected and warn if the IP address does not change.</p>\n<p>The tunnelblick.net website will be accessed to perform this function. The access is usually done via https: using the tunnelblick.net name, except that if that access fails, access is attempted using http: and the IP address of the website.</p>\n<p><strong>When not checked</strong>, Tunnelblick does not check for IP address changes and does not warn if the IP address does not change after the VPN is connected.</p>\n";
+"<p><strong>When checked</strong>, Tunnelblick will determine the computer's apparent public IP address before and after the VPN is connected and warn if the IP address does not change.</p>\n<p>The tunnelblick.net website will be accessed to perform this function. The access is usually done via https: using the tunnelblick.net name, except that if that access fails, access is attempted using http: and the IP address of the website.</p>\n<p><strong>When not checked</strong>, Tunnelblick does not check for IP address changes and does not warn if the IP address does not change after the VPN is connected.</p>\n" = "<p><strong>Pokiaľ je zaškrtnuté</strong>, Tunnelblick bude zisťovať verejnú IP adresu pred a po pripojení k VPN a pokiaľ sa adresa nezmení, zobrazí varovanie.</p>\n<p>Stránka tunnelblick.net bude navštívená z dôvodu overenia tejto funkcie. Prístup je vo väčšine prípadou uskutočnený pomocí https protokolu a doménového mena tunnelblick.net, pokiaľ táto metóda zlyhá je použitý http protokol a IP adresa stránky.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, Tunnelblick nebude uskutočňovať kontrolu IP adresy po pripojení k VPN a nebude zobrazovať varovanie.</p>\n";
 
 /* HTML info for the 'Route all IPv4 traffic through the VPN' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n" = "<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n";
+"<p><strong>When checked</strong>, Tunnelblick will instruct OpenVPN to route all IPv4 traffic through the VPN server.</p>\n<p><strong>When not checked</strong>, by default OpenVPN will use the VPN only for traffic that is destined for the VPN's network. All other traffic will use the normal Internet connection without going through the VPN. OpenVPN's default behavior may be changed by the OpenVPN configuration or the VPN server and cause all IPv4 traffic to be routed through the VPN server as if this checkbox had been checked. </p>\n" = "<p><strong>Pokiaľ je zaškrtnuté</strong>, Tunnelblick dá pokyn, aby OpenVPN smeroval všetku IPv4 trafiku cez VPN server.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, vo východiskovom stave OpenVPN smeruje trafiku cez VPN iba pokiaľ je cieľ vo VPN sieti. Všetka ostatná trafika pôjde normálne cez internetové pripojenie bez použitia VPN. Štandardné chovanie OpenVPN môžete zmeniť nastavením klienta, alebo nastavením na serveri VPN a celý prenos dát bude smerovaný cez VPN server, pokiaľ je táto voľba aktívna.</p>\n";
+
+/* HTML info for the 'Do not warn about this for [number of days] days' checkbox. */
+"<p><strong>When checked</strong>, Tunnelblick will not show this warning again for %lu days.</p>\n<p><strong>When not checked</strong>, Tunnelblick will show this warning each time it is launched.</p>\n" = "<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick už nebude zobrazovať toto upozornenie nasledujúcich %lu dní.</p>\n<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick znovu zobrazí toto upozornenie pri každom spustení.</p>\n";
+
+/* HTML info for the 'Do not warn about this again' checkbox. */
+"<p><strong>When checked</strong>, Tunnelblick will not show this warning again.</p>\n<p><strong>When not checked</strong>, Tunnelblick will show this warning again.</p>\n" = "<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick už nebude zobrazovať toto upozornenie.</p>\n<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick znovu zobrazí toto upozornenie.</p>\n";
 
 /* HTML info for the 'Require administrator authorization for key and certificate changes' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>" = "<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>";
-
-/* HTML info for the 'Reset the primary interface after disconnecting' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will reset the primary network interface after the VPN is disconnected. This can work around problems caused by some misconfigured VPN servers and by some OpenVPN configuration errors.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not reset the primary network interface.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver'.</p>" = "<p><strong>When checked</strong>, Tunnelblick will reset the primary network interface after the VPN is disconnected. This can work around problems caused by some misconfigured VPN servers and by some OpenVPN configuration errors.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not reset the primary network interface.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver'.</p>";
-
-/* HTML info for the 'Send anonymous profile information when checking' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will send information about your computer (the operating system version) to the Tunnelblick website when checking for updates.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not send the information when checking for updates.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p>" = "<p><strong>When checked</strong>, Tunnelblick will send information about your computer (the operating system version) to the Tunnelblick website when checking for updates.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not send the information when checking for updates.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p>";
+"<p><strong>When checked</strong>, Tunnelblick will require a computer administrator's authorization to make changes to key and certificate files.</p>\n<p><strong>When not checked</strong>, a standard user will be allowed to make changes to key and certificate files.</p><p><strong>Note: A computer administrator's authorization is required to change this setting.</strong></p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick bude vyžadovať autorizáciu administrátora pre uskutočnenie zmien do súborov s kľúčmi a certifikátmi.</p>\n<p><strong>Pokiaľ nezaškrtnuté</strong>, štandardnému používateľovi bude umožnené uskutočňovať zmeny v kľúčoch a certifikátoch.</p><p><strong>Poznámka: autorizácia administrátora je vyžadovaná pre zmenu nastavenia.</strong></p>";
 
 /* HTML info for the 'Monitor network settings' checkbox. */
-"<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>" = "<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>";
+"<p><strong>When checked</strong>, Tunnelblick will watch for and react to changes in network settings (for example, changes caused by DHCP renewals or switching Internet connections) to attempt to keep the VPN connected. Tunnelblick's default actions when network settings change usually work well, but you may specify different actions on the 'While Connected' tab of the 'Advanced' settings window.</p>\n<p><strong>When not checked</strong>, Tunnelblick will ignore network changes.</p>\n<p><strong>This checkbox is disabled</strong> when 'Set DNS/WINS' is not set to 'Set nameserver' or 'Set nameserver (3.1)'.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, Tunnelblick bude sledovať a reagovať na zmeny v sieťovom nastavení (na príklad zmeny spôsobené obnovením DHCP alebo prepnutím internetového spojenia), aby sa udržalo VPN pripojené. Predvolená akcie Tunnelblicku spustené pri zmene sieťového nastavení sú zvyčajne dostatočné. Je ale možné nastaviť iné akcie na záložke 'Po pripojení' okna 'Rozšírené nastavenia'.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, Tunnelblick bude ignorovať sieťové zmeny.</p>\n<p><strong>Táto voľba je zakázaná</strong> Pokiaľ 'Nastaviť DNS/WINS' nie je nastavené v 'Nastaviť nameserver' alebo 'Nastaviť nameserver (3.1)'.</p>";
 
 /* HTML info for the 'Show the VPN status window when the pointer is over the Tunnelblick icon' checkbox. */
-"<p><strong>When checked</strong>, VPN status windows for all 'active' configurations are displayed when the pointer is over the Tunnelblick icon.</p><p>'Active' configurations are configurations that you have attempted to connect since Tunnelblick was launched.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>When checked</strong>, VPN status windows for all 'active' configurations are displayed when the pointer is over the Tunnelblick icon.</p><p>'Active' configurations are configurations that you have attempted to connect since Tunnelblick was launched.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>";
+"<p><strong>When checked</strong>, VPN status windows for all 'active' configurations are displayed when the pointer is over the Tunnelblick icon.</p><p>'Active' configurations are configurations that you have attempted to connect since Tunnelblick was launched.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, bude pri prejdení ikony Tunnelblicku zobrazené okna stavu VPN pre všetky 'aktívne' konfigurácie. </p><p>'Aktívne' konfigurácie sú tie, ktoré ste sa pokúšali pripojiť od spustenia Tunnelblicku.</p><p><strong>Táto voľba je nedostupná</strong> v prípade, že je vybrané vyššie uvedené 'Nikdy nezobrazovať'.</p>";
 
 /* HTML info for the 'Display window while Tunnelblick is starting up' checkbox. */
-"<p><strong>When checked</strong>, a window will display Tunnelblick's progress while starting up.</p>" = "<p><strong>When checked</strong>, a window will display Tunnelblick's progress while starting up.</p>";
+"<p><strong>When checked</strong>, a window will display Tunnelblick's progress while starting up.</p>" = "<p><strong>Ak Je zaškrtnuté</strong>, bude počas spustenia Tunnelblicku zobrazené okno s priebehom spúšťania.</p>";
 
 /* HTML info for the 'All configurations use ___ credentials' checkbox. */
-"<p><strong>When checked</strong>, all configurations will share the same username, password, and/or private key.</p>\n" = "<p><strong>When checked</strong>, all configurations will share the same username, password, and/or private key.</p>\n";
+"<p><strong>When checked</strong>, all configurations will share the same username, password, and/or private key.</p>\n" = "<p><strong>Ak je zaškrtnuté</strong>, budú všetky konfigurácie zdieľať to isté používateľské meno, heslo a/nebo privátny kľúč.</p>\n";
 
 /* HTML info for the 'Display connection submenus' checkbox. */
-"<p><strong>When checked</strong>, configurations that are inside folders are shown in submenus of the Tunnelblick menu.</p>\n<p><strong>When not checked</strong>, configurations that are inside folders are shown in the Tunnelblick menu.</p>" = "<p><strong>When checked</strong>, configurations that are inside folders are shown in submenus of the Tunnelblick menu.</p>\n<p><strong>When not checked</strong>, configurations that are inside folders are shown in the Tunnelblick menu.</p>";
+"<p><strong>When checked</strong>, configurations that are inside folders are shown in submenus of the Tunnelblick menu.</p>\n<p><strong>When not checked</strong>, configurations that are inside folders are shown in the Tunnelblick menu.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, sú konfigurácie, umiestnené vo vnútri priečinkov, zobrazené v podmenu ponuky Tunnelblicku.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, sú konfigurácie, umiestnené vo vnútri priečinkov, zobrazené v ponuke Tunnelblicku.</p>";
 
 /* HTML info for the 'Keep connected' checkbox. */
-"<p><strong>When checked</strong>, if the VPN disconnects unexpectedly, Tunnelblick will attempt to reconnect it.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not try to reconnect a VPN if it disconnects unexpectedly.</p>\n" = "<p><strong>When checked</strong>, if the VPN disconnects unexpectedly, Tunnelblick will attempt to reconnect it.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not try to reconnect a VPN if it disconnects unexpectedly.</p>\n";
+"<p><strong>When checked</strong>, if the VPN disconnects unexpectedly, Tunnelblick will attempt to reconnect it.</p>\n<p><strong>When not checked</strong>, Tunnelblick will not try to reconnect a VPN if it disconnects unexpectedly.</p>\n" = "<p><strong>Pokiaľ zaškrtnuté</strong>, pokiaľ dôjde k neočakávanému rozpojeniu VPN, tak se Tunnelblick pokusí obnoviť spojenie.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, Tunnelblick sa nebude pokúšať znovu nadviazať VPN spojenie, pokiaľ dôjde k neočakávanému rozpojeniu.</p>\n";
 
 /* HTML info for the 'Allow changes to manually-set network settings' checkbox. */
-"<p><strong>When checked</strong>, network settings which were set manually may be changed when the VPN connects. This will only happen if changes are specified by options in the OpenVPN configuration file or from the OpenVPN server.</p>\n<p><strong>When not checked</strong>, network settings which were set manually will not be changed when the VPN connects.</p>" = "<p><strong>When checked</strong>, network settings which were set manually may be changed when the VPN connects. This will only happen if changes are specified by options in the OpenVPN configuration file or from the OpenVPN server.</p>\n<p><strong>When not checked</strong>, network settings which were set manually will not be changed when the VPN connects.</p>";
+"<p><strong>When checked</strong>, network settings which were set manually may be changed when the VPN connects. This will only happen if changes are specified by options in the OpenVPN configuration file or from the OpenVPN server.</p>\n<p><strong>When not checked</strong>, network settings which were set manually will not be changed when the VPN connects.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong> môže dôjsť počas spracovanie VPN spojenia k zmenám v ručne zadaných predvoľbách siete. K tomu môže dôjsť len vtedy, keď sú zmeny dané nastavením v konfiguračnom súbore OpenVPN nebo z OpenVPN serveru.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, nebudú počas pripájania VPN zmenené žiadne ručne uložené predvoľby siete.</p>";
 
 /* HTML info for the 'Inhibit automatic update checking and IP Address checking' checkbox. */
 "<p><strong>When checked</strong>, no automatic checking for updates or checking for IP address changes will be done, regardless of other settings. Note: both of these activities access the Tunnelblick website.</p>\n<p><strong>When not checked</strong>, automatic checking for updates will be done if enabled below, and checking for IP address changes will be done when connecting a configuration if the configuration's setting to do so is enabled.</p><p>See <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net] for details.</p><p>&nbsp;</p>" = "<p><strong>Ak je zaškrtnuté</strong>, nebude sa vykonávať žiadna automatická kontrola aktualizácií alebo IP adresy, bez ohľadu na iné nastavenia. Poznámka: obidve činnosti pristupujú na webovú stránku Tunnelblick.</p>\n<p><strong>Ak nie je zaškrtnuté</strong>, automatická kontrola aktualizácií sa bude vykonávať v prípade, ak je táto možnosť povolená nižšie. Kontrola zmien IP adresy bude vykonaná pri pripojení konfigurácie, ktorá má túto kontrolu povolenú v nastaveniach konfigurácie.</p><p>Pre viac informácií navštívte stránku <a href=\"https://tunnelblick.net/cPrivacy.html\">Súkromie a bezpečnosť</a> na [tunnelblick.net].</p><p>&nbsp;</p>";
 
 /* HTML info for the 'Place near Spotlight icon' checkbox. The two '%@' are replaced by images of the menu bar showing the position of the Tunnelblick icon. */
-"<p><strong>When checked</strong>, the Tunnelblick icon is positioned near the Spotlight icon:</p>\n<p>%@</p>\n<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n<p>%@</p>\n<p><strong>This checkbox is disabled</strong> on macOS Sierra because it is not needed, and on systems for which it is known to cause problems.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>" = "<p><strong>Ak je zaškrtnuté</strong>, ikona Tunnelblick je umiestnená vedľa Spotlight ikony:</p>\n<p>%1$@</p>\n<p><strong>Ak nie je zaškrtnuté</strong>, ikona Tunnelblick sa objaví na svojom bežnom mieste:</p>\n<p>%2$@</p>\n<p><strong>Tento výber je zakázaný</strong> na macOS Sierra, pretože nie je potrebný a môže spôsobovať ťažkosti.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">Viac info</a></p>";
+"<p><strong>When checked</strong>, the Tunnelblick icon is positioned near the Spotlight icon:</p>\n<p>%@</p>\n<p><strong>When not checked</strong>, the Tunnelblick icon is positioned normally:</p>\n<p>%@</p>\n<p><strong>This checkbox is disabled</strong> on macOS Sierra and higher because it is not needed, and on systems for which it is known to cause problems.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">More info</a></p>" = "<p><strong>Ak je zaškrtnuté</strong>, ikona Tunnelblick je umiestnená vedľa Spotlight ikony:</p>\n<p>%1$@</p>\n<p><strong>Ak nie je zaškrtnuté</strong>, ikona Tunnelblick sa objaví na svojom bežnom mieste:</p>\n<p>%2$@</p>\n<p><strong>Tento výber je zakázaný</strong> na macOS Sierra a vyššie, pretože nie je potrebný a môže spôsobovať problémy.</p>\n<p><a href=\"https://tunnelblick.net/cAppInfoPlaceNearSpotLightIconCheckbox.html\">Viac info</a></p>";
 
 /* HTML info for the 'Show the VPN status window when disconnected' checkbox. */
-"<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>";
+"<p><strong>When checked</strong>, the VPN status window is displayed even when the configuration is disconnected.</p><p><strong>This checkbox is disabled</strong> when 'Never Show' is selected above.</p>" = "<p><strong>Ak je zaškrtnuté</strong>, je okno zo stavom VPN zobrazené aj vtedy, ak je konfigurácia odpojená.</p><p><strong>Toto nastavenie je nedostupné</strong> v prípade, že je vybrané vyššie uvedené 'Nikdy nezobrazovať'.</p>";
 
 /* HTML info for the 'Disconnect when user switches out' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be disconnected when switching to another user.</p>\n<p><strong>When not checked</strong>, the VPN will not be disconnected when switching to another user.</p>" = "<p><strong>When checked</strong>, the VPN will be disconnected when switching to another user.</p>\n<p><strong>When not checked</strong>, the VPN will not be disconnected when switching to another user.</p>";
+"<p><strong>When checked</strong>, the VPN will be disconnected when switching to another user.</p>\n<p><strong>When not checked</strong>, the VPN will not be disconnected when switching to another user.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, VPN bude odpojená pri prepnutí na iného používateľa.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, VPN nebude odpojená pri prepnutí na iného používateľa.</p>";
 
 /* HTML info for the 'Disconnect when computer goes to sleep' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be disconnected when the computer goes to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will stay connected when the computer goes to sleep.</p>" = "<p><strong>When checked</strong>, the VPN will be disconnected when the computer goes to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will stay connected when the computer goes to sleep.</p>";
+"<p><strong>When checked</strong>, the VPN will be disconnected when the computer goes to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will stay connected when the computer goes to sleep.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, VPN bude odpojená pri uspaní počítača.</p>\n<p><strong>Pokiaľ nieje zaškrtnuté</strong>, VPN nebude odpojená pri uspaní počítača.</p>";
 
 /* HTML info for the 'Reconnect when user switches in' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be reconnected when switching back to the current user if it was disconnected when a switch to another user was done.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when switching back to the current user.</p>" = "<p><strong>When checked</strong>, the VPN will be reconnected when switching back to the current user if it was disconnected when a switch to another user was done.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when switching back to the current user.</p>";
+"<p><strong>When checked</strong>, the VPN will be reconnected when switching back to the current user if it was disconnected when a switch to another user was done.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when switching back to the current user.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, VPN bude znovu pripojená pri prepnutí späť na aktuálneho používateľa a to v prípade, že pri prepnutí na iného používateľa došlo k odpojeniu.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, VPN nebude znovu pripojená pri prepnutí späť na aktuálneho používateľa.</p>";
 
 /* HTML info for the 'Reconnect when computer wakes up' checkbox. */
-"<p><strong>When checked</strong>, the VPN will be reconnected when the computer wakes up if it was disconnected when the computer went to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when the computer wakes up.</p>" = "<p><strong>When checked</strong>, the VPN will be reconnected when the computer wakes up if it was disconnected when the computer went to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when the computer wakes up.</p>";
+"<p><strong>When checked</strong>, the VPN will be reconnected when the computer wakes up if it was disconnected when the computer went to sleep.</p>\n<p><strong>When not checked</strong>, the VPN will not be reconnected when the computer wakes up.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, VPN bude znovu pripojená pri prebudení počítača v prípade, že pri uspaní došlo k odpojeniu.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, VPN nebude znovu pripojená pri prebudení počítača.</p>";
 
 /* HTML info for the 'Prepend domain name to search domains' checkbox. */
-"<p><strong>When checked</strong>, the VPN-specified domain name will be added to the start of the search domain list.</p>\n<p><strong>When not checked</strong>, the search domain list will be replaced by the VPN-specified domain name.</p>" = "<p><strong>When checked</strong>, the VPN-specified domain name will be added to the start of the search domain list.</p>\n<p><strong>When not checked</strong>, the search domain list will be replaced by the VPN-specified domain name.</p>";
+"<p><strong>When checked</strong>, the VPN-specified domain name will be added to the start of the search domain list.</p>\n<p><strong>When not checked</strong>, the search domain list will be replaced by the VPN-specified domain name.</p>" = "<p><strong>Pokiaľ zaškrtnuté</strong>, doménové meno špecifikované vo VPN bude pridané na začiatok zoznamu vyhľadávaných domén.</p>\n<p><strong>Pokiaľ nie je zaškrtnuté</strong>, zoznam vyhľadávaných domén bude nahradený doménovým menom špecifikovanými vo VPN.</p>";
 
 /* HTML info for the 'Display connection timers' checkbox. */
-"<p><strong>When checked</strong>, the time since a connection was established is displayed in the Tunnelblick menu and in the title of the VPN Details window.</p>" = "<p><strong>When checked</strong>, the time since a connection was established is displayed in the Tunnelblick menu and in the title of the VPN Details window.</p>";
+"<p><strong>When checked</strong>, the time since a connection was established is displayed in the Tunnelblick menu and in the title of the VPN Details window.</p>" = "<p><strong>Ak Je zaškrtnuté,</strong>, bude v ponuke Tunnelblicku a v názve okna Detailu VPN zobrazený čas od okamihu vytvorenia spojenia.</p>";
 
 /* HTML info for the 'Load Tap driver' popdown list. */
-"<p>A 'tap' device driver is needed for Tap connections. Tunnelblick includes its own Tap driver because the system does not include one. If you have installed a different Tap driver, Tunnelblick may not be able to load its driver.</p><p>You can choose if and when Tunnelblick loads its driver:</p>\n<p><strong>Load Tap driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed.</p>\n<p><strong>Always load Tap driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tap driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>" = "<p>A 'tap' device driver is needed for Tap connections. Tunnelblick includes its own Tap driver because the system does not include one. If you have installed a different Tap driver, Tunnelblick may not be able to load its driver.</p><p>You can choose if and when Tunnelblick loads its driver:</p>\n<p><strong>Load Tap driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed.</p>\n<p><strong>Always load Tap driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tap driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>";
+"<p>A 'tap' device driver is needed for Tap connections. Tunnelblick includes its own Tap driver because the system does not include one. If you have installed a different Tap driver, Tunnelblick may not be able to load its driver.</p><p>You can choose if and when Tunnelblick loads its driver:</p>\n<p><strong>Load Tap driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed.</p>\n<p><strong>Always load Tap driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tap driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tun configurations.</p>" = "<p>Ovládač zariadenia 'tap' je nevyhnutný pre Tap spojenie. Tunnelblick obsahuje vlastný Tap ovládač, pretože nie je súčasťou systému. Pokiaľ máte inštalovaný iný Tap ovládač, Tunnelblick nemusí byť schopný ovládač načítať.</p><p>Môžete vybrať či a kedy Tunnelblick ovládač načíta:</p>\n<p><strong>Načítať ovládač Tap automaticky</strong>: Tunnelblick načíta ovládač ak je to potrebné a uvolní už nie je potrebný.</p>\n<p><strong>Vždy načítať ovládač Tap</strong>: Tunnelblick načíta ovládač keď pripojí túto konfiguráciu a uvolní keď už nie je potrebný.</p>\n<p><strong>Nenačítavať ovládač Tap</strong>: Tunnelblick nikdy nenačíta ovládač.</p>\n<p><strong>Tento checkbox je zakázaný</strong> pre konfigurácie Tun.</p>";
 
 /* HTML info for the 'Load Tun driver' popdown list. */
-"<p>A 'tun' device driver is needed for Tun connections. Usually the system's Tun driver is used, but Tunnelblick also includes its own Tun driver. If you have installed a different Tun driver, Tunnelblick may not be able to load its driver.</p>\n<p>OpenVPN will use the system's driver unless the OpenVPN configuration includes the 'dev-type tun' option.</p>\n<p>You can choose if and when Tunnelblick loads its Tun driver:</p>\n<p><strong>Load Tun driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed. (Tunnelblick will only load its driver if the OpenVPN configuration includes the 'dev-type tun' option.)</p>\n<p><strong>Always load Tun driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tun driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tap configurations.</p>" = "<p>A 'tun' device driver is needed for Tun connections. Usually the system's Tun driver is used, but Tunnelblick also includes its own Tun driver. If you have installed a different Tun driver, Tunnelblick may not be able to load its driver.</p>\n<p>OpenVPN will use the system's driver unless the OpenVPN configuration includes the 'dev-type tun' option.</p>\n<p>You can choose if and when Tunnelblick loads its Tun driver:</p>\n<p><strong>Load Tun driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed. (Tunnelblick will only load its driver if the OpenVPN configuration includes the 'dev-type tun' option.)</p>\n<p><strong>Always load Tun driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tun driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tap configurations.</p>";
+"<p>A 'tun' device driver is needed for Tun connections. Usually the system's Tun driver is used, but Tunnelblick also includes its own Tun driver. If you have installed a different Tun driver, Tunnelblick may not be able to load its driver.</p>\n<p>OpenVPN will use the system's driver unless the OpenVPN configuration includes the 'dev-type tun' option.</p>\n<p>You can choose if and when Tunnelblick loads its Tun driver:</p>\n<p><strong>Load Tun driver automatically</strong>: Tunnelblick loads its driver if it is needed and unloads it when it is no longer needed. (Tunnelblick will only load its driver if the OpenVPN configuration includes the 'dev-type tun' option.)</p>\n<p><strong>Always load Tun driver</strong>: Tunnelblick loads its driver when it connects this configuration, and unloads it when it is no longer needed.</p>\n<p><strong>Never load Tun driver</strong>: Tunnelblick never loads its driver.</p>\n<p><strong>This checkbox is disabled</strong> for Tap configurations.</p>" = "<p>Ovládač zariadenia 'tun' je potrebný pre spojenie Tun. Obvykle je použitý systémový ovládač Tun, ale Tunnelblick tiež obsahuje vlastný ovládač Tun. Pokiaľ máte nainľtalovaný iný ovládač Tun, tak Tunnelblick nemusí byť schopný ovládač zaviesť.</p>\n<p>OpenVPN bude používať systémový ovládač pokiaľ konfigurácia OpenVPN obsahuje voľbu 'dev-type tun'.</p>\n<p>Môžete zvoliť či a kedy Tunnelblick zavedie ovládač Tun:</p>\n<p><strong>Zaviesť ovládač Tun automaticky</strong>: Tunnelblick zavedie ovládač pokiaľ je potrebné a uvolní ho pokiaľ nie je ďalej potrebný. (Tunnelblick bude zavádzať ovládač pokiaľ konfigurácia OpenVPN obsahuje voľbu 'dev-type tun'.)</p>\n<p><strong>Vždy zaviesť ovládač</strong>: Tunnelblick zavedie ovládač pri pripojení tejto konfigurácie a uvolní pokiaľ nie je potrebný.</p>\n<p><strong>Nezavádzať ovládač Tun</strong>: Tunnelblick nezavedie ovládač.</p>\n<p><strong>Táto voľba je zakázaná</strong> v prípade konfigurácia Tap.</p>";
 
 /* HTML info for the 'Check Now' button. */
-"<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>" = "<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>";
+"<p>Checks for updates to the Tunnelblick application.</p><p>Accesses the Tunnelblick website; for more details see <a href=\"https://tunnelblick.net/cPrivacy.html\">Privacy and Security</a> [tunnelblick.net].</p><p>Also checks for updates to configurations if your VPN service provider implements that feature.</p>" = "<p>Skontroluje aktualizácie pre aplikáciu Tunnelblick.</p><p>Navštívi stránku Tunnelblick; pre detailné informácie pozri <a href=\"https://tunnelblick.net/cPrivacy.html\">Súkromie a bezpečnosť</a>[tunnelblick.net]</p><p>Tiež skontroluje aktualizácie konfigurácií v prípade, že poskytovateľ služby VPN túto funkciu podporuje.</p>";
+
+/* HTML info for the 'Copy Diagnostic Info to Clipboard' button. */
+"<p>Copies information to the Clipboard to help diagnose problems.</p><p>The information includes software versions and settings, the OpenVPN configuration file, network settings and more.</p><p>Sensitive certificate information is not included, but data such as IP addreses and URLs which <em>may</em> be confidential are included. You should examine the information and remove anything you want kept secret before sending it in an email or posting it publicly.</p>" = "<p>Skopíruje informácie do Schránky pre pomoc s diagnózou problémov.</p><p>Informácie zahŕňajú verziu softvéru a nastavenia, OpenVPN konfiguračný súbor, nastavenia siete a ďalšie.</p><p>Citlivé informácie o certifikáte nie sú zahrnuté, ale iné dáta, napr. IP adresy a URL, ktoré <em>môžu</em> byť tajné, zahrnuté sú. Predtým, ako informácie pošlete emailom, alebo ich inak zverejníte, ich podrobne prejdite a odstráňte všetko, čo si prajete uchovať v tajnosti.</p>";
 
 /* HTML info for the 'Copy Console Log to Clipboard' button. */
-"<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>" = "<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>";
+"<p>Copies the last part of the Console Log to the Clipboard so it may be pasted into an email or other document.</p><p>The log contains details of Tunnelblick's and OpenVPN's operations. It includes normal status messages and detailed error messages that are too long to present to the user in a normal dialog window.</p>" = "<p>Skopíruje poslednú časť logu konzoly do schránky, aby ju bolo možné vložiť do emailu alebo iného dokumentu.</p><p>Log obsahuje detaily operácií Tunnelblicku a OpenVPN. Zahŕňa bežné stavové správy a detailné chybové hlásenia, ktoré sú príliš dlhé pre prezentovanie užívateľovi cez bežné dialógové okno.</p>";
 
 /* HTML info for the 'Open Uninstall Instructions in Browser' button. */
-"<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>" = "<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>";
+"<p>Opens a browser window containing information on the Tunnelblick website about uninstalling Tunnelblick.</p>" = "<p>Otvorí okno internetového prehliadača, obsahujúce informácie z Tunnelblick webovej stránky ohľadom odinštalovania Tunnelblicku.</p>";
 
 /* HTML info for the 'Advanced...' button. */
-"<p>Opens a window with additional settings.</p><p>Any changes will be applied to all configurations that are selected in the 'VPN Details' window.</p>" = "<p>Opens a window with additional settings.</p><p>Any changes will be applied to all configurations that are selected in the 'VPN Details' window.</p>";
+"<p>Opens a window with additional settings.</p><p>Any changes will be applied to all configurations that are selected in the 'VPN Details' window.</p>" = "<p>Otvorí okno s ďalšími nastaveniami.</p><p>Akékoľvek zmeny budú aplikované na všetky konfigurácie zvolené v okne 'Detaily VPN'.</p>";
 
 /* HTML info for the 'Quit All OpenVPN Processes' button. */
-"<p>Quits all OpenVPN processes, including those which were not started by Tunnelblick. You should use the Tunnelblick 'Disconnect' or 'Disconnect All' buttons and menu commands to disconnect configurations which were connected using Tunnelblick.</p><p>Clicking this button sends a 'SIGTERM' signal to all processes named 'openvpn'. Normally this will cause OpenVPN to close all connections and quit. If this button does not quit all OpenVPN processes, you may need to use the OS X Activity Monitor application to 'Force Quit' the process.</p>" = "<p>Quits all OpenVPN processes, including those which were not started by Tunnelblick. You should use the Tunnelblick 'Disconnect' or 'Disconnect All' buttons and menu commands to disconnect configurations which were connected using Tunnelblick.</p><p>Clicking this button sends a 'SIGTERM' signal to all processes named 'openvpn'. Normally this will cause OpenVPN to close all connections and quit. If this button does not quit all OpenVPN processes, you may need to use the OS X Activity Monitor application to 'Force Quit' the process.</p>";
+"<p>Quits all OpenVPN processes, including those which were not started by Tunnelblick. You should use the Tunnelblick 'Disconnect' or 'Disconnect All' buttons and menu commands to disconnect configurations which were connected using Tunnelblick.</p><p>Clicking this button sends a 'SIGTERM' signal to all processes named 'openvpn'. Normally this will cause OpenVPN to close all connections and quit. If this button does not quit all OpenVPN processes, you may need to use the OS X Activity Monitor application to 'Force Quit' the process.</p>" = "<p>Ukonči všetky OpenVPN procesy, vrátane tých, ktoré neboli spustené Tunnelblickom. Pre ukončenie konfigurácií, pripojených Tunnelblickom, použite Tunnelblick tlačítka 'Odpojiť' alebo 'Odpojiť všetko' a príkazy menu.</p><p>Kliknutím na toto tlačítko sa vyšle signál 'SIGTERM' všetkým procesom s názvom 'openvpn'. Bežným dôsledkom bude zavretie všetkých spojení a ukončenie OpenVPN. V prípade, keď tlačítko neukončí všetky OpenVPN procesy, môže byť potrebné využiť funkciu 'Vynútiť ukončenie' v aplikácií macOS Monitor aktivity.</p>";
 
 /* HTML info for the 'Reset Disabled Warnings' button. */
 "<p>Restores warnings that have been inhibited by a 'Do not warn about this again' checkbox.</p>" = "<p>Obnoví upozornenia, ktoré boli potlačené voľbou 'Viac na toto neupozorňovať'.</p>";
 
+/* HTML info for the 'VPN log level' button. */
+"<p>Specifies the amount of logging that is done by Tunnelblick and OpenVPN.</p>" = "<p>Nastaviť množstvo výstupu (textu) v protokolovacích (log) súboroch Tunnelblick a OpenVPN.</p>\n ";
+
+/* HTML info for the 'Icon' button. */
+"<p>Specifies the icon which Tunnelblick should display in the menu bar.</p>" = "<p>Určuje ikonu ktorú má Tunnelblick zobrazovať v lište.</p>";
+
+/* HTML info for the 'Keyboard shortcut' button. */
+"<p>Specifies the keys to press to invoke Tunneblick's main menu.</p>" = "<p>Určuje kombináciu kláves ktorá vyvolá základné menu Tunnelblick.</p>";
+
+/* HTML info for the 'Maximum log display size' button. */
+"<p>Specifies the maximum amount of storage to use to display the VPN log.</p>" = "<p>Určuje maximálnu povolenú veľkosť ktorá sa má použiť na zobrazenie záznamov VPN.</p>";
+
+/* HTML info for the button for selecting which screen to show status windows. */
+"<p>Specifies the screen on which Tunnelblick should display VPN status windows.</p>" = "<p>Určuje obrazovku ktorú Tunnelblick použije na zobrazenie informačného okno VPN.</p>";
+
+/* HTML info for the 'VPN status windows' button. */
+"<p>Specifies when Tunnelblick should display VPN status windows.</p>" = "<p>Určuje kedy má Tunnelblick zobrazovať informačného okno VPN.</p>";
+
 /* HTML info for the 'Flush DNS cache after connecting or disconnecting' checkbox. */
-"<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>" = "<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>";
+"<p>The DNS cache contains copies of DNS (Domain Name System) information.</p>\n<p><strong>When checked</strong>, the DNS cache will be flushed (cleared) after connecting or disconnecting. All DNS lookups will be performed by the name server specified by the VPN setup.</p>\n<p><strong>When not checked</strong>, the DNS cache will not be flushed. This can cause problems if there are name conflicts between the name server specified by the VPN setup and the pre-VPN name server and if pre-VPN entries have been cached.</p>" = "<p>Cache DNS obsahuje kópie záznamov DNS (Domain Name System) information.</p>\n<p><strong>Keď je zaškrtnuté</strong>, DNS cache bude vyprázdnená (vyčistená) po pripojení alebo odpojení. Všetky DNS požiadavky budú vykonané menným serverom určeným v nastavení VPN.</p>\n<p><strong>Keď nie je zaškrtnuté</strong>, DNS cache nebude vyprázdnená. To môže spôsobiť problémy v prípade konfliktov medzi menným serverom určeným v konfigurácií VPN a menným serverom z konfigurácie pred VPN - v prípade uloženia položiek serveru pred spustením VPN.</p>";
 
 /* HTML info for the 'Open easy-rsa in Terminal' button. */
-"<p>Tunnelblick includes a customized version of 'easy-rsa', which is a set of command line scripts written by the OpenVPN developers for creating and maintaining certificates and keys.</p><p>Clicking this button launches the OS X Terminal application with the working directory set to the folder containing the scripts.</p><p>The scripts are normally located in the folder at ~/Library/Application Support/Tunnelblick/easy-rsa. An 'easy-rsaPath' preference can contain the path to a folder that Tunnelblick will use instead. 'easy-rsaPath' must be an absolute path or start with a '~', and the parent folder of the path must exist. If a folder exists at the path, it will be used; if it does not exist, it will be created and the easy-rsa scripts will be installed into it when Tunnelblick is launched.</p><p>For information about using easy-rsa, see <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients</a> [openvpn.net].</p><p>For details of Tunnelblick's customizations of easy-rsa, see the README file located in the folder.</p>" = "<p>Tunnelblick includes a customized version of 'easy-rsa', which is a set of command line scripts written by the OpenVPN developers for creating and maintaining certificates and keys.</p><p>Clicking this button launches the OS X Terminal application with the working directory set to the folder containing the scripts.</p><p>The scripts are normally located in the folder at ~/Library/Application Support/Tunnelblick/easy-rsa. An 'easy-rsaPath' preference can contain the path to a folder that Tunnelblick will use instead. 'easy-rsaPath' must be an absolute path or start with a '~', and the parent folder of the path must exist. If a folder exists at the path, it will be used; if it does not exist, it will be created and the easy-rsa scripts will be installed into it when Tunnelblick is launched.</p><p>For information about using easy-rsa, see <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients</a> [openvpn.net].</p><p>For details of Tunnelblick's customizations of easy-rsa, see the README file located in the folder.</p>";
+"<p>Tunnelblick includes a customized version of 'easy-rsa', which is a set of command line scripts written by the OpenVPN developers for creating and maintaining certificates and keys.</p><p>Clicking this button launches the OS X Terminal application with the working directory set to the folder containing the scripts.</p><p>The scripts are normally located in the folder at ~/Library/Application Support/Tunnelblick/easy-rsa. An 'easy-rsaPath' preference can contain the path to a folder that Tunnelblick will use instead. 'easy-rsaPath' must be an absolute path or start with a '~', and the parent folder of the path must exist. If a folder exists at the path, it will be used; if it does not exist, it will be created and the easy-rsa scripts will be installed into it when Tunnelblick is launched.</p><p>For information about using easy-rsa, see <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Setting up your own Certificate Authority (CA) and generating certificates and keys for an OpenVPN server and multiple clients</a> [openvpn.net].</p><p>For details of Tunnelblick's customizations of easy-rsa, see the README file located in the folder.</p>" = "<p>Tunnelblick obsahuje upravenú verziu 'easy-rsa', ktorá je sadou skriptov príkazového riadku, napísaných vývojármi OpenVPN pre vytvorení a údržbu certifikátov a kľúčov.</p><p>Stlačením toho tlačítka sa spustí macOS Terminál s prednastaveným priečinkom, obsahujúcim tieto skripty.</p><p>Skripty sú bežne umiestnené v priečinku ~/Library/Application Support/Tunnelblick/easy-rsa. Predvoľba 'easy-rsaPath' môže obsahovať cestu k priečinku, ktorú bude Tunnelblick používať namiesto východiskovej. Cesta 'easy-rsaPath' musí byť úplný odkaz alebo cesta začínajúca '~', a nadradený priečinok tejto cesty musí existovať. Pokiaľ v danej ceste existuje priečinok, bude použitý; pokiaľ neexistuje, bude vytvorený a easy-rsa skripty budú doňho nainštalované pri spustení Tunnelblicku.</p><p>Pre informácie o používaní easy-rsa pozri <a href=\"https://openvpn.net/index.php/open-source/documentation/howto.html#pki\">Nastavenie vlastného Certifikátu autority (CA) a generovanie certifikátov a kľúčov pre OpenVPN server a viacero klientov</a> [openvpn.net].</p><p>Informácie o prispôsobení easy-rsa v Tunnelblick nájdete v README súbore umiestnenom v priečinku.</p>";
+
+/* HTML error message. The first %@ is a configuration name. The second %@ and third %@ are HTML <a> and </a> tags that link to tunnelblick.net -- translators should ignore them but keep them in their translation. The fourth %@ is a domain name such as 'tunnelblick.net' to show the user where the link goes to (you may replace the square brackets with symbols appropriate for your language). */
+"<p>Tunnelblick was not able to load a system extension that is needed to connect to %@.</p><p>%@More information%@ [%@]</p>" = "<p>Tunnelblicku sa nepodarilo nahrať systémové rozšírenie, ktoré je požadované na pripojenie k %1$@.</p><p>%2$@Pre viac informácií%3$@[%4$@]</p>";
 
 /* Toolbar text for 'Lock' item */
 "Admin mode %@ remaining" = "Režim správcu zostáva %@";
 
 /* Credit description */
 "Afrikaans translation" = "Afrikánsky preklad";
+
+/* Credit description */
+"Albanian translation" = "Albánsky preklad";
 
 /* Credit description */
 "Animation and icon sets code" = "Animácia a skupina ikon";
@@ -2046,6 +2170,12 @@
 
 /* Credit description */
 "Catalan translation" = "Katalánsky preklad";
+
+/* Checkbox text */
+"Check for IP address changes" = "Kontrolovať zmeny IP adresy";
+
+/* Checkbox text */
+"Check for updates" = "Skontrolovať aktualizácie";
 
 /* Credit description */
 "Chinese (simplified) translation" = "Čínsky (zjednod.) preklad";
@@ -2080,12 +2210,14 @@
 /* Checkbox */
 "Do not show this again" = "Už nezobrazovať";
 
+/* Checkbox text */
+"Do not warn about this again, never re-enable" = "Neupozorňovať znovu, nikdy neobnovovať";
+
 /* Credit description */
 "Dutch translation" = "Holandský preklad";
 
 /* Toolbar text for 'Lock' icon
-   Toolbar text for 'Lock' item
-*/
+   Toolbar text for 'Lock' item */
 "Enter admin mode" = "Vstúpiť do režimu správcu";
 
 /* Credit description */
@@ -2095,7 +2227,7 @@
 "Finnish translation" = "Fínsky preklad";
 
 /* Credit description */
-"Flemish translation" = "Flemish translation";
+"Flemish translation" = "Flámsky preklad";
 
 /* Credit description */
 "Founder, original program and documentation" = "Zakladateľ, pôvodný program a dokumentácia";
@@ -2108,6 +2240,9 @@
 
 /* Credit description */
 "Greek translation" = "Grécky preklad";
+
+/* Credit description */
+"Hebrew translation" = "Hebrejský preklad";
 
 /* Credit description */
 "Hungarian translation" = "Maďarský preklad";
@@ -2204,6 +2339,9 @@
 
 /* Notification text */
 "Updated to %@." = "Aktualizované na verziu %@.";
+
+/* Credit description */
+"Vietnamese translation" = "Vietnamský preklad";
 
 /* Credit description */
 "Xcode help and OpenSSL integration" = "Pomoc s Xcode a integrácia OpenSSL";

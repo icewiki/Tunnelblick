@@ -1,7 +1,7 @@
 # Makefile to build all of the third-party software included in Tunnelblick
 #
 # Copyright 2004, 2005, 2006, 2007, 2008, 2009 Angelo Laub
-# Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+# Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018. All rights reserved.
 #
 #  This file is part of Tunnelblick.
 #
@@ -33,22 +33,48 @@ TOPDIR = $(PWD)
 # Define names of folders in third_party/sources that contain programs to build:
 # Names of OpenVPN folders are determined by examining third_party/sources/openvpn
 
-LZO_NAME         = lzo-2.09
+LZO_NAME         = lzo-2.10
 
-LZ4_NAME         = lz4-r131
+LZ4_NAME         = lz4-1.8.1.2
 LZ4_TARGET_ARCHS = x86_64
 
-OPENSSL_NAME     = openssl-1.0.2k
-LIBRESSL_NAME	 = libressl-2.5.0
+# IMPORTANT: When an SSL version changes, change the name of any corresponding folder in patches/ssl
 
-PKCS11_NAME      = pkcs11-helper-1.11
+OPENSSL_1_0_NAME = openssl-1.0.2o
+OPENSSL_1_1_NAME = openssl-1.1.0h
+LIBRESSL_NAME	 = libressl-2.7.1
 
-EASY_RSA_3_NAME  = easy-rsa-3.0.0-rc2
+PKCS11_NAME      = pkcs11-helper-1.22
+
+EASY_RSA_3_NAME  = easy-rsa-3.0.1
 
 TUNTAP_20111101_NAME  = tuntap-20111101
 TUNTAP_CURRENT_NAME   = tuntap-20141104
 TUNTAP_20111101_TARGZ = tuntap_20111101_src.tar.gz
 TUNTAP_CURRENT_TARGZ  = tuntap_20141104_src.tar.gz
+
+
+
+#######################################################################################
+#######################################################################################
+#######################################################################################
+###                                                                                 ###
+### THE REST OF THIS SCRIPT NEEDS TO BE CHANGED ONLY RARELY                         ###
+###                                                                                 ###
+### (For example, when a new major.minor version of OpenVPN or OpenSSL is added.)   ###
+###                                                                                 ###
+#######################################################################################
+#######################################################################################
+#######################################################################################
+
+
+#######################################################################################
+# Define tests (inside bash [ ]) which determine which SSL libraries to link to for each major.minor version of OpenVPN
+# Each test compares a bash variable ($$ssl_name) with one or more make variables ( e.g., $(OPENSSL_1_0_NAME) )
+
+OPENVPN_2_3_SSL_LIBRARIES_TEST = $$ssl_name = $(OPENSSL_1_0_NAME) -o $$ssl_name = $(LIBRESSL_NAME)
+OPENVPN_2_4_SSL_LIBRARIES_TEST = $$ssl_name = $(OPENSSL_1_0_NAME) -o $$ssl_name = $(OPENSSL_1_1_NAME)
+OPENVPN_2_5_SSL_LIBRARIES_TEST = $$ssl_name = $(OPENSSL_1_0_NAME) -o $$ssl_name = $(OPENSSL_1_1_NAME)
 
 #######################################################################################
 # Define treatment of deprecated functions, methods, etc. for OpenVPN
@@ -69,8 +95,11 @@ PRODUCTS_DIR = $(TOPDIR)/products
 
 STAGING_DIR = $(BUILD_DIR)/staging
 
-OPENSSL_STAGING_DIR = $(STAGING_DIR)/$(OPENSSL_NAME)
-OPENSSL_TARGET_FILES = $(foreach f, libcrypto.a libssl.a, $(OPENSSL_STAGING_DIR)/lib/$(f))
+OPENSSL_1_0_STAGING_DIR = $(STAGING_DIR)/$(OPENSSL_1_0_NAME)
+OPENSSL_1_0_TARGET_FILES = $(foreach f, libcrypto.a libssl.a, $(OPENSSL_1_0_STAGING_DIR)/lib/$(f))
+
+OPENSSL_1_1_STAGING_DIR = $(STAGING_DIR)/$(OPENSSL_1_1_NAME)
+OPENSSL_1_1_TARGET_FILES = $(foreach f, libcrypto.a libssl.a, $(OPENSSL_1_1_STAGING_DIR)/lib/$(f))
 
 LIBRESSL_STAGING_DIR = $(STAGING_DIR)/$(LIBRESSL_NAME)
 LIBRESSL_TARGET_FILES = $(foreach f, libcrypto.a libssl.a, $(LIBRESSL_STAGING_DIR)/lib/$(f))

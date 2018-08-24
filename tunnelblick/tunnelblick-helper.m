@@ -1,7 +1,7 @@
 /*
  * Copyright 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 Angelo Laub
  * Contributions by Dirk Theisen
- * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+ * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2017, 2018. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -60,14 +60,34 @@ int                   gPendingRootCounter = 0;  // Number of becomeRoot requests
 //                                              //        when increments to one, become root
 //                                              //        when decements to zero, become non-root
 
+NSString * gTemporaryDirectory = nil;			// Path to a temporary directory if one was created for this process, otherwise nil.
+												// If not nil, the TMPDIR environment variable was set to this value and
+												// the directory and its contents should be deleted upon exit from main().
+
 //**************************************************************************************************************************
 
 void appendLog(NSString * msg) {
     fprintf(stderr, "%s\n", [msg UTF8String]);
 }
 
-    // returnValue: have used 172-247, plus the values in define.h (248-254)
+const char * fileSystemRepresentationOrNULL(NSString * s) {
+
+	// Returns the fileSystemRepresentation of an NSString.
+	// Returns "NULL" without raising an exception if the NSString is nil or the empty string.
+	
+	return (  0 == [s length]
+			? "NULL"
+			: [s fileSystemRepresentation]);
+}
+
 void exitOpenvpnstart(OSStatus returnValue) {
+	
+	// returnValue: have used 164-246, plus the values in define.h (247-254)
+
+	if (  gTemporaryDirectory  ) {
+		[[NSFileManager defaultManager] tbRemoveFileAtPath: gTemporaryDirectory handler: nil];
+	}
+	
     [pool drain];
     exit(returnValue);
 }
@@ -103,15 +123,24 @@ void printUsageMessageAndExitOpenvpnstart(void) {
             "./openvpnstart test\n"
             "               always returns success\n\n"
             
+			"./openvpnstart re-enable-network-services\n"
+			"               to run Tunnelblick's re-enable-network-services.sh script\n\n"
+			
             "./openvpnstart route-pre-down\n"
             "               to run Tunnelblick's client.route-pre-down.tunnelblick script\n\n"
             
+			"./openvpnstart route-pre-down-k\n"
+			"               to run Tunnelblick's client.route-pre-down.tunnelblick script with the '-k' option\n\n"
+			
             "./openvpnstart checkSignature\n"
             "               to verify the application's signature using codesign\n\n"
             
             "./openvpnstart deleteLogs\n"
             "               to delete all log files that have the OPENVPNSTART_NOT_WHEN_COMPUTER_STARTS bit set in the bitmask encoded in their filenames.\n\n"
             
+			"./openvpnstart expectDisconnect flag\n"
+			"               creates (flag = 1) or removes (flag = 0) the file /Library/Application Support/Tunnelblick/expect-disconnect.txt\n\n"
+			
             "./openvpnstart loadKexts     [bitMask]\n"
             "               to load .tun and .tap kexts\n\n"
             
@@ -209,16 +238,21 @@ void printUsageMessageAndExitOpenvpnstart(void) {
             "                            bit  7 is 1 to indicate the domain name should be prepended to the search domains if search domains are not set manually\n"
             "                            bit  8 is 1 to indicate the DNS cache should be flushed after each connection or disconnection\n"
             "                            bit  9 is 1 to indicate the 'redirect-gateway def1' option should be passed to OpenVPN\n"
-            "                            bit 10 is 1 to indicate the primary interface should be reset after disconnect (via ifconfig up; ifconfig down)\n"
+            "                            bit 10 is 1 to indicate that logging should be disabled\n"
             "                            bit 11 is 1 to indicate the --mtu-test option should be added to the command line\n"
             "                            bit 12 is 1 to indicate that extra logging should be done by the up script\n"
             "                            bit 13 is 1 to indicate that the default domain ('openvpn') should not be used\n"
             "                            bit 14 is 1 to indicate that the program is not being started when the computer starts\n"
             "                            bit 15 is 1 to indicate that the up script should be started with --route-up instead of --up\n"
-            "                            bit 16 is 1 to indicate that the i386 version of the OpenVPN universal binary should be used\n"
+            "                            bit 16 is 1 to indicate that the up script should override manual network settings\n"
             "                            bit 17 is 1 to indicate that return from the 'up' script should be delayed until DHCP information has been received in a tap connection\n"
-            "                            bit 18 is 1 to indicate that IPv6 should be enabled on TAP devices using DHCP\n"
-            "                            bit 19 is 1 to indicate that IPv6 should be disabled in all enabled (active) network services for TUN connections\n"
+			"                            bit 18 is 1 to indicate that Internet access should not be waited for\n"
+			"                            bit 19 is 1 to indicate that IPv6 should be enabled on TAP devices using DHCP\n"
+            "                            bit 20 is 1 to indicate that IPv6 should be disabled in all enabled (active) network services for TUN connections\n"
+			"                            bit 21 is 1 to indicate that the primary network service should be reset after disconnecting\n"
+			"                            bit 22 is 1 to indicate that network access should be disabled after disconnecting\n"
+			"                            bit 23 is 1 to indicate that the primary network service should be reset after disconnecting unexpectedly\n"
+			"                            bit 24 is 1 to indicate that network access should be disabled after disconnecting unexpectedly\n"
             "                            Note: Bits 2 and 3 are ignored by the start subcommand (for which foo.tun and foo.tap are unloaded only as needed)\n\n"
 
             "leasewatchOptions is a string containing characters indicating options for leasewatch.\n\n"
@@ -262,10 +296,7 @@ void printUsageMessageAndExitOpenvpnstart(void) {
             
             "The normal return code is 0. If an error occurs a message is sent to stderr and a non-zero value is returned.\n\n"
             
-            "This executable, openvpn, tap.kext, and tun.kext (and client.up.osx.sh and client.down.osx.sh if they are used)\n"
-            "must all be located in /Library/Application Support/Tunnelblick/bin/.\n\n"
-            
-            "Tunnelblick must have been run and an administrator password entered at least once before openvpnstart can be used.\n\n"
+            "Tunnelblick must have been installed before openvpnstart can be used.\n\n"
             
             "For more information on using Deploy, see the Deployment wiki at https://tunnelblick.net/cCusDeployed.html\n"
             , killStringC, killAllStringC);
@@ -680,7 +711,8 @@ void exitIfTblkNeedsRepair(void) {
     
     // Permissions:
     mode_t folderPerms         = PERMS_SECURED_FOLDER;
-    mode_t scriptPerms         = PERMS_SECURED_SCRIPT;
+    mode_t rootScriptPerms     = PERMS_SECURED_ROOT_SCRIPT;
+	mode_t userScriptPerms     = PERMS_SECURED_USER_SCRIPT;
     mode_t publicReadablePerms = PERMS_SECURED_READABLE;
     mode_t otherPerms          = PERMS_SECURED_OTHER;
     
@@ -702,7 +734,9 @@ void exitIfTblkNeedsRepair(void) {
             exitIfPathIsNotSecure(filePath, folderPerms, OPENVPNSTART_RETURN_CONFIG_NOT_SECURED_ERROR);
             
         } else if ( [ext isEqualToString:@"sh"]  ) {
-            exitIfPathIsNotSecure(filePath, scriptPerms, OPENVPNSTART_RETURN_CONFIG_NOT_SECURED_ERROR);
+			exitIfPathIsNotSecure(filePath,
+								  (shouldRunScriptAsUserAtPath(file) ? userScriptPerms : rootScriptPerms),
+								  OPENVPNSTART_RETURN_CONFIG_NOT_SECURED_ERROR);
             
         } else if (   [ext isEqualToString: @"strings"]
                    || [[file lastPathComponent] isEqualToString:@"Info.plist"]  ) {
@@ -759,7 +793,9 @@ void exitIfPathShouldNotBeRunAsRoot(NSString * path) {
                                 || [[pathComponents objectAtIndex: 5] isEqualToString: @"client.1.down.tunnelblick.sh"]
                                 || [[pathComponents objectAtIndex: 5] isEqualToString: @"client.2.down.tunnelblick.sh"]
                                 || [[pathComponents objectAtIndex: 5] isEqualToString: @"client.3.down.tunnelblick.sh"]
+								|| [[pathComponents objectAtIndex: 5] isEqualToString: @"client.4.down.tunnelblick.sh"]
                                 || [[pathComponents objectAtIndex: 5] isEqualToString: @"client.route-pre-down.tunnelblick.sh"]
+                                || [[pathComponents objectAtIndex: 5] isEqualToString: @"re-enable-network-services.sh"]
                                 )
                             )
                         )
@@ -912,7 +948,7 @@ int runAsRoot(NSString * thePath, NSArray * theArguments, mode_t permissions) {
     
     [task setCurrentDirectoryPath: @"/private/tmp"];
     
-    [task setEnvironment: getSafeEnvironment([[thePath lastPathComponent] isEqualToString: @"openvpn"])];
+    [task setEnvironment: getSafeEnvironment()];
     
 	becomeRoot([NSString stringWithFormat: @"launch %@", [thePath lastPathComponent]]);
     
@@ -940,12 +976,18 @@ int runAsRoot(NSString * thePath, NSArray * theArguments, mode_t permissions) {
 	NSCharacterSet * trimCharacterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
 
 	NSString * stdOutput = [[[NSString alloc] initWithData: stdData encoding: NSUTF8StringEncoding] autorelease];
+	if (  stdOutput == nil  ) {
+		stdOutput = @"Unable to interpret stdout as UTF-8";
+	}
     stdOutput = [stdOutput stringByTrimmingCharactersInSet: trimCharacterSet];
 	if (  [stdOutput length] != 0  ) {
 		fprintf(stderr, "stdout from %s: %s\n", [[thePath lastPathComponent] UTF8String], [stdOutput UTF8String]);
 	}
 	
 	NSString * errOutput = [[[NSString alloc] initWithData: errData encoding: NSUTF8StringEncoding] autorelease];
+	if (  errOutput == nil  ) {
+		errOutput = @"Unable to interpret stderr as UTF-8";
+	}
     errOutput = [errOutput stringByTrimmingCharactersInSet: trimCharacterSet];
 	if (  [errOutput length] != 0  ) {
 		fprintf(stderr, "stderr from %s: %s\n", [[thePath lastPathComponent] UTF8String], [errOutput UTF8String]);
@@ -1022,11 +1064,11 @@ int runScript(NSString * scriptName, int argc, char * argv[]) {
 		return 0;
 	}
 	
-    exitIfNotRootWithPermissions(scriptPath, PERMS_SECURED_SCRIPT);
+    exitIfNotRootWithPermissions(scriptPath, PERMS_SECURED_ROOT_SCRIPT);
 
     fprintf(stdout, "Executing %s in %s...\n", [[scriptPath lastPathComponent] UTF8String], [[scriptPath stringByDeletingLastPathComponent] UTF8String]);
     
-    returnValue = runAsRoot(scriptPath, [NSArray array], PERMS_SECURED_SCRIPT);
+    returnValue = runAsRoot(scriptPath, [NSArray array], PERMS_SECURED_ROOT_SCRIPT);
     
     fprintf(stdout, "%s returned with status %d\n", [[scriptPath lastPathComponent] UTF8String], returnValue);
     
@@ -1066,8 +1108,39 @@ int runDownScript(unsigned scriptNumber) {
 }
 
 //**************************************************************************************************************************
-int runRoutePreDownScript(void) {
+int runReenableNetworkServices(void) {
     
+	int returnValue = 0;
+	
+	NSString * scriptPath = [gResourcesPath stringByAppendingPathComponent: @"re-enable-network-services.sh"];
+	
+	becomeRootToAccessPath(scriptPath, @"Check if script exists");
+	BOOL scriptExists = [[NSFileManager defaultManager] fileExistsAtPath: scriptPath];
+	stopBeingRootToAccessPath(scriptPath);
+	
+	if (  scriptExists  ) {
+		
+		exitIfNotRootWithPermissions(scriptPath, 0744);
+		
+		fprintf(stdout, "Executing %s in %s...\n", [[scriptPath lastPathComponent] UTF8String], [[scriptPath stringByDeletingLastPathComponent] UTF8String]);
+		returnValue = runAsRoot(scriptPath, [NSArray array], 0744);
+		fprintf(stdout, "%s returned with status %d\n", [[scriptPath lastPathComponent] UTF8String], returnValue);
+		
+	} else {
+		
+		fprintf(stdout, "No such script exists: %s\n", [scriptPath UTF8String]);
+		returnValue = 184;
+	}
+	
+	exitOpenvpnstart(returnValue);
+	return returnValue; // Avoid analyzer warnings
+}
+
+//**************************************************************************************************************************
+int runRoutePreDownScript(BOOL kOption) {
+    
+	// Runs the route-pre-down script; includes a "-k" argument to disable network access if kOption is true.
+	
     int returnValue = 0;
     
     NSString * scriptPath = [gResourcesPath stringByAppendingPathComponent: @"client.route-pre-down.tunnelblick.sh"];
@@ -1080,8 +1153,11 @@ int runRoutePreDownScript(void) {
         
         exitIfNotRootWithPermissions(scriptPath, 0744);
         
-        fprintf(stdout, "Executing %s in %s...\n", [[scriptPath lastPathComponent] UTF8String], [[scriptPath stringByDeletingLastPathComponent] UTF8String]);
-        returnValue = runAsRoot(scriptPath, [NSArray array], 0744);
+        fprintf(stdout, "Executing %s%s in %s...\n", [[scriptPath lastPathComponent] UTF8String], (kOption ? " -k" : ""), [[scriptPath stringByDeletingLastPathComponent] UTF8String]);
+		NSArray * arguments = (  kOption
+							   ? [NSArray arrayWithObject: @"-k"]
+							   : [NSArray array]);
+        returnValue = runAsRoot(scriptPath, arguments, 0744);
         fprintf(stdout, "%s returned with status %d\n", [[scriptPath lastPathComponent] UTF8String], returnValue);
         
     } else {
@@ -1236,50 +1312,6 @@ int getProcesses(struct kinfo_proc** procs, unsigned * number) {
     return 0;
 }
 
-void waitUntilAllOpenVPNProcessesAreGone(void) {
-    
-	//Waits until all OpenVPN processes are gone or fifteen seconds, whichever comes first
-	
-    BOOL     found   = FALSE;
-    unsigned count   = 0;
-    unsigned i       = 0;
-    unsigned j       = 0;
-    
-	struct kinfo_proc*	info	= NULL;
-        
-    for (j=0; j<16; j++) {   // Try up to sixteen times, with one second _between_ each try -- max fifteen seconds total
-        
-		found = FALSE;
-		
-        if (j != 0) {       // Don't sleep the first time through
-            sleep(1);
-        }
-        
-        if (  getProcesses(&info, &count) == 0 ) {
-            for (i = 0; i < count; i++) {
-                char* process_name = info[i].kp_proc.p_comm;
-                if (  strcmp(process_name, "openvpn") == 0  ) {
-                    found = TRUE;
-                    break;
-                }
-            }
-            
-            free(info);
-            
-            if (  ! found  ) {
-                break;
-            }
-        } else {
-            fprintf(stderr, "waitUntilAllOpenVPNProcessesAreGone(): Unable to get process information via getProcesses()");
-            exitOpenvpnstart(217);
-        }
-    }
-    
-    if (  found  ) {
-        fprintf(stderr, "Timeout (15 seconds) waiting for process(es) named 'openvpn' to terminate\n");
-    }
-}
-
 void secureUpdate(NSString * name) {
     
     // Secures an update in L_AS_T_TBLKS
@@ -1342,10 +1374,12 @@ void killOneOpenvpn(pid_t pid) {
                     if (  errno == ESRCH  ) {
                         fprintf(stderr, "killOneOpenvpn(%lu): kill() failed: Process does not exist\n", (unsigned long) pid);
                         exitOpenvpnstart(OPENVPNSTART_NO_SUCH_OPENVPN_PROCESS);
+						return; // Make analyzer happy
                     }
                     
                     fprintf(stderr, "killOneOpenvpn(%lu): kill() failed; errno %d: %s\n", (unsigned long) pid, errno, strerror(errno));
                     exitOpenvpnstart(218);
+					return; // Make analyzer happy
                 }
             }
         }
@@ -1370,8 +1404,6 @@ void killAllOpenvpn(void) {
     
     NSArray  * arguments = [NSArray arrayWithObject: @"openvpn"];
     runAsRoot(TOOL_PATH_FOR_KILLALL, arguments, 0755);
-	
-    waitUntilAllOpenVPNProcessesAreGone();
 }
 
 //**************************************************************************************************************************
@@ -1407,7 +1439,7 @@ NSString * constructLogBase(NSString * configurationFile, unsigned cfgLocCode) {
             break;
         default:
             fprintf(stderr, "Invalid cfgLocCode = %u\n", cfgLocCode);
-            exit(EXIT_FAILURE);
+            exitOpenvpnstart(168);
     }
     
     NSMutableString * base = [[[configPrefix stringByAppendingPathComponent: configurationFile] mutableCopy] autorelease];
@@ -1588,6 +1620,22 @@ void deleteLogFiles(NSString * configurationFile, unsigned cfgLocCode) {
 	stopBeingRoot();
 }
 
+void expectDisconnect(unsigned int flag) {
+	
+	if (  flag == 0  ) {
+		becomeRoot(@"Delete expect-disconnect.txt");
+		[[NSFileManager defaultManager] tbRemovePathIfItExists: L_AS_T_EXPECT_DISCONNECT_PATH];
+		stopBeingRoot();
+	} else if (  flag == 1  ) {
+		becomeRoot(@"Create expect-disconnect.txt");
+		if (  ! [[NSFileManager defaultManager] fileExistsAtPath:L_AS_T_EXPECT_DISCONNECT_PATH]  ) {
+			[[NSFileManager defaultManager] createFileAtPath: L_AS_T_EXPECT_DISCONNECT_PATH contents: nil attributes: nil];
+		}
+
+		stopBeingRoot();
+	}
+}
+
 //**************************************************************************************************************************
 
 void compareShadowCopy (NSString * fileName) {
@@ -1669,7 +1717,7 @@ void revertToShadow (NSString * fileName) {
             }
 		} else {
 			fprintf(stderr, "Unable to copy %s to %s\n", [shadowPath UTF8String], [privatePath UTF8String]);
-			exitOpenvpnstart(247);
+			exitOpenvpnstart(226);
 		}
 	} else {
 		fprintf(stderr, "No secured (shadow) copy of a .tblk at %s\n", [shadowPath UTF8String]);
@@ -1700,7 +1748,7 @@ void printSanitizedConfigurationFile(NSString * configFile, unsigned cfgLocCode)
             break;
         default:
             fprintf(stderr, "Invalid cfgLocCode = %u\n", cfgLocCode);
-            exit(EXIT_FAILURE);
+            exitOpenvpnstart(167);
     }
     
     NSString * configSuffix = @"";
@@ -1718,19 +1766,23 @@ void printSanitizedConfigurationFile(NSString * configFile, unsigned cfgLocCode)
     
     if (  ! data  ) {
         fprintf(stderr, "No configuration file at %s\n", [actualConfigPath UTF8String]);
-        exit(EXIT_FAILURE);
+        exitOpenvpnstart(166);
     }
     
     NSString * cfgContents = [[[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding] autorelease];
-    
+	if (  ! cfgContents  ) {
+		fprintf(stderr, "Could not interpret the configuration file at %s as UTF-8\n", [actualConfigPath UTF8String]);
+		exitOpenvpnstart(165);
+	}
+	
     NSString * sanitizedCfgContents = sanitizedConfigurationContents(cfgContents);
     if (  ! sanitizedCfgContents  ) {
         fprintf(stderr, "There was a problem in the configuration file at %s\n", [actualConfigPath UTF8String]);
-        exit(EXIT_FAILURE);
+        exitOpenvpnstart(164);
     }
     
     fprintf(stdout, "%s", [sanitizedCfgContents UTF8String]);
-    exit(EXIT_SUCCESS);
+    exitOpenvpnstart(EXIT_SUCCESS);
 }
 
 //**************************************************************************************************************************
@@ -1779,7 +1831,7 @@ void loadKexts(unsigned int bitMask) {
     }
     if (  status != 0  ) {
         fprintf(stderr, "Unable to load net.tunnelblick.tun and/or net.tunnelblick.tap kexts in 5 tries. Status = %d\n", status);
-        exitOpenvpnstart(226);
+        exitOpenvpnstart(OPENVPNSTART_COULD_NOT_LOAD_KEXT);
     }
 }
 
@@ -1890,7 +1942,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
 
     if (  gUidOfUser == 0  ) {
         fprintf(stderr, "safeUpdate/safeUpdateTest not allowed when running as root\n");
-        exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+        exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
     }
     
     // Make sure an admin has authorized safe updates
@@ -1898,7 +1950,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
     if (  ! (   [obj respondsToSelector: @selector(boolValue)]
              && [obj boolValue])  ) {
         fprintf(stderr, "safeUpdate/safeUpdateTest not been approved by an administrator\n");
-        exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+        exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
     }
     
     NSString * sourcePrefix = [gUserHome     stringByAppendingPathComponent: @"Library/Application Support/Tunnelblick/Configurations"];
@@ -1916,7 +1968,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
         stopBeingRoot();
         if (  ! ok  ) {
             fprintf(stderr, "Unable to secure privatefolder %s\n", [sourcePath UTF8String]);
-            exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+            exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
         }
         
         // Make sure it is OK to update
@@ -1925,7 +1977,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
         stopBeingRoot();
         if (  ! ok  ) {
             fprintf(stderr, "SafeUpdate test failed; source = %s; target = %s\n", [sourcePath UTF8String], [targetPath UTF8String]);
-            exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+            exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
         }
 
         // Do the actual update
@@ -1934,7 +1986,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
         stopBeingRoot();
         if (  ! ok  ) {
             fprintf(stderr, "SafeUpdate failed; source = %s; target = %s\n", [sourcePath UTF8String], [targetPath UTF8String]);
-            exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+            exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
         }
         
         // Restore normal security on the user's private configuration
@@ -1943,7 +1995,7 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
         stopBeingRoot();
         if (  ! ok  ) {
             fprintf(stderr, "Unable to restore normal security on folder %s\n", [sourcePath UTF8String]);
-            exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+            exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
         }
         
     } else {
@@ -1953,11 +2005,11 @@ void safeUpdate(NSString * displayName, BOOL doUpdate) {
         stopBeingRoot();
         if (  ! ok  ) {
             fprintf(stderr, "SafeUpdateTest failed; source = %s; target = %s\n", [sourcePath UTF8String], [targetPath UTF8String]);
-            exit(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
+            exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_NOT_OK);
         }
     }
     
-    exit(OPENVPNSTART_UPDATE_SAFE_OK);
+    exitOpenvpnstart(OPENVPNSTART_UPDATE_SAFE_OK);
 }
 
 //**************************************************************************************************************************
@@ -2039,6 +2091,7 @@ int startVPN(NSString * configFile,
         default:
             fprintf(stderr, "Syntax error: Invalid cfgLocCode (%d)\n", cfgLocCode);
             exitOpenvpnstart(OPENVPNSTART_RETURN_SYNTAX_ERROR);
+			return -1; // Make analyzer happy
     }
     
     if (  [[gConfigPath pathExtension] isEqualToString: @"tblk"]) {
@@ -2062,11 +2115,16 @@ int startVPN(NSString * configFile,
         }
     }
     
-    if (  port == 0  ) {
-        port = getFreePort(1337);   // If port number is zero, preserve old default behavior: start looking for a free port starting with 1337
-    } else if (  (bitMask & OPENVPNSTART_NOT_WHEN_COMPUTER_STARTS) != 0  ) {
-        port = getFreePort(port);   // If no GUI, start looking for a free port with the specified starting port number
-    }                               // Otherwise, use the specified port
+	// If  we're starting when the computer starts or port = 0, get a free port.
+	// Otherwise use the specified port, warning if that port isn't in the dynamic/private/emphemeral range.
+    if (   (port == 0)
+		|| ( (bitMask & OPENVPNSTART_NOT_WHEN_COMPUTER_STARTS) == 0 )  ) {
+		port = getFreePort();
+	} else if (   (port < MIN_MANAGMENT_INTERFACE_PORT_NUMBER)
+			   || (port > MAX_MANAGMENT_INTERFACE_PORT_NUMBER)  ) {
+		fprintf(stderr, "Warning: specified port %u for OpenVPN management interface is not between %u and %u, inclusive\n",
+				port, MIN_MANAGMENT_INTERFACE_PORT_NUMBER, MAX_MANAGMENT_INTERFACE_PORT_NUMBER);
+	}
     if (  port == 0  ) {
         fprintf(stderr, "Unable to find a free port to connect to the management interface\n");
         exitOpenvpnstart(248);
@@ -2101,6 +2159,22 @@ int startVPN(NSString * configFile,
 								 @"--cd",         cdFolderPath,
                                  nil];
     
+	// Set IV_GUI_VER using the "--setenv" option
+	// We get the Info.plist contents as follows because NSBundle's objectForInfoDictionaryKey: method returns the object as it was at
+	// compile time, before the TBBUILDNUMBER is replaced by the actual build number (which is done in the final run-script that builds Tunnelblick)
+	// By constructing the path, we force the objects to be loaded with their values at run time.
+	NSString * plistPath    = [[[[NSBundle mainBundle] bundlePath]
+								stringByDeletingLastPathComponent] // Remove /Resources
+							   stringByAppendingPathComponent: @"Info.plist"];
+	NSDictionary * infoDict = [NSDictionary dictionaryWithContentsOfFile: plistPath];
+	NSString * bundleId     = [infoDict objectForKey: @"CFBundleIdentifier"];
+	NSString * buildNumber  = [infoDict objectForKey: @"CFBundleVersion"];
+	NSString * fullVersion  = [infoDict objectForKey: @"CFBundleShortVersionString"];
+	NSString * guiVersion   = [NSString stringWithFormat: @"\"%@ %@ %@\"", bundleId, buildNumber, fullVersion];
+	[arguments addObject: @"--setenv"];
+	[arguments addObject: @"IV_GUI_VER"];
+	[arguments addObject: guiVersion];
+	
     // Optionally specify verb level before the configuration file, so the configuration file can override it while it is being processed
     if (  verbString  ) {
         [arguments addObject: @"--verb"];
@@ -2125,6 +2199,13 @@ int startVPN(NSString * configFile,
     [arguments addObject: @"--management"];
     [arguments addObject: @"127.0.0.1"];
     [arguments addObject: [NSString stringWithFormat:@"%u", port]];
+	
+	NSString * themipName = mipName();
+	if (  ! themipName  ) {
+		fprintf(stderr, "Unable to find .mip\n");
+		exitOpenvpnstart(169);
+	}
+	[arguments addObject: [L_AS_T stringByAppendingPathComponent: [themipName stringByAppendingString: @".mip"]]];
     
 	if (  (bitMask & OPENVPNSTART_TEST_MTU) != 0  ) {
         [arguments addObject: @"--mtu-test"];
@@ -2301,6 +2382,14 @@ int startVPN(NSString * configFile,
             [scriptOptions appendString: @" -f"];
         }
         
+        if (  (bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS) != 0  ) {
+            [scriptOptions appendString: @" -k"];
+        }
+        
+		if (  (bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS_UNEXPECTED) != 0  ) {
+			[scriptOptions appendString: @" -ku"];
+		}
+		
         if (  ((bitMask & OPENVPNSTART_EXTRA_LOGGING) != 0) && ((bitMask & OPENVPNSTART_DISABLE_LOGGING) == 0)  ) {
             [scriptOptions appendString: @" -l"];
         }
@@ -2325,6 +2414,10 @@ int startVPN(NSString * configFile,
             [scriptOptions appendString: @" -r"];
         }
         
+		if (  (bitMask & OPENVPNSTART_RESET_PRIMARY_INTERFACE_UNEXPECTED) != 0  ) {
+			[scriptOptions appendString: @" -ru"];
+		}
+		
         if (  (bitMask & OPENVPNSTART_RESTORE_ON_WINS_RESET) != 0  ) {
             [scriptOptions appendString: @" -w"];
         }
@@ -2410,15 +2503,26 @@ int startVPN(NSString * configFile,
                         fprintf(stderr, "Warning: Tunnelblick is using 'openvpn-down-root.so', so the custom route-pre-down script will not"
                                 " be executed as root unless the 'user' and 'group' options are removed from the OpenVPN configuration file.");
                     } else {
-                        fprintf(stderr, "Warning: Tunnelblick is using 'openvpn-down-root.so', so the route-pre-down script will not be used."
-                                " You can override this by providing a custom route-pre-down script (which may be a copy of Tunnelblick's standard"
-                                " route-pre-down script) in a Tunnelblick VPN Configuration. However, that script will not be executed as root"
-                                " unless the 'user' and 'group' options are removed from the OpenVPN configuration file. If the 'user' and 'group'"
-                                " options are removed, then you don't need to use a custom route-pre-down script.");
-                    }
+						if (   ((bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS) != 0)
+							|| ((bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS_UNEXPECTED) != 0)  ) {
+							fprintf(stderr, "Error: Tunnelblick is using 'openvpn-down-root.so', so 'Disable network access after disconnecting'"
+									" will not work because the 'route-pre-down script' will not be executed as root. Remove the 'user' and 'group' options"
+									" from the OpenVPN configuration file to allow 'Disable network access after disconnecting' to work.");
+							exitOpenvpnstart(170);
+						} else {
+							fprintf(stderr, "Warning: Tunnelblick is using 'openvpn-down-root.so', so the route-pre-down script will not be used."
+									" You can override this by providing a custom route-pre-down script (which may be a copy of Tunnelblick's standard"
+									" route-pre-down script) in a Tunnelblick VPN Configuration. However, that script will not be executed as root"
+									" unless the 'user' and 'group' options are removed from the OpenVPN configuration file. If the 'user' and 'group'"
+									" options are removed, then you don't need to use a custom route-pre-down script.");
+						}
+					}
                 } else {
                     if (   customRoutePreDownScript
-						|| ((bitMask & OPENVPNSTART_USE_TAP) != 0)) {
+						|| ((bitMask & OPENVPNSTART_USE_TAP) != 0)
+						|| ((bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS) != 0)
+						|| ((bitMask & OPENVPNSTART_DISABLE_INTERNET_ACCESS_UNEXPECTED) != 0)
+					   ) {
 						[arguments addObjectsFromArray: [NSArray arrayWithObjects:
 														 @"--route-pre-down", routePreDownscriptCommand,
 														 nil
@@ -2440,11 +2544,11 @@ int startVPN(NSString * configFile,
         NSString * preConnectPath   = [preConnectFolder stringByAppendingPathComponent: @"pre-connect.sh"];
         
         if (   fileExistsForRootAtPath(preConnectPath)  ) {
-            exitIfNotRootWithPermissions(preConnectPath, PERMS_SECURED_SCRIPT);
+            exitIfNotRootWithPermissions(preConnectPath, PERMS_SECURED_ROOT_SCRIPT);
             
             fprintf(stderr, "Executing pre-connect.sh in %s...\n", [preConnectFolder UTF8String]);
             
-            int result = runAsRoot(preConnectPath, [NSArray array], PERMS_SECURED_SCRIPT);
+            int result = runAsRoot(preConnectPath, [NSArray array], PERMS_SECURED_ROOT_SCRIPT);
             
             fprintf(stderr, "Status %d returned by pre-connect.sh in %s\n", result, [preConnectFolder UTF8String]);
             
@@ -2489,11 +2593,11 @@ int startVPN(NSString * configFile,
         NSString * postTunTapPath   = [postTunTapFolder stringByAppendingPathComponent: @"post-tun-tap-load.sh"];
         
         if (  fileExistsForRootAtPath(postTunTapPath)  ) {
-            exitIfNotRootWithPermissions(postTunTapPath, PERMS_SECURED_SCRIPT);
+            exitIfNotRootWithPermissions(postTunTapPath, PERMS_SECURED_ROOT_SCRIPT);
             
             fprintf(stderr, "Executing post-tun-tap-load.sh in %s...\n", [postTunTapFolder UTF8String]);
             
-            int result = runAsRoot(postTunTapPath, [NSArray array], PERMS_SECURED_SCRIPT);
+            int result = runAsRoot(postTunTapPath, [NSArray array], PERMS_SECURED_ROOT_SCRIPT);
             
             fprintf(stderr, "Status %d returned by post-tun-tap-load.sh in %s\n", result, [postTunTapFolder UTF8String]);
             
@@ -2729,8 +2833,15 @@ void validateOpenvpnVersion(NSString * s) {
     }
 }
 
-void validateEnvironment(void) {
+NSString * validateEnvironment(void) {
 	
+	// Exits with error if any environment variable other than TMPDIR is not set to its expected value.
+	// If TMPDIR is as expected, returns nil.
+	// If TMPDIR is not as expected, sets TMPDIR to the path of a newly-created temporary directory and returns that directory's path.
+	//								 (That directory and its contents must be deleted when it is no longer needed.)
+	
+	BOOL errorFound = FALSE;
+
 	NSDictionary * env = [[NSProcessInfo processInfo] environment];
 	
 	// Check that the PATH starts with known system directories
@@ -2738,16 +2849,15 @@ void validateEnvironment(void) {
     if (  envPath  ) {
 		if (  ! [envPath hasPrefix: STANDARD_PATH]  ) {
 			fprintf(stderr, "the PATH environment variable must start with '%s'; it is '%s'\n", [STANDARD_PATH UTF8String], [envPath UTF8String]);
-			exitOpenvpnstart(177);
+			errorFound = TRUE;
 		}
 	} else {
 		fprintf(stderr, "the PATH environment variable is missing; it must be '%s'\n", [envPath UTF8String]);
-		exitOpenvpnstart(176);
+		errorFound = TRUE;
 	}
 	
 	// Check some other environment variables for exact matches but allow them to be undefined
 	NSDictionary * envVarsList = [NSDictionary dictionaryWithObjectsAndKeys:
-								  NSTemporaryDirectory(), @"TMPDIR",
 								  NSUserName(),           @"USER",
 								  NSUserName(),           @"LOGNAME",
 								  NSHomeDirectory(),      @"HOME",
@@ -2755,7 +2865,6 @@ void validateEnvironment(void) {
 								  @"unix2003",            @"COMMAND_MODE",
 								  nil];
 	
-	BOOL errorFound = FALSE;
 	NSEnumerator * e = [envVarsList keyEnumerator];
 	NSString * key;
 	while (  (key = [e nextObject])  ) {
@@ -2769,10 +2878,27 @@ void validateEnvironment(void) {
 		}
 	}
 	
+	// If the TMPDIR environment variable != NSTemporaryDirectory(), create a new subfolder of NSTemporaryDirectory() and set TMPDIR to that
+	NSString * nstDir = NSTemporaryDirectory();
+	NSString * oldDir = [env objectForKey: @"TMPDIR"];
+	NSString * newDir = nil;
+	if (  [nstDir isNotEqualTo: oldDir]  )  {
+		newDir = newTemporaryDirectoryPath();
+		const char * newDirC = [newDir fileSystemRepresentation];
+		setenv("TMPDIR", newDirC, 1);
+		const char * newDirAfterSetC = fileSystemRepresentationOrNULL([[[NSProcessInfo processInfo] environment] objectForKey: @"TMPDIR"]);
+		if (  0 != strcmp(newDirC, newDirAfterSetC)  ) {
+			fprintf(stderr, "Failed to set the TMPDIR environment variable to\n'%s'\nIt is\n'%s'\n", newDirC, newDirAfterSetC);
+			errorFound = TRUE;
+		}
+	}
+	
 	if (  errorFound  ) {
-		fprintf(stderr, "Complete environment = %s\n", [[env description] UTF8String]);
+		fprintf(stderr, "Complete environment on entry to validateEnvironment() = %s\n", [[env description] UTF8String]);
 		exitOpenvpnstart(173);
 	}
+	
+	return newDir;
 }
 
 //**************************************************************************************************************************
@@ -2845,22 +2971,35 @@ int main(int argc, char * argv[]) {
         ) {
         fprintf(stderr, "Tunnelblick must be in /Applications (bundlePath = %s)\n", [gResourcesPath UTF8String]);
         exitOpenvpnstart(243);
+		return -1; // Make analyzer happy
     }
     NSString * ourPath = [gResourcesPath stringByAppendingPathComponent: @"tunnelblick-helper"];
     if (  pathIsNotSecure(ourPath, PERMS_SECURED_EXECUTABLE)  ) {
         fprintf(stderr, "tunnelblick-helper and the path to it have not been secured\n"
-                "You must have run Tunnelblick and entered a computer administrator password at least once to use tunnelblick-helper\n");
+                "You must have installed Tunnelblick to use tunnelblick-helper\n");
         exitOpenvpnstart(244);
     }
 #endif
 	
-	validateEnvironment();
+	gTemporaryDirectory = validateEnvironment();
 	
     // Process arguments
     
     BOOL	syntaxError	= TRUE;
     int     retCode = 0;
-    
+
+	// Verify that all arguments are valid UTF-8 strings
+	int ix;
+	for (  ix=0; ix<argc; ix++  ) {
+		const char * arg = argv[ix];
+		if (   (arg == NULL)
+			|| ([NSString stringWithUTF8String: arg] == NULL)  ) {
+			fprintf(stderr, "Invalid argument #%d (0 = command; 1 = first actual argument)\n", ix);
+			exitOpenvpnstart(171);
+			return -1; // Make analyzer happy
+		}
+	}
+
     if (  argc > 1  ) {
 		char * command = argv[1];
 		
@@ -2875,12 +3014,24 @@ int main(int argc, char * argv[]) {
 				syntaxError = FALSE;
 			}
             
-        } else if (  strcmp(command, "route-pre-down") == 0  ) {
+        } else if (  strcmp(command, "re-enable-network-services") == 0  ) {
             if (  argc == 2  ) {
-				runRoutePreDownScript();
+				runReenableNetworkServices();
 				syntaxError = FALSE;
 			}
             
+        } else if (  strcmp(command, "route-pre-down") == 0  ) {
+            if (  argc == 2  ) {
+				runRoutePreDownScript(false);
+				syntaxError = FALSE;
+			}
+            
+		} else if (  strcmp(command, "route-pre-down-k") == 0  ) {
+			if (  argc == 2  ) {
+				runRoutePreDownScript(true);
+				syntaxError = FALSE;
+			}
+			
         } else if (  strcmp(command, "checkSignature") == 0  ) {
             if (  argc == 2  ) {
 				checkSignature();
@@ -2893,7 +3044,16 @@ int main(int argc, char * argv[]) {
                 syntaxError = FALSE;
             }
             
-        } else if (  strcmp(command, "loadKexts") == 0  ) {
+		} else if (  strcmp(command, "expectDisconnect") == 0  ) {
+			if (  argc == 3  ) {
+				unsigned int flag = cvt_atou(argv[2], @"flag");
+				if (   (flag == 0)
+					|| (flag == 1)  ) {
+					expectDisconnect(flag);
+					syntaxError = FALSE;
+				}
+			}
+		} else if (  strcmp(command, "loadKexts") == 0  ) {
 			if (  argc == 2  ) {
                 loadKexts(OPENVPNSTART_KEXTS_MASK_LOAD_DEFAULT);
 				syntaxError = FALSE;
@@ -2949,7 +3109,7 @@ int main(int argc, char * argv[]) {
 				NSString* fileName = [NSString stringWithUTF8String:argv[2]];
                 validateConfigName(fileName);
                 compareShadowCopy(fileName);
-                // compareShadowCopy() should never return (it does exit() with its own exit codes)
+                // compareShadowCopy() should never return (it does exitOpenvpnstart() with its own exit codes)
                 // but just in case, we force a syntax error by NOT setting syntaxError FALSE
             }
             
@@ -2958,7 +3118,7 @@ int main(int argc, char * argv[]) {
 				NSString* fileName = [NSString stringWithUTF8String:argv[2]];
                 validateConfigName(fileName);
                 revertToShadow(fileName);
-                // revertToShadow() should never return (it does exit() with its own exit codes)
+                // revertToShadow() should never return (it does exitOpenvpnstart() with its own exit codes)
                 // but just in case, we force a syntax error by NOT setting syntaxError FALSE
             }
             
@@ -2967,7 +3127,7 @@ int main(int argc, char * argv[]) {
                 NSString* fileName = [NSString stringWithUTF8String:argv[2]];
                 validateConfigName(fileName);
                 safeUpdate(fileName, YES);
-                // safeUpdate() should never return (it does exit() with its own exit codes)
+                // safeUpdate() should never return (it does exitOpenvpnstart() with its own exit codes)
                 // but just in case, we force a syntax error by NOT setting syntaxError FALSE
             }
             
@@ -2976,7 +3136,7 @@ int main(int argc, char * argv[]) {
                 NSString* fileName = [NSString stringWithUTF8String:argv[2]];
                 validateConfigName(fileName);
                 safeUpdate(fileName, NO);
-                // safeUpdateTest() should never return (it does exit() with its own exit codes)
+                // safeUpdateTest() should never return (it does exitOpenvpnstart() with its own exit codes)
                 // but just in case, we force a syntax error by NOT setting syntaxError FALSE
             }
             
@@ -3003,7 +3163,7 @@ int main(int argc, char * argv[]) {
 				}
 				validateCfgLocCode(cfgLocCode);
                 printSanitizedConfigurationFile(configFile, cfgLocCode);
-                // printSanitizedConfigurationFile() should never return (it does exit() with its own exit codes)
+                // printSanitizedConfigurationFile() should never return (it does exitOpenvpnstart() with its own exit codes)
                 // but just in case, we force an error by NOT setting syntaxError FALSE
             }
             
@@ -3081,10 +3241,8 @@ int main(int argc, char * argv[]) {
                 for (  i=0; i<10; i++  ) {
                     
                     if (  i != 0  ) {
-                        // Delay for a random time of up to 1.048576 seconds.
-                        // Use a delay that is a power of two to avoid modulo bias (arc4random_uniform is available only on OS X 10.7 and higher)
-                        
-                        uint32_t randomDelayMicroseconds = arc4random() % (1024*1024);
+                        // Delay for a random time of up to 1.0 seconds.
+                        uint32_t randomDelayMicroseconds = arc4random_uniform(1.0e6);
                         fprintf(stderr, "Trying to start OpenVPN again, after a delay of %lu microseconds...\n",
                                 (unsigned long) randomDelayMicroseconds);
 
@@ -3118,6 +3276,5 @@ int main(int argc, char * argv[]) {
         printUsageMessageAndExitOpenvpnstart();
 	}
 	
-	[pool drain];
-	exit(retCode);
+	exitOpenvpnstart(retCode);
 }

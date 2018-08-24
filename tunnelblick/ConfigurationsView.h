@@ -25,6 +25,7 @@
 @class LeftNavViewController;
 @class LeftNavDataSource;
 @class TBButton;
+@class TBPopUpButton;
 
 @interface ConfigurationsView : NSView
 {    
@@ -55,7 +56,7 @@
     
     IBOutlet NSButton            * configurationsHelpButton;
 	
-    IBOutlet NSButton            * diagnosticInfoToClipboardButton;
+    IBOutlet TBButton            * diagnosticInfoToClipboardButton;
     IBOutlet NSProgressIndicator * diagnosticInfoToClipboardProgressIndicator;
     
     IBOutlet NSButton            * disconnectButton;
@@ -76,31 +77,44 @@
     
 	IBOutlet NSTextField		 * whenToConnectTF;
     IBOutlet NSTextFieldCell     * whenToConnectTFC;
-    IBOutlet NSPopUpButton       * whenToConnectPopUpButton;
+    IBOutlet TBPopUpButton       * whenToConnectPopUpButton;
     IBOutlet NSMenuItem          * whenToConnectManuallyMenuItem;
     IBOutlet NSMenuItem          * whenToConnectTunnelBlickLaunchMenuItem;
     IBOutlet NSMenuItem          * whenToConnectOnComputerStartMenuItem;
     
     IBOutlet NSTextField         * setNameserverTF;
     IBOutlet NSTextFieldCell     * setNameserverTFC;
-    IBOutlet NSPopUpButton       * setNameserverPopUpButton;
+    IBOutlet TBPopUpButton       * setNameserverPopUpButton;
     IBOutlet NSArrayController   * setNameserverArrayController;
     
     IBOutlet NSTextField        * perConfigOpenvpnVersionTF;
     IBOutlet NSTextFieldCell    * perConfigOpenvpnVersionTFC;
     IBOutlet NSArrayController  * perConfigOpenvpnVersionArrayController;
-    IBOutlet NSButton           * perConfigOpenvpnVersionButton;
+    IBOutlet TBPopUpButton      * perConfigOpenvpnVersionButton;
    
     IBOutlet NSTextField         * loggingLevelTF;
     IBOutlet NSTextFieldCell     * loggingLevelTFC;
-    IBOutlet NSPopUpButton       * loggingLevelPopUpButton;
+    IBOutlet TBPopUpButton       * loggingLevelPopUpButton;
     IBOutlet NSArrayController   * loggingLevelArrayController;
     
+	IBOutlet NSTextField		 * uponDisconnectTF;
+	IBOutlet NSTextFieldCell     * uponDisconnectTFC;
+	IBOutlet TBPopUpButton       * uponDisconnectPopUpButton;
+	IBOutlet NSMenuItem          * uponDisconnectDoNothingMenuItem;
+	IBOutlet NSMenuItem          * uponDisconnectResetPrimaryInterfaceMenuItem;
+	IBOutlet NSMenuItem          * uponDisconnectDisableNetworkAccessMenuItem;
+	
+	IBOutlet NSTextField		 * uponUnexpectedDisconnectTF;
+	IBOutlet NSTextFieldCell     * uponUnexpectedDisconnectTFC;
+	IBOutlet TBPopUpButton       * uponUnexpectedDisconnectPopUpButton;
+	IBOutlet NSMenuItem          * uponUnexpectedDisconnectDoNothingMenuItem;
+	IBOutlet NSMenuItem          * uponUnexpectedDisconnectResetPrimaryInterfaceMenuItem;
+	IBOutlet NSMenuItem          * uponUnexpectedDisconnectDisableNetworkAccessMenuItem;
+	
     IBOutlet TBButton            * monitorNetworkForChangesCheckbox;
     IBOutlet TBButton            * routeAllTrafficThroughVpnCheckbox;
 	IBOutlet TBButton            * disableIpv6OnTunCheckbox;
     IBOutlet TBButton            * checkIPAddressAfterConnectOnAdvancedCheckbox;
-    IBOutlet TBButton            * resetPrimaryInterfaceAfterDisconnectCheckbox;
 	
     IBOutlet TBButton            * advancedButton;
 }
@@ -132,7 +146,7 @@ TBPROPERTY_READONLY(NSMenuItem *,          removeCredentialsMenuItem)
 
 TBPROPERTY_READONLY(NSButton *,            configurationsHelpButton)
 TBPROPERTY_READONLY(NSButton *,            disconnectButton)
-TBPROPERTY_READONLY(NSButton *,            diagnosticInfoToClipboardButton)
+TBPROPERTY_READONLY(TBButton *,            diagnosticInfoToClipboardButton)
 TBPROPERTY_READONLY(NSProgressIndicator *, diagnosticInfoToClipboardProgressIndicator)
 TBPROPERTY_READONLY(NSButton *,            connectButton)
 
@@ -146,28 +160,39 @@ TBPROPERTY_READONLY(NSProgressIndicator *, logDisplayProgressIndicator)
 TBPROPERTY_READONLY(NSTabViewItem *,       settingsTabViewItem)
 
 TBPROPERTY_READONLY(NSTextFieldCell *,     whenToConnectTFC)
-TBPROPERTY_READONLY(NSPopUpButton *,       whenToConnectPopUpButton)
+TBPROPERTY_READONLY(TBPopUpButton *,       whenToConnectPopUpButton)
 TBPROPERTY_READONLY(NSMenuItem *,          whenToConnectManuallyMenuItem)
 TBPROPERTY_READONLY(NSMenuItem *,          whenToConnectTunnelBlickLaunchMenuItem)
 TBPROPERTY_READONLY(NSMenuItem *,          whenToConnectOnComputerStartMenuItem)
 
 TBPROPERTY_READONLY(NSTextField *,         setNameserverTF)
 TBPROPERTY_READONLY(NSTextFieldCell *,     setNameserverTFC)
-TBPROPERTY_READONLY(NSPopUpButton *,       setNameserverPopUpButton)
+TBPROPERTY_READONLY(TBPopUpButton *,       setNameserverPopUpButton)
 TBPROPERTY_READONLY(NSArrayController *,   setNameserverArrayController)
+
+TBPROPERTY_READONLY(NSTextFieldCell *,     uponDisconnectTFC)
+TBPROPERTY_READONLY(TBPopUpButton *,       uponDisconnectPopUpButton)
+TBPROPERTY_READONLY(NSMenuItem *,          uponDisconnectDoNothingMenuItem)
+TBPROPERTY_READONLY(NSMenuItem *,          uponDisconnectResetPrimaryInterfaceMenuItem)
+TBPROPERTY_READONLY(NSMenuItem *,          uponDisconnectDisableNetworkAccessMenuItem)
+
+TBPROPERTY_READONLY(NSTextFieldCell *,     uponUnexpectedDisconnectTFC)
+TBPROPERTY_READONLY(TBPopUpButton *,       uponUnexpectedDisconnectPopUpButton)
+TBPROPERTY_READONLY(NSMenuItem *,          uponUnexpectedDisconnectDoNothingMenuItem)
+TBPROPERTY_READONLY(NSMenuItem *,          uponUnexpectedDisconnectResetPrimaryInterfaceMenuItem)
+TBPROPERTY_READONLY(NSMenuItem *,          uponUnexpectedDisconnectDisableNetworkAccessMenuItem)
 
 TBPROPERTY_READONLY(TBButton *,            monitorNetworkForChangesCheckbox)
 TBPROPERTY_READONLY(TBButton *,            routeAllTrafficThroughVpnCheckbox)
 TBPROPERTY_READONLY(TBButton *,            disableIpv6OnTunCheckbox)
 TBPROPERTY_READONLY(TBButton *,            checkIPAddressAfterConnectOnAdvancedCheckbox)
-TBPROPERTY_READONLY(TBButton *,            resetPrimaryInterfaceAfterDisconnectCheckbox)
 
 TBPROPERTY_READONLY(NSArrayController *,   perConfigOpenvpnVersionArrayController)
-TBPROPERTY_READONLY(NSButton *,            perConfigOpenvpnVersionButton)
+TBPROPERTY_READONLY(TBPopUpButton *,       perConfigOpenvpnVersionButton)
 
 TBPROPERTY_READONLY(NSTextField *,         loggingLevelTF)
 TBPROPERTY_READONLY(NSTextFieldCell *,     loggingLevelTFC)
-TBPROPERTY_READONLY(NSPopUpButton *,       loggingLevelPopUpButton)
+TBPROPERTY_READONLY(TBPopUpButton *,       loggingLevelPopUpButton)
 TBPROPERTY_READONLY(NSArrayController *,   loggingLevelArrayController)
 
 TBPROPERTY_READONLY(TBButton *,            advancedButton)

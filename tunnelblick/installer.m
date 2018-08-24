@@ -1,6 +1,6 @@
 /*
  * Copyright 2004, 2005, 2006, 2007, 2008, 2009 by Angelo Laub
- * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+ * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018. All rights reserved.
 
  *
  *  This file is part of Tunnelblick.
@@ -26,6 +26,7 @@
 #import <sys/stat.h>
 #import <sys/xattr.h>
 #import <CommonCrypto/CommonDigest.h>
+#import <Security/SecRandom.h>
 
 #import "defines.h"
 #import "sharedRoutines.h"
@@ -115,7 +116,6 @@ uid_t           gRealUserID;                  // User ID & Group ID for the real
 gid_t           gRealGroupID;
 NSAutoreleasePool * pool;
 
-BOOL makeUnlockedAtPath(NSString * path);
 BOOL moveContents(NSString * fromPath, NSString * toPath);
 NSString * firstPartOfPath(NSString * path);
 NSString * lastPartOfPath(NSString * path);
@@ -126,7 +126,7 @@ BOOL tunnelblickTestPrivateOnlyHasTblks(void);
 
 //**************************************************************************************************************************
 
-void errorExit();
+void errorExit(void);
 void errorExitIfAnySymlinkInPath(NSString * path);
 
 void debugLog(NSString * string) {
@@ -423,13 +423,15 @@ void loadLaunchDaemonUsingLaunchctl(void) {
 		stderrString = @"";
 	}
 	
-	NSArray * arguments = [NSArray arrayWithObjects: @"load", TUNNELBLICKD_PLIST_PATH, nil];
+	NSArray * arguments = [NSArray arrayWithObjects: @"load", @"-w", TUNNELBLICKD_PLIST_PATH, nil];
 	OSStatus status = runTool(TOOL_PATH_FOR_LAUNCHCTL, arguments, &stdoutString, &stderrString);
-	if (  status == EXIT_SUCCESS  ) {
+	if (   (status == EXIT_SUCCESS)
+		&& [stdoutString isEqualToString: @""]
+		&& [stderrString isEqualToString: @""]  ) {
 		appendLog(@"Used launchctl to load tunnelblickd");
 	} else {
-		appendLog([NSString stringWithFormat: @"'%@ load' failed; error was %d: '%s'\nstdout = '%@'\nstderr='%@'",
-                   TOOL_PATH_FOR_LAUNCHCTL, errno, strerror(errno), stdoutString, stderrString]);
+		appendLog([NSString stringWithFormat: @"'%@ load -w %@' failed; status = %d; errno = %d: '%s'\nstdout = '%@'\nstderr='%@'",
+                   TOOL_PATH_FOR_LAUNCHCTL, TUNNELBLICKD_PLIST_PATH, status, errno, strerror(errno), stdoutString, stderrString]);
 		errorExit();
 	}
 }
@@ -465,6 +467,31 @@ BOOL removeQuarantineBit(void) {
     }
     
     return TRUE;
+}
+
+NSString * getStringOf40RandomCharacters(void) {
+	
+	// Returns a 40 character long string composed of random characters in the range 'a' through 'p'
+	// (A simple encoding of 20 bytes of random data.)
+	
+	// Get 20 random bytes
+	const char bytes[20];
+	int result = SecRandomCopyBytes(kSecRandomDefault, sizeof(bytes), (void *)bytes);
+	if (  result != errSecSuccess  ) {
+		appendLog(@"Unable to obtain data for .mip");
+		errorExit();
+	}
+	
+	// Convert each 4-bit nibble to a character from 'a' through 'p'
+	NSMutableString * outString = [[[NSMutableString alloc] initWithCapacity: 2 * sizeof(bytes)] autorelease];
+	NSUInteger ix;
+	for (  ix=0; ix<sizeof(bytes); ix++) {
+		char ch = bytes[ix];
+		char ch1 = (ch & 0xF) + 'a';
+		char ch2 = ((ch >> 4) & 0xF) + 'a';
+		[outString appendFormat: @"%c%c", ch1, ch2];
+	}
+	return outString;
 }
 
 /* DISABLED BECAUSE THIS IS NOT AVAILABLE ON 10.4 and 10.5
@@ -735,6 +762,38 @@ int main(int argc, char *argv[])
             errorExit();
         }
     }
+	
+	// Create the .mip file owned by root with 0600 permissions in L_AS_T if it doesn't already exist
+	NSDirectoryEnumerator  * dirEnum = [gFileMgr enumeratorAtPath: L_AS_T];
+	NSString * fileName;
+	while (  (fileName = [dirEnum nextObject])  ) {
+		[dirEnum skipDescendants];
+		if (  [fileName hasSuffix: @".mip"]  ) {
+			break;
+		}
+	}
+	if (  ! fileName) {
+		// Get 40 random characters A-P as a filename for the .mip file
+		NSString * name = getStringOf40RandomCharacters();
+		NSString * path = [L_AS_T stringByAppendingPathComponent: [name stringByAppendingString: @".mip"]];
+		NSString * contents = [name stringByAppendingString: @"\n"];
+		NSData * contentsAsData = [NSData dataWithBytes: [contents cStringUsingEncoding: NSASCIIStringEncoding] length: [contents length]];
+		if (  contentsAsData == NULL  ) {
+			appendLog(@"Unable to create .mip because can't get dataWithBytes with NSASCIIStringEncoding");
+			errorExit();
+		}
+		NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+									 [NSNumber numberWithInt: 0], NSFileOwnerAccountID,
+									 [NSNumber numberWithInt: 0], NSFileGroupOwnerAccountID,
+									 [NSNumber numberWithInt: PERMS_SECURED_ROOT_RO], NSFilePosixPermissions,
+									 nil];
+		if (  ! [gFileMgr createFileAtPath: path contents: contentsAsData attributes: attributes] ) {
+			appendLog(@"Unable to create .mip");
+			errorExit();
+		}
+		
+		appendLog(@"Created .mip");
+	}
     
     NSString * userL_AS_T_Path= [[[NSHomeDirectory()
                                    stringByAppendingPathComponent: @"Library"]
@@ -866,7 +925,7 @@ int main(int argc, char *argv[])
     //      (5) Renames /Library/LaunchDaemons/net.tunnelblick.startup.*
     //               to                        net.tunnelblick.tunnelblick.startup.*
     
-    NSDirectoryEnumerator * dirEnum = [gFileMgr enumeratorAtPath: @"/Library/LaunchDaemons"];
+    dirEnum = [gFileMgr enumeratorAtPath: @"/Library/LaunchDaemons"];
     NSString * file;
     NSString * oldPrefix = @"net.tunnelblick.startup.";
     NSString * newPrefix = @"net.tunnelblick.tunnelblick.startup.";
@@ -921,7 +980,10 @@ int main(int argc, char *argv[])
         NSString *clientNewAlt2DownPath     = [appResourcesPath stringByAppendingPathComponent:@"client.2.down.tunnelblick.sh"                   ];
         NSString *clientNewAlt3UpPath       = [appResourcesPath stringByAppendingPathComponent:@"client.3.up.tunnelblick.sh"                     ];
         NSString *clientNewAlt3DownPath     = [appResourcesPath stringByAppendingPathComponent:@"client.3.down.tunnelblick.sh"                   ];
+		NSString *clientNewAlt4UpPath       = [appResourcesPath stringByAppendingPathComponent:@"client.4.up.tunnelblick.sh"                     ];
+		NSString *clientNewAlt4DownPath     = [appResourcesPath stringByAppendingPathComponent:@"client.4.down.tunnelblick.sh"                   ];
         NSString *reactivateTunnelblickPath = [appResourcesPath stringByAppendingPathComponent:@"reactivate-tunnelblick.sh"                      ];
+        NSString *reenableNetworkServicesPath = [appResourcesPath stringByAppendingPathComponent:@"re-enable-network-services.sh"				 ];
         NSString *freePublicDnsServersPath  = [appResourcesPath stringByAppendingPathComponent:@"FreePublicDnsServersList.txt"                   ];
         NSString *iconSetsPath              = [appResourcesPath stringByAppendingPathComponent:@"IconSets"                                       ];
         
@@ -970,7 +1032,10 @@ int main(int argc, char *argv[])
         okSoFar = okSoFar && checkSetPermissions(clientNewAlt2DownPath,     PERMS_SECURED_ROOT_EXEC,  YES);
         okSoFar = okSoFar && checkSetPermissions(clientNewAlt3UpPath,       PERMS_SECURED_ROOT_EXEC,  YES);
         okSoFar = okSoFar && checkSetPermissions(clientNewAlt3DownPath,     PERMS_SECURED_ROOT_EXEC,  YES);
+		okSoFar = okSoFar && checkSetPermissions(clientNewAlt4UpPath,       PERMS_SECURED_ROOT_EXEC,  YES);
+		okSoFar = okSoFar && checkSetPermissions(clientNewAlt4DownPath,     PERMS_SECURED_ROOT_EXEC,  YES);
         okSoFar = okSoFar && checkSetPermissions(reactivateTunnelblickPath, PERMS_SECURED_EXECUTABLE, YES);
+        okSoFar = okSoFar && checkSetPermissions(reenableNetworkServicesPath, PERMS_SECURED_ROOT_EXEC, YES);
         
         // Check/set OpenVPN version folders and openvpn and openvpn-down-root.so in them
         NSDirectoryEnumerator * dirEnum = [gFileMgr enumeratorAtPath: openvpnPath];
@@ -1550,59 +1615,10 @@ BOOL moveContents(NSString * fromPath, NSString * toPath)
 }
 
 //**************************************************************************************************************************
-BOOL makeOneItemUnlockedAtPath(NSString * path)
-{
-    NSDictionary * curAttributes;
-    NSDictionary * newAttributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt:0] forKey: NSFileImmutable];
-    
-    unsigned i;
-    unsigned maxTries = 5;
-    for (i=0; i <= maxTries; i++) {
-        curAttributes = [gFileMgr tbFileAttributesAtPath: path traverseLink:YES];
-        if (  ! [curAttributes fileIsImmutable]  ) {
-            break;
-        }
-        [gFileMgr tbChangeFileAttributes: newAttributes atPath: path];
-        appendLog([NSString stringWithFormat: @"Unlocked %@", path]);
-		if (  i != 0  ) {
-			sleep(1);
-		}
-	}
-    
-    if (  [curAttributes fileIsImmutable]  ) {
-        appendLog([NSString stringWithFormat: @"Failed to unlock %@ in %d attempts", path, maxTries]);
-        return FALSE;
-    }
-	
-    return TRUE;
-}
-
-//**************************************************************************************************************************
-BOOL makeUnlockedAtPath(NSString * path)
-{
-	// To make a file hierarchy unlocked, we have to first unlock everything inside the hierarchy
-	
-	BOOL isDir;
-	if (   [gFileMgr fileExistsAtPath: path isDirectory: &isDir]  ) {
-		if (  isDir  ) {
-			NSString * file;
-			NSDirectoryEnumerator * dirEnum = [gFileMgr enumeratorAtPath: path];
-			while (  (file = [dirEnum nextObject])  ) {
-				makeUnlockedAtPath([path stringByAppendingPathComponent: file]);
-			}
-		}
-		
-		return makeOneItemUnlockedAtPath(path);
-	}
-	
-	return TRUE;
-}
-
-//**************************************************************************************************************************
 void errorExitIfAnySymlinkInPath(NSString * path)
 {
     NSString * curPath = path;
-    while (   curPath
+    while (   ([curPath length] != 0)
            && ! [curPath isEqualToString: @"/"]  ) {
         if (  [gFileMgr fileExistsAtPath: curPath]  ) {
             NSDictionary * fileAttributes = [gFileMgr tbFileAttributesAtPath: curPath traverseLink: NO];

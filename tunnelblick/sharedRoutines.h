@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, 2013, 2014, 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2012, 2013, 2014, 2015, 2016, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -24,6 +24,8 @@
 
 NSString * sha256HexStringForData (NSData * data);
 
+NSString * mipName(void);
+
 BOOL isValidIPAdddress(NSString * ipAddress);
 
 NSDictionary * tunnelblickdPlistDictionaryToUse(void);
@@ -46,6 +48,8 @@ mode_t privateFolderPermissions(NSString * path);
 gid_t privateFolderGroup(NSString * path);
 
 BOOL isSanitizedOpenvpnVersion(NSString * s);
+
+BOOL shouldRunScriptAsUserAtPath(NSString * path);
 
 BOOL checkOwnerAndPermissions (NSString * fPath,
                                uid_t      uid,
@@ -81,13 +85,15 @@ NSDictionary * highestEditionForEachBundleIdinL_AS_T(void);
 BOOL invalidConfigurationName (NSString * name,
                                const char badChars[]);
 
-unsigned int getFreePort(unsigned int startingPort);
+unsigned int getFreePort(void);
 
 BOOL itemIsVisible(NSString * path);
 
+BOOL makeUnlockedAtPath(NSString * path);
+
 BOOL secureOneFolder(NSString * path, BOOL isPrivate, uid_t theUser);
 
-NSDictionary * getSafeEnvironment(bool includeIV_GUI_VER);
+NSDictionary * getSafeEnvironment(void);
 
 OSStatus runTool(NSString * launchPath,
                  NSArray  * arguments,

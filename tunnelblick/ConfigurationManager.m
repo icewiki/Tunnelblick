@@ -1,5 +1,5 @@
 /*
- * Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -169,6 +169,65 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 	return FALSE;
 }
 
++(NSString *) rawTunnelblickVersion {
+	
+	// Returns '3.5beta02' from 'Tunnelblick 3.5beta02 (build...'
+	
+	NSString * thisTunnelblickVersion = tunnelblickVersion([NSBundle mainBundle]);
+	if (  [thisTunnelblickVersion hasPrefix: @"Tunnelblick "]  ) {
+		thisTunnelblickVersion = [thisTunnelblickVersion substringFromIndex: [@"Tunnelblick " length]];
+	} else {
+		NSLog(@"Invalid Tunnelblick version (not prefixed by 'Tunnelblick '): '%@'", thisTunnelblickVersion);
+	}
+	
+	NSRange r = [thisTunnelblickVersion rangeOfString: @" "];
+	if (  r.length == 0  ) {
+		NSLog(@"Invalid Tunnelblick version (no space after 'Tunnelblick '): '%@'", thisTunnelblickVersion);
+		r.location = [thisTunnelblickVersion length];
+	}
+	
+	return [thisTunnelblickVersion substringToIndex: r.location];
+}
+
++(NSString *) checkTunnelblickVersionAgainstInfoPlist: (NSDictionary *) plist displayName: (NSString *) displayName {
+	
+	// Returns nil if:
+	//         The .plist is nil; or
+	//		   The version of Tunnelblick is within all TBMinimumTunnelblickVersion and TBMaximumTunnelblickVersion limits in the .plist.
+	// Otherwise returns a localized error string.
+	
+	if (  ! plist  ) {
+		return nil;
+	}
+	
+	NSEnumerator * e = [plist keyEnumerator];
+	NSString * key;
+	while (  (key = [e nextObject])  ) {
+		
+		if (  [key isEqualToString: @"TBMinimumTunnelblickVersion"]  ) {
+			NSString * minimumTunnelblickVersion = [plist objectForKey: key];
+			NSString * thisTunnelblickVersion = [self rawTunnelblickVersion];
+			if (  [minimumTunnelblickVersion tunnelblickVersionCompare: thisTunnelblickVersion] == NSOrderedDescending) {
+				return [NSString stringWithFormat: NSLocalizedString(@"Configuration '%@' requires Tunnelblick %@ or higher; you are using Tunnelblick %@.\n\n"
+																	 @"You must update Tunnelblick to install this configuration.",
+																	 @"Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02'"),
+						displayName, minimumTunnelblickVersion, thisTunnelblickVersion];
+			};
+			
+		} else if (  [key isEqualToString: @"TBMaximumTunnelblickVersion"]  ) {
+			NSString * maximumTunnelblickVersion = [plist objectForKey: key];
+			NSString * thisTunnelblickVersion = [self rawTunnelblickVersion];
+			if (  [maximumTunnelblickVersion tunnelblickVersionCompare: thisTunnelblickVersion] == NSOrderedAscending) {
+				return [NSString stringWithFormat: NSLocalizedString(@"Configuration '%@' requires Tunnelblick %@ or lower; you are using Tunnelblick %@.",
+																	 @"Window text. The first '%@' will be the name of a configuration; the other two '%@' will each be a version number such as '3.5.4' or '3.5.3beta02'"),
+						displayName, maximumTunnelblickVersion, thisTunnelblickVersion];
+			};
+		}
+	}
+	
+	return nil; // Info.plist does not require a different Tunnelblick version
+}
+
 +(NSString *) checkPlistEntries: (NSDictionary *) dict
                        fromPath: (NSString *)     path {
     
@@ -291,7 +350,9 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 				if (  ! [gConfigurationPreferences containsObject: pref]  ) {
 					return [NSString stringWithFormat: NSLocalizedString(@"A TBPreference or TBAlwaysSetPreference key refers to an unknown preference '%@' in %@", @"Window text"), pref, path];
 				}
-			} else if (  ! [key isEqualToString: @"TBUninstall"]  ) {
+			} else if (   ( ! [key isEqualToString: @"TBUninstall"] )
+					   && ( ! [key isEqualToString: @"TBMinimumTunnelblickVersion"] )
+					   && ( ! [key isEqualToString: @"TBMaximumTunnelblickVersion"] )  ) {
                 return [NSString stringWithFormat: NSLocalizedString(@"Unknown key '%@' in %@", @"Window text"), key, path];
             }
         }
@@ -678,10 +739,12 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 
 +(NSString *)parseConfigurationPath: (NSString *)      cfgPath
                       forConnection: (VPNConnection *) connection
-                    hasAuthUserPass: (BOOL *)          hasAuthUserPass {
+                    hasAuthUserPass: (BOOL *)          hasAuthUserPass
+				 authRetryParameter: (NSString **)	   authRetryParameter {
     
     // Parses the configuration file.
-    // Sets 'hasAuthUserPass' TRUE if configuration has a 'auth-user-pass' option with no arguments; FALSE otherwise
+    // Sets *hasAuthUserPass TRUE if configuration has a 'auth-user-pass' option with no arguments; FALSE otherwise
+	// Sets *authRetryParameter (which must be nil) to the first parameter of an 'auth-retry' option if it appears in the file
     // Gives user the option of adding the down-root plugin if appropriate
     // Returns with device type: "tun", "tap", "utun", "tunOrUtun", or nil if it can't be determined
     // Returns with string "Cancel" if user cancelled
@@ -709,8 +772,15 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     *hasAuthUserPass = (  authUserPassOption
                         ? ([authUserPassOption length] == 0)
                         : NO);
-                           
 
+	// Set authRetryParameter
+	NSString * theAuthRetryParameter = [ConfigurationManager parseString: cfgContents forOption: @"auth-retry" ];
+	if (  *authRetryParameter  ) {
+		NSLog(@"parseConfigurationPath: *authRetryParameter is not nil, so it is not being set to %@", theAuthRetryParameter);
+	} else {
+		*authRetryParameter = theAuthRetryParameter;
+	}
+	
     NSString * userOption  = [ConfigurationManager parseString: cfgContents forOption: @"user" ];
     if (  [userOption length] == 0  ) {
         userOption = nil;
@@ -1576,6 +1646,8 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 														  @"CFBundleIdentifier",
 														  @"CFBundleVersion",
 														  @"CFBundleShortVersionString",
+														  @"TBMinimumTunnelblickVersion",
+														  @"TBMaximumTunnelblickVersion",
                                                           @"TBPackageVersion",
                                                           @"TBReplaceIdentical",
                                                           @"TBSharePackage",
@@ -1585,6 +1657,7 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
             
             NSString * innerBundleIdentifier = nil;
             NSString * innerBundleVersion    = nil;
+			
             NSMutableDictionary * mDict = [[outerTblkInfoPlist mutableCopy] autorelease];
             NSEnumerator * e = [innerTblkInfoPlist keyEnumerator];
             NSString * key;
@@ -1601,6 +1674,10 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 				} else 	if (   [allowedInnerPlistReplacementKeys containsObject: key]
 							|| [key hasPrefix: @"TBPreference"]
 							|| [key hasPrefix: @"TBAlwaysSetPreference"]  ) {
+					[mDict setObject: obj forKey: key];
+				} else if (  [key isEqualToString: @"TBMinimumTunnelblickVersion"]  ) {
+					[mDict setObject: obj forKey: key];
+				} else if (  [key isEqualToString: @"TBMaximumTunnelblickVersion"]  ) {
 					[mDict setObject: obj forKey: key];
 				} else if (  ! [[mDict objectForKey: key] isEqualTo: obj ]) {
 					return [NSString stringWithFormat: NSLocalizedString(@"\"%@\" in the Info.plist for\n\n%@\n\nis not allowed in an \"inner\" .tblk or conflicts with the same entry in an \"outer\" .tblk.", @"Window text"), key, fullPath];
@@ -1620,6 +1697,12 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
             mergedInfoPlist = innerTblkInfoPlist;
         }
         
+		// Make sure this version of Tunnelblick is within any minimum or maximum required by the plist
+		NSString * errorMessage = [ConfigurationManager checkTunnelblickVersionAgainstInfoPlist: mergedInfoPlist displayName: innerFilePath];
+		if (  errorMessage  ) {
+			return errorMessage;
+		}
+		
         // Get a relative path to the configuration file. If both a ".ovpn" and a ".conf" file exist, use the ".ovpn" file
         
         // (Put all the config files in a list, then look at the list)
@@ -1818,7 +1901,13 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     }
 	NSDictionary * outerUpdatablePlist = (NSDictionary *)obj;
 		
-    // Build lists of .tblks and of .ovpn/.conf files
+	// Make sure this version of Tunnelblick is within any minimum or maximum required by the configuration's .plist
+	NSString * errorMessage = [ConfigurationManager checkTunnelblickVersionAgainstInfoPlist: outerTblkPlist displayName: [outerTblkPath lastPathComponent]];
+	if (  errorMessage  ) {
+		return errorMessage;
+	}
+	
+	// Build lists of .tblks and of .ovpn/.conf files
     NSMutableArray * ovpnAndConfInnerFilePartialPaths = [NSMutableArray arrayWithCapacity: 100];
     NSMutableArray * tblkInnerFilePartialPaths        = [NSMutableArray arrayWithCapacity: 100];
     
@@ -2384,7 +2473,7 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
                                 ? @""
                                 :  NSLocalizedString(@"\n\nNOTE: One or more of the configurations are currently connected. They will be disconnected, installs/replacements/uninstalls will be performed, and the configurations will be reconnected unless they have been uninstalled.\n\n", @"Window text"));
     
-    NSString * authMsg = [NSString stringWithFormat: @"Tunnelblick needs to:\n\n%@%@%@%@", uninstallMsg, replaceMsg, installMsg, disconnectMsg];
+    NSString * authMsg = [NSString stringWithFormat: @"%@\n%@%@%@%@", NSLocalizedString(@"Tunnelblick needs to:\n", @"Window text"), uninstallMsg, replaceMsg, installMsg, disconnectMsg];
     
     // Get a SystemAuth WITH A RETAIN COUNT OF 1, from MenuController's startupInstallAuth, the lock, or from a user interaction
     SystemAuth * auth = [[((MenuController *)[NSApp delegate]) startupInstallAuth] retain];
@@ -2726,42 +2815,64 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
             return;
         }
         if ( status != CommandOptionsNo  ) {
-            int userAction = TBRunAlertPanelExtended(NSLocalizedString(@"Tunnelblick", @"Window title"),
-                                                     NSLocalizedString(@"One or more VPN configurations that are being updated include programs which"
-                                                                       @" will run as root when you connect to a VPN. They are able to TAKE"
-                                                                       @" COMPLETE CONTROL OF YOUR COMPUTER.\n\n"
-                                                                       @"YOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\n"
-                                                                       @"Do you trust the author of the configurations and wish to install them?\n\n",
-                                                                       @"Window text"),
-                                                     NSLocalizedString(@"Cancel",  @"Button"), // Default
-                                                     NSLocalizedString(@"Install", @"Button"), // Alternate
-                                                     nil,                                      // Other
-                                                     @"skipWarningAboutInstallsWithCommands",
-                                                     NSLocalizedString(@"Do not warn about this again", @"Checkbox name"),
-                                                     nil,
-                                                     NSAlertAlternateReturn);
-            if (  userAction == NSAlertAlternateReturn  ) {
-                userAction = TBRunAlertPanel(NSLocalizedString(@"Tunnelblick", @"Window title"),
-                                             NSLocalizedString(@"Are you sure you wish to install configurations which can TAKE"
-                                                               @" COMPLETE CONTROL OF YOUR COMPUTER?\n\n",
-                                                               @"Window text"),
-                                             NSLocalizedString(@"Cancel",  @"Button"), // Default
-                                             NSLocalizedString(@"Install", @"Button"), // Alternate
-                                             nil);                                     // Other
-                if (  userAction == NSAlertAlternateReturn  ) {
-                    [ConfigurationManager installConfigurationsInNewThreadShowMessagesNotifyDelegateWithPaths: filePaths];
-                }
-            }
-            if (  notifyDelegate  ) {
+			if (  status == CommandOptionsUserScript  ) {
+				int userAction = TBRunAlertPanelExtended(NSLocalizedString(@"Tunnelblick", @"Window title"),
+														 NSLocalizedString(@"One or more VPN configurations that are being updated include programs which"
+																		   @" will run when you connect to a VPN. These programs are part of the configuration"
+																		   @" and are not part of the Tunnelblick application.\n\n"
+																		   @"You should install these configurations only if you trust their author.\n\n"
+																		   @"Do you trust the author of the configurations and wish to install them?\n\n",
+																		   @"Window text"),
+														 NSLocalizedString(@"Cancel",  @"Button"), // Default
+														 NSLocalizedString(@"Install", @"Button"), // Alternate
+														 nil,                                      // Other
+														 @"skipWarningAboutInstallsWithUserCommands",
+														 NSLocalizedString(@"Do not warn about this again", @"Checkbox name"),
+														 nil,
+														 NSAlertAlternateReturn);
+				if (  userAction == NSAlertAlternateReturn  ) {
+					[ConfigurationManager installConfigurationsInNewThreadShowMessagesNotifyDelegateWithPaths: filePaths];
+				}
+			} else {
+				int userAction = TBRunAlertPanelExtended(NSLocalizedString(@"Tunnelblick", @"Window title"),
+														 NSLocalizedString(@"One or more VPN configurations that are being updated include programs which"
+																		   @" will run as root when you connect to a VPN. These programs are part of the configuration"
+																		   @" and are not part of the Tunnelblick application. They are able to TAKE"
+																		   @" COMPLETE CONTROL OF YOUR COMPUTER.\n\n"
+																		   @"YOU SHOULD NOT INSTALL THESE CONFIGURATIONS UNLESS YOU TRUST THEIR AUTHOR.\n\n"
+																		   @"Do you trust the author of the configurations and wish to install them?\n\n",
+																		   @"Window text"),
+														 NSLocalizedString(@"Cancel",  @"Button"), // Default
+														 NSLocalizedString(@"Install", @"Button"), // Alternate
+														 nil,                                      // Other
+														 @"skipWarningAboutInstallsWithCommands",
+														 NSLocalizedString(@"Do not warn about this again", @"Checkbox name"),
+														 nil,
+														 NSAlertAlternateReturn);
+				if (  userAction == NSAlertAlternateReturn  ) {
+					userAction = TBRunAlertPanel(NSLocalizedString(@"Tunnelblick", @"Window title"),
+												 NSLocalizedString(@"Are you sure you wish to install configurations which can TAKE"
+																   @" COMPLETE CONTROL OF YOUR COMPUTER?\n\n",
+																   @"Window text"),
+												 NSLocalizedString(@"Cancel",  @"Button"), // Default
+												 NSLocalizedString(@"Install", @"Button"), // Alternate
+												 nil);                                     // Other
+					if (  userAction == NSAlertAlternateReturn  ) {
+						[ConfigurationManager installConfigurationsInNewThreadShowMessagesNotifyDelegateWithPaths: filePaths];
+					}
+				}
+			}
+			
+			if (  notifyDelegate  ) {
                 [NSApp replyToOpenOrPrint: NSApplicationDelegateReplyFailure];
             }
-            
+				
             return;
         }
     }
-    
+		
     // Set up instance variables that we use
-    
+		
     BOOL isDeployed = [gFileMgr fileExistsAtPath: gDeployPath];
     [self setInstallToPrivateOK: (   (! isDeployed)
                                   || (   [gTbDefaults boolForKey: @"usePrivateConfigurationsWithDeployedOnes"]
@@ -3488,12 +3599,12 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     return [NSArray arrayWithArray: displayNames];
 }
 
-+(void) createShadowThenConnectWithDisplayName: (NSString *) displayName userKnows: (BOOL) userKnows {
++(BOOL) createShadowCopyWithDisplayName: (NSString *) displayName {
     
     NSString * prompt = NSLocalizedString(@"Tunnelblick needs to create or update a secure (shadow) copy of the configuration file.", @"Window text");
-    SystemAuth * auth = [SystemAuth newAuthWithPrompt: prompt];
+    SystemAuth * auth = [[SystemAuth newAuthWithPrompt: prompt] autorelease];
     if (   ! auth  ) {
-        return;
+        return NO;
     }
     
     NSString * cfgPath = [[((MenuController *)[NSApp delegate]) myConfigDictionary] objectForKey: displayName];
@@ -3508,13 +3619,7 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
                                       moveNotCopy: NO
                                           noAdmin: NO] ) {    // Copy the config to the alt config
             NSLog(@"Created or updated secure (shadow) copy of configuration file %@", cfgPath);
-            
-            VPNConnection * connection = [[((MenuController *)[NSApp delegate]) myVPNConnectionDictionary] objectForKey: displayName];
-            if (  connection  ) {
-                [connection performSelectorOnMainThread: @selector(connectUserKnows:) withObject: [NSNumber numberWithBool: userKnows] waitUntilDone: NO];
-            } else {
-                NSLog(@"createShadowThenConnectWithDisplayName: No connection object for '%@'", displayName);
-            }
+			return YES;
         } else {
             NSLog(@"Unable to create or update secure (shadow) copy of configuration file %@", cfgPath);
         }
@@ -3522,7 +3627,22 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
         NSLog(@"createShadowThenConnectWithDisplayName: No configuration path for '%@'", displayName);
     }
     
-    [auth release];
+	return NO;
+}
+
++(void) createShadowThenConnectWithDisplayName: (NSString *) displayName userKnows: (BOOL) userKnows {
+	
+	if (  ! [ConfigurationManager createShadowCopyWithDisplayName: displayName]  ) {
+		NSLog(@"Unable to create or update secure (shadow) copy of configuration file for %@", displayName);
+		return;
+	}
+	
+	VPNConnection * connection = [[((MenuController *)[NSApp delegate]) myVPNConnectionDictionary] objectForKey: displayName];
+	if (  connection  ) {
+		[connection performSelectorOnMainThread: @selector(connectUserKnows:) withObject: [NSNumber numberWithBool: userKnows] waitUntilDone: NO];
+	} else {
+		NSLog(@"createShadowThenConnectWithDisplayName: No connection object for '%@'", displayName);
+	}
 }
 
 +(NSString *) listOfFilesInTblkForConnection: (VPNConnection *) connection {
@@ -3531,36 +3651,38 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     NSString * configPathTail = [configPath lastPathComponent];
     
     if (  [configPath hasSuffix: @".tblk"]  ) {
-        NSMutableString * fileListString = [[[NSMutableString alloc] initWithCapacity: 500] autorelease];
+		NSArray * keyAndCrtExtensions = KEY_AND_CRT_EXTENSIONS;
+        NSMutableString * fileListString = [[[NSMutableString alloc] initWithCapacity: 10000] autorelease];
         NSDirectoryEnumerator * dirEnum = [gFileMgr enumeratorAtPath: configPath];
         NSString * filename;
         while (  (filename = [dirEnum nextObject])  ) {
-            if (  ! [filename hasPrefix: @"."]  ) {
-                NSString * extension = [filename pathExtension];
-                NSString * nameOnly = [filename lastPathComponent];
-                NSArray * extensionsToSkip = KEY_AND_CRT_EXTENSIONS;
-                if (   ( ! [extensionsToSkip containsObject: extension])
-                    && ( ! [extension isEqualToString: @"ovpn"])
-                    && ( ! [extension isEqualToString: @"lproj"])
-                    && ( ! [extension isEqualToString: @"strings"])
-                    && ( ! [nameOnly  isEqualToString: @"Info.plist"])
-                    && ( ! [nameOnly  isEqualToString: @".DS_Store"])
-                    ) {
-                    NSString * fullPath = [configPath stringByAppendingPathComponent: filename];
-                    BOOL isDir;
-                    if (  ! (   [gFileMgr fileExistsAtPath: fullPath isDirectory: &isDir]
-                             && isDir)  ) {
-                        [fileListString appendFormat: @"      %@\n", filename];
-                    }
-                }
-            }
-        }
-        
+			BOOL isDir;
+			if (   [gFileMgr fileExistsAtPath: [configPath stringByAppendingPathComponent: filename] isDirectory: &isDir]
+				&& ( ! isDir )  ) {
+				NSString * extension  = [filename pathExtension];
+				
+				// Obfuscate key and certificate filenames by truncating them after the first three characters
+				if (  [keyAndCrtExtensions containsObject: extension]  ) {
+					NSString * folderName = [filename stringByDeletingLastPathComponent];
+					if (  [folderName length] != 0  ) {
+						folderName = [folderName stringByAppendingString: @"/"];
+					}
+					NSString * filenameOnly = [[filename lastPathComponent] stringByDeletingPathExtension];
+					NSString * filenameOnlyObfuscated = (  ([filenameOnly length] > 3)
+														 ? [[filenameOnly substringToIndex: 3] stringByAppendingString: @"…"]
+														 : filenameOnly);
+					[fileListString appendFormat: @"      %@%@.%@\n", folderName, filenameOnlyObfuscated, extension];
+				} else {
+					[fileListString appendFormat: @"      %@\n", filename];
+				}
+			}
+		}
+
         return (  ([fileListString length] == 0)
-                ? [NSString stringWithFormat: @"There are no unusual files in %@\n", configPathTail]
-                : [NSString stringWithFormat: @"Unusual files in %@:\n%@", configPathTail, fileListString]);
+                ? [NSString stringWithFormat: @"There are no files in %@\n", configPathTail]
+                : [NSString stringWithFormat: @"Files in %@:\n%@", configPathTail, fileListString]);
     } else {
-        return [NSString stringWithFormat: @"Cannot list unusual files in %@; not a .tblk\n", configPathTail];
+        return [NSString stringWithFormat: @"Cannot list files in %@; not a .tblk\n", configPathTail];
     }
 }
 
@@ -3785,9 +3907,14 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
 
 +(void) putDiagnosticInfoOnClipboardWithDisplayName: (NSString *) displayName {
 	
+	NSPasteboard * pb = [NSPasteboard generalPasteboard];
+	[pb declareTypes: [NSArray arrayWithObject: NSStringPboardType] owner: self];
+
 	VPNConnection * connection = [[((MenuController *)[NSApp delegate]) myVPNConnectionDictionary] objectForKey: displayName];
     if (  connection  ) {
 		
+		[pb setString: @"You pasted too soon! The Tunnelblick diagnostic info was not yet available on the Clipboard when you pasted. Try to paste again.\n" forType: NSStringPboardType];
+
 		// Get OS and Tunnelblick version info
 		NSString * versionContents = [[((MenuController *)[NSApp delegate]) openVPNLogHeader] stringByAppendingString:
                                       (isUserAnAdmin()
@@ -3853,35 +3980,160 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
                              ifconfigOutput, separatorString,
                              consoleContents];
         
-        NSPasteboard * pb = [NSPasteboard generalPasteboard];
+        pb = [NSPasteboard generalPasteboard];
         [pb declareTypes: [NSArray arrayWithObject: NSStringPboardType] owner: self];
         [pb setString: output forType: NSStringPboardType];
     } else {
+		[pb setString: @"No diagnostic info is available because no configuration has been selected.\n" forType: NSStringPboardType];
         NSLog(@"diagnosticInfoToClipboardButtonWasClicked but no configuration selected");
     }
 	
 }
 
-+(void) killAllOpenVPN {
++(void) terminateAllOpenVPN {
     
-    NSArray * volatile pIds = [NSApp pIdsForOpenVPNProcessesOnlyMain: NO];
+	// Sends SIGTERM to all OpenVPN processes every second until all have terminated.
+	// Aborts and returns after about 60 seconds even if they have not terminated.
+	
+	TBLog(@"DB-TO", @"terminateAllOpenVPN invoked");
+	
+	if (  ! ALLOW_OPENVPNSTART_KILLALL  ) {
+		NSLog(@"terminateAllOpenVPN returning immediately because ALLOW_OPENVPNSTART_KILLALL is FALSE");
+		return;
+	}
+	
+	NSUInteger numberOfOpenvpnProcesses = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count];
+	
+	if (  numberOfOpenvpnProcesses == 0  ) {
+		TBLog(@"DB-TO", @"terminateAllOpenVPN returning immediately because there are no OpenVPN processes");
+		return;
+	}
+
+	NSUInteger i;
+	for (  i=0; i<600; i++  ) { // 600 loops @ 0.1 seconds each = 60 seconds (approximately)
+		
+		numberOfOpenvpnProcesses = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] count];
+		if (  numberOfOpenvpnProcesses == 0  ) {
+			TBLog(@"DB-TO", @"terminateAllOpenVPN detected no OpenVPN processes");
+			break;
+		}
+		
+		// The first time through, and about every second thereafter, try to kill all "openvpn" processes
+		if (  (i % 10)  == 0  ) {
+			TBLog(@"DB-TO", @"terminateAllOpenVPN will run openvpnstart to 'killall'");
+			runOpenvpnstart([NSArray arrayWithObject: @"killall"], nil, nil);
+		}
+		
+		usleep(100000);	// 0.1 seconds
+	}
+	
+	if (  numberOfOpenvpnProcesses == 0  ) {
+		TBLog(@"DB-TO", @"terminateAllOpenVPN succeeded; there are no OpenVPN processes");
+	} else {
+		NSLog(@"Could not kill %ld OpenVPN processes within 60 seconds", (long)numberOfOpenvpnProcesses);
+	}
+}
+
++(void) terminateOpenVPNWithProcessId: (NSNumber *) processIDAsNumber {
     
-    if (  [pIds count] == 0  ) {
-        TBShowAlertWindow(NSLocalizedString(@"Tunnelblick", @"Window title"),
-                          NSLocalizedString(@"There are no OpenVPN processes running.", @"Window title"));
-        return;
-    }
+	// Sends SIGTERM to the specified OpenVPN process every second until it has terminated.
+	// Aborts and returns after about 60 seconds even if the process has not terminated.
+	
+	TBLog(@"DB-TO", @"terminateOpenVPNWithProcessId: %@ invoked'", processIDAsNumber);
+	
+	if (  ! ALLOW_OPENVPNSTART_KILL  ) {
+		NSLog(@"killOneOpenVPN returning immediately because ALLOW_OPENVPNSTART_KILL is FALSE. Cannot kill OpenVPN process with ID %@", processIDAsNumber);
+		return;
+	}
+	
+	BOOL processExists = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] containsObject: processIDAsNumber];
+	
+	if (  ! processExists  ) {
+		TBLog(@"DB-TO", @"killOneOpenVPN returning immediately because there is no OpenVPN process with ID %@", processIDAsNumber);
+		return;
+	}
+	
+	NSUInteger i;
+	for (  i=0; i<600; i++  ) { // 600 loops @ 0.1 seconds each = 60 seconds (approximately)
+		
+		processExists = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] containsObject: processIDAsNumber];
+		if (  ! processExists  ) {
+			TBLog(@"DB-TO", @"killOneOpenVPN detected no OpenVPN process with ID %@", processIDAsNumber);
+			break;
+		}
+		
+		// The first time, and about every second thereafter, try to kill all "openvpn" processes
+		if (  (i % 10)  == 0  ) {
+			TBLog(@"DB-TO", @"killOneOpenVPN will run openvpnstart to 'kill' %@", processIDAsNumber);
+			NSArray * arguments = [NSArray arrayWithObjects: @"kill", [NSString stringWithFormat: @"%@", processIDAsNumber], nil];
+			runOpenvpnstart(arguments, nil, nil);
+		}
+		
+		usleep(100000);	// 0.1 seconds
+	}
+	
+	if (  ! processExists  ) {
+		TBLog(@"DB-TO", @"killOneOpenVPN succeeded; there is no OpenVPN process with ID %@", processIDAsNumber);
+	} else {
+		NSLog(@"Could not kill OpenVPN process %@ within 60 seconds", processIDAsNumber);
+	}
+}
+
+
++(void) terminateOpenVPNWithManagmentSocketForConnection: (VPNConnection *) connection {
     
-    runOpenvpnstart([NSArray arrayWithObject: @"killall"], nil, nil);
-    
-    pIds = [NSApp pIdsForOpenVPNProcessesOnlyMain: NO];
-    if (  [pIds count] == 0  ) {
-        [UIHelper showSuccessNotificationTitle: NSLocalizedString(@"Tunnelblick", @"Window title")
-                                           msg: NSLocalizedString(@"All OpenVPN process were terminated.", @"Window title")];
-    } else {
-        TBShowAlertWindow(NSLocalizedString(@"Warning!", @"Window title"),
-                          NSLocalizedString(@"One or more OpenVPN processes could not be terminated.", @"Window title"));
-    }
+	// Sends 'signal SIGTERM' through the management socket for a connection every second until the process has terminated.
+	// Aborts and returns after about 60 seconds even if the process has not terminated.
+	
+	TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketForConnection for '%@' invoked'", [connection displayName]);
+	
+	if (  ! ALLOW_OPENVPNSTART_KILL  ) {
+		NSLog(@"terminateOpenVPNWithManagmentSocketForConnection for '%@' returning immediately because ALLOW_OPENVPNSTART_KILL is FALSE. Cannot kill OpenVPN process.", [connection displayName]);
+		return;
+	}
+	
+	if (  sizeof(pid_t) != 4  ) {
+		NSLog(@"sizeof(pid_t) is %lu, not 4!", sizeof(pid_t));
+		[(MenuController *)[NSApp delegate] terminateBecause: terminatingBecauseOfError];
+		return;
+	}
+	pid_t pid = [connection pid];
+	NSNumber * processIDAsNumber = [NSNumber numberWithInt: pid];
+	if (  pid  <= 0  ) {
+		NSLog(@"terminateOpenVPNWithManagmentSocketForConnection for '%@' returning immediately because the configuration's process ID, %@, is <= 0", [connection displayName], processIDAsNumber);
+		return;
+	}
+
+	BOOL processExists = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] containsObject: processIDAsNumber];
+	
+	if (  ! processExists  ) {
+		TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketForConnection for '%@' returning immediately because there is no OpenVPN process %@", [connection displayName], processIDAsNumber);
+		return;
+	}
+	
+	NSUInteger i;
+	for (  i=0; i<600; i++  ) { // 600 loops @ 0.1 seconds each = 60 seconds (approximately)
+		
+		processExists = [[NSApp pIdsForOpenVPNProcessesOnlyMain: YES] containsObject: processIDAsNumber];
+		if (  ! processExists  ) {
+			TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketForConnection for '%@' detected no OpenVPN process with ID %@", [connection displayName], processIDAsNumber);
+			break;
+		}
+		
+		// The first time, and about every second thereafter, write 'signal SIGTERM' to the connection's management socket
+		if (  (i % 10)  == 0  ) {
+			TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketForConnection for '%@': will write 'signal SIGTERM' to the management socket", [connection displayName]);
+			[connection performSelectorOnMainThread: @selector(sendSigtermToManagementSocket) withObject: nil waitUntilDone: NO];
+		}
+		
+		usleep(100000);	// 0.1 seconds
+	}
+	
+	if (  ! processExists  ) {
+		TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketForConnection for '%@'  succeeded; there is no OpenVPN process %@", [connection displayName], processIDAsNumber);
+	} else {
+		NSLog(@"terminateOpenVPNWithManagmentSocketForConnection for '%@': OpenVPN process %@ did not terminate within 60 seconds", [connection displayName], processIDAsNumber);
+	}
 }
 
 +(void) putConsoleLogOnClipboard {
@@ -4171,15 +4423,39 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     [pool drain];
 }
 
-+(void) killAllOpenVPNOperation {
++(void) terminateAllOpenVPNOperation {
     
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
-    [ConfigurationManager killAllOpenVPN];
+    [ConfigurationManager terminateAllOpenVPN];
     
     [TBOperationQueue removeDisableList];
     
-    [[((MenuController *)[NSApp delegate]) logScreen] performSelectorOnMainThread: @selector(indicateNotWaitingForKillAllOpenVPN) withObject: nil waitUntilDone: NO];
+    [TBOperationQueue operationIsComplete];
+    
+    [pool drain];
+}
+
++(void) terminateOpenVPNWithProcessIdOperation: (NSNumber *) processIDAsNumber {
+    
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    
+	[ConfigurationManager terminateOpenVPNWithProcessId: processIDAsNumber];
+	
+    [TBOperationQueue removeDisableList];
+    
+    [TBOperationQueue operationIsComplete];
+    
+    [pool drain];
+}
+
++(void) terminateOpenVPNWithManagmentSocketInNewThreadOperation: (VPNConnection *) connection {
+    
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    
+	[ConfigurationManager terminateOpenVPNWithManagmentSocketForConnection: connection];
+	
+    [TBOperationQueue removeDisableList];
     
     [TBOperationQueue operationIsComplete];
     
@@ -4374,12 +4650,35 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
                              disableList: [NSArray arrayWithObject: displayName]];
 }
 
-+(void) killAllOpenVPNInNewThread {
++(void) terminateAllOpenVPNInNewThread {
     
-    [TBOperationQueue addToQueueSelector: @selector(killAllOpenVPNOperation)
+	TBLog(@"DB-TO", @"terminateAllOpenVPNInNewThread invoked; stack trace: %@", callStack());
+	
+    [TBOperationQueue addToQueueSelector: @selector(terminateAllOpenVPNOperation)
                                   target: [ConfigurationManager class]
                                   object: nil
                              disableList: [NSArray array]];
+}
+
++(void) terminateOpenVPNWithProcessIdInNewThread: (NSNumber *) processIdAsNumber {
+	
+	TBLog(@"DB-TO", @"terminateOpenVPNWithProcessIdInNewThread: %@ invoked; stack trace: %@", processIdAsNumber, callStack());
+	
+	[TBOperationQueue addToQueueSelector: @selector(terminateOpenVPNWithProcessIdOperation:)
+								  target: [ConfigurationManager class]
+								  object: processIdAsNumber
+							 disableList: [NSArray array]];
+}
+
+
++(void) terminateOpenVPNWithManagmentSocketInNewThread: (VPNConnection *) connection {
+	
+	TBLog(@"DB-TO", @"terminateOpenVPNWithManagmentSocketInNewThread '%@' invoked; stack trace: %@", [connection displayName], callStack());
+	
+	[TBOperationQueue addToQueueSelector: @selector(terminateOpenVPNWithManagmentSocketInNewThreadOperation:)
+								  target: [ConfigurationManager class]
+								  object: connection
+							 disableList: [NSArray array]];
 }
 
 +(void) putConsoleLogOnClipboardInNewThread {
@@ -4431,10 +4730,12 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
         NSString * returnDescription = (  (status == CommandOptionsError)
                                         ? @"error occurred"
                                         : (  (status == CommandOptionsYes)
-                                           ? @"unsafe option(s) found"
+                                           ? @"unsafe option(s) or run-as-root scripts found"
                                            : (  (status == CommandOptionsUnknown)
                                               ? @"unknown option(s) found"
-                                              : @"invalid status")));
+                                              : (  (status == CommandOptionsUserScript)
+											     ? @"user scripts found"
+												 : @"invalid status"))));
         NSLog(@"commandOptionsStatusForOpenvpnConfigurationAtPath:forTblk: returned '%@' for %@", returnDescription, path);
     }
     
@@ -4456,6 +4757,7 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
     }
     
     BOOL haveUnknown = FALSE;
+	BOOL haveUserScript = FALSE;
     
     NSString * file;
     NSDirectoryEnumerator * dirE = [gFileMgr enumeratorAtPath: path];
@@ -4465,7 +4767,11 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
         
         if (  [extension isEqualToString: @"sh"]  ) {
             NSLog(@"commandOptionsInOneConfigurationAtPath: '.sh' files found in %@", path);
-            return CommandOptionsYes;
+			if (  shouldRunScriptAsUserAtPath(file)  ) {
+				haveUserScript = TRUE;
+			} else {
+				return CommandOptionsYes;
+			}
         }
         
 		NSString * fullPath = [path stringByAppendingPathComponent: file];
@@ -4482,12 +4788,17 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
         }
     }
     
-    return (  haveUnknown ? CommandOptionsUnknown : CommandOptionsNo  );
+    return (  haveUnknown
+			? CommandOptionsUnknown
+			: (  haveUserScript
+			   ? CommandOptionsUserScript
+			   : CommandOptionsNo  ));
 }
 
 +(CommandOptionsStatus) commandOptionsInConfigurationsAtPaths: (NSArray *) paths {
     
     BOOL haveUnknown = FALSE;
+	BOOL haveUserScript = FALSE;
     NSString * path;
     NSEnumerator * e = [paths objectEnumerator];
     while (  (path = [e nextObject])  ) {
@@ -4495,13 +4806,19 @@ TBSYNTHESIZE_NONOBJECT(BOOL, multipleConfigurations, setMultipleConfigurations)
         if (  status != CommandOptionsNo   ) {
             if (  status == CommandOptionsUnknown  ) {
                 haveUnknown = TRUE;
-            } else {
+            } else if (  status == CommandOptionsUserScript  ){
+				haveUserScript = TRUE;
+			} else {
                 return status;
             }
         }
     }
     
-    return (  haveUnknown ? CommandOptionsUnknown : CommandOptionsNo  );
+    return (  haveUnknown
+			? CommandOptionsUnknown
+			: (  haveUserScript
+			   ? CommandOptionsUserScript
+			   : CommandOptionsNo ));
 }
 
 @end

@@ -1,6 +1,6 @@
 /*
  * Copyright 2005, 2006, 2007, 2008, 2009 Angelo Laub
- * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016. All rights reserved.
+ * Contributions by Jonathan K. Bullard Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -27,6 +27,9 @@ NSAttributedString * attributedStringFromHTML(NSString * html);
 void           appendLog				 (NSString * msg);
 
 BOOL           appHasValidSignature(void);
+
+NSString	 * base64Encode(NSData   * input);
+NSData       * base64Decode(NSString * input);
 
 uint64_t       nowAbsoluteNanoseconds    (void);
 
@@ -60,6 +63,10 @@ NSMutableString * encodeSlashesAndPeriods(NSString * s);
 NSString     * stringForLog             (NSString * outputString,
                                          NSString * header);
 
+NSString     * displayNameForOpenvpnName(NSString * openvpnName);
+
+NSString     * messageIfProblemInLogLine(NSString * line);
+
 NSString     * firstPartOfPath          (NSString * thePath);
 NSString     * lastPartOfPath           (NSString * thePath);
 NSString     * displayNameFromPath      (NSString * thePath);
@@ -68,6 +75,7 @@ NSString     * firstPathComponent       (NSString * thePath);
 NSString     * tunnelblickVersion       (NSBundle * bundle);
 NSString     * localizeNonLiteral        (NSString * status,
                                          NSString * type);
+NSString	 * defaultOpenVpnFolderName	(void);
 
 // from http://clang-analyzer.llvm.org/faq.html#unlocalized_string
 __attribute__((annotate("returns_localized_nsstring")))
@@ -82,7 +90,16 @@ NSString     * TBGetDisplayName         (NSString * msg,
                                          NSString * sourcePath);
 
 AlertWindowController * TBShowAlertWindow(NSString * title,
-                                          NSString * msg);
+                                          id         msg); // NSString or NSAttributedString only
+
+AlertWindowController * TBShowAlertWindowExtended(NSString * title,
+												  id				   msg, // NSString or NSAttributedString only
+												  NSString			 * preferenceToSetTrue,
+												  NSString			 * preferenceName,
+												  id				   preferenceValue, // any object
+												  NSString			 * checkboxTitle,
+												  NSAttributedString * checkboxInfoTitle,
+												  BOOL				   checkboxIsOn);
 
 int            TBRunAlertPanel          (NSString * title,
                                          NSString * msg,
@@ -106,8 +123,8 @@ int            TBRunAlertPanelExtendedPlus  (NSString * title,
                                              NSString * alternateButtonLabel,
                                              NSString * otherButtonLabel,
                                              NSString * doNotShowAgainPreferenceKey,
-                                             NSString * checkboxLabel,
-                                             BOOL     * checkboxResult,
+											 NSArray  * checkboxLabels,
+											 NSArray  * * checkboxResults,
                                              int		notShownReturnValue,
                                              id         shouldCancelTarget,
                                              SEL        shouldCancelSelector);
@@ -126,18 +143,12 @@ BOOL           displaysHaveDifferentSpaces(void);
 BOOL           mustPlaceIconInStandardPositionInStatusBar(void);
 BOOL           shouldPlaceIconInStandardPositionInStatusBar(void);
 
-BOOL           runningOnSnowLeopardPointEightOrNewer(void);
-BOOL           runningOnLionOrNewer(void);
 BOOL           runningOnMountainLionOrNewer(void);
 BOOL           runningOnMavericksOrNewer(void);
 BOOL           runningOnYosemiteOrNewer(void);
 BOOL           runningOnElCapitanOrNewer(void);
 BOOL           runningOnSierraOrNewer(void);
-BOOL           runningOnIntel(void);
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED != MAC_OS_X_VERSION_10_4
-BOOL           runningOn64BitKernel(void);
-#endif
+BOOL           runningOnHighSierraOrNewer(void);
 
 BOOL           tunnelblickTestPrivateOnlyHasTblks(void);
 BOOL           tunnelblickTestAppInApplications(void);

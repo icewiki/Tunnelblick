@@ -13,13 +13,13 @@
 # Version of each tool to download and install:
 
 readonly autoconf_version="autoconf-2.69"
-readonly automake_version="automake-1.15"
-readonly libtool_version="libtool-2.4.5"
+readonly automake_version="automake-1.16.1"
+readonly libtool_version="libtool-2.4.6"
 
 # You can check for the latest version of each tool by examining the following:
-#     http://ftpmirror.gnu.org/autoconf
-#     http://ftpmirror.gnu.org/automake
-#     http://ftpmirror.gnu.org/libtool
+#     https://ftpmirror.gnu.org/autoconf
+#     https://ftpmirror.gnu.org/automake
+#     https://ftpmirror.gnu.org/libtool
 # If you wish to install different versions, modify the variables above.
 # Note that it is possible (although unlikely) that later versions of the autotools may
 # not work properly for the third party build process.
@@ -37,14 +37,22 @@ readonly downloads_folder_path=~/"Downloads"
 
 
 # URLs for downloading the tools:
-readonly autoconf_url=http://ftpmirror.gnu.org/autoconf/${autoconf_version}.tar.gz
-readonly automake_url=http://ftpmirror.gnu.org/automake/${automake_version}.tar.gz
-readonly libtool_url=http://ftpmirror.gnu.org/libtool/${libtool_version}.tar.gz
+readonly autoconf_url=https://ftpmirror.gnu.org/autoconf/${autoconf_version}.tar.gz
+readonly automake_url=https://ftpmirror.gnu.org/automake/${automake_version}.tar.gz
+readonly libtool_url=https://ftpmirror.gnu.org/libtool/${libtool_version}.tar.gz
 
 if [ ! -d "${downloads_folder_path}" ] ; then
     echo "Downloads folder '${downloads_folder_path}' does not exist or is not a folder"
     exit 1
 fi
+
+for buildtool in automake autoconf libtool glibtool; do
+  if [ -L /usr/local/bin/$buildtool ]; then
+    echo "/usr/local/bin/$buildtool exists & appears to be a symlink."
+    echo "Presuming $buildtool is from a package manager & refusing to overwrite."
+    exit 1
+  fi
+done
 
 echo "INSTALLING AUTOCONF:"
 cd "${downloads_folder_path}"
@@ -74,8 +82,21 @@ cd "${downloads_folder_path}"
 curl -OL "${libtool_url}"
 tar xzf "${libtool_version}.tar.gz"
 cd "${libtool_version}"
-./configure
+./configure --program-prefix=g
 make
 sudo make install
+
+old_wd="$( pwd )"
+  cd /usr/local/bin/
+  if [  -e glibtool -a ! -e libtool ] ; then
+      sudo ln -s glibtool libtool
+      echo "CREATED SYMLINK: /usr/local/bin/libtool -> /usr/local/bin/glibtool"
+  fi
+
+  if [  -e glibtoolize -a ! -e libtoolize ] ; then
+      sudo ln -s glibtoolize libtoolize
+      echo "CREATED SYMLINK: /usr/local/bin/libtoolize -> /usr/local/bin/glibtoolize"
+  fi
+cd "$old_wd"
 
 echo "Installation of autotools completed successfully"

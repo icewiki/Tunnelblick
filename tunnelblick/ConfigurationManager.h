@@ -1,5 +1,5 @@
 /*
- * Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016 Jonathan K. Bullard. All rights reserved.
+ * Copyright 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018 Jonathan K. Bullard. All rights reserved.
  *
  *  This file is part of Tunnelblick.
  *
@@ -35,6 +35,7 @@ typedef enum
 {
     CommandOptionsError,     // Error occurred
     CommandOptionsNo,        // Configurations have only safe options and do not contain .sh files
+	CommandOptionsUserScript,// Configurations have only safe options and contain only .sh files that are run as the user
     CommandOptionsYes,       // Configurations have unsafe options and/or contain .sh files
     CommandOptionsUnknown    // Configurations do not contain .sh files, but have options not known to be safe or unsafe
 } CommandOptionsStatus;
@@ -80,9 +81,13 @@ typedef enum
 
 +(NSMutableDictionary *)    getConfigurations;
 
++(NSString *) parseString: (NSString *) cfgContents
+				forOption: (NSString *) option;
+
 +(NSString *)               parseConfigurationPath:     (NSString *)        cfgPath
                                      forConnection:     (VPNConnection *)   connection
-                                   hasAuthUserPass:     (BOOL *)            hasAuthUserPass;
+                                   hasAuthUserPass:     (BOOL *)            hasAuthUserPass
+								authRetryParameter:     (NSString **)		authRetryParameter;
 
 +(BOOL)                     userCanEditConfiguration:   (NSString *)        filePath;
 
@@ -92,6 +97,8 @@ typedef enum
 
 +(void) removeConfigurationsInNewThreadWithDisplayNames: (NSArray *) displayNames;
 
++(BOOL) revertOneConfigurationToShadowWithDisplayName: (NSString *) displayName;
+
 +(void) revertToShadowInNewThreadWithDisplayNames: (NSArray *) displayNames;
 
 +(void) removeCredentialsInNewThreadWithDisplayNames: (NSArray *) displayNames;
@@ -99,6 +106,8 @@ typedef enum
 +(void) removeCredentialsGroupInNewThreadWithName: (NSString *) name;
 
 +(void) renameConfigurationInNewThreadWithDisplayName: (NSString *) displayName;
+
++(BOOL) createShadowCopyWithDisplayName: (NSString *) displayName;
 
 +(void) createShadowConfigurationInNewThreadWithDisplayName: (NSString *) displayName thenConnectUserKnows: (BOOL) userKnows;
 
@@ -114,7 +123,11 @@ typedef enum
 
 +(void) putDiagnosticInfoOnClipboardInNewThreadForDisplayName: (NSString *) displayName;
 
-+(void) killAllOpenVPNInNewThread;
++(void) terminateAllOpenVPNInNewThread;
+
++(void) terminateOpenVPNWithProcessIdInNewThread: (NSNumber *) processIdAsNumber;
+
++(void) terminateOpenVPNWithManagmentSocketInNewThread: (VPNConnection *) connection;
 
 +(void) putConsoleLogOnClipboardInNewThread;
 
